@@ -1,7 +1,7 @@
 package Domain;
 
 public class Entity<T> {
-    private T id;
+    private T id =null;
 
     public T getId() {
         return id;

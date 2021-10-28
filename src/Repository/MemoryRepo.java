@@ -1,27 +1,24 @@
 package Repository;
 import Domain.*;
+import Utils.Generator;
+
+import java.util.Random;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MemoryRepo<Id, E extends Entity<Id>> implements Repository<Id,E> {
+public abstract class MemoryRepo<Id, E extends Entity<Id>> implements Repository<Id,E> {
 
-    List<E> list;
-    int size=0;
+    protected List<E> list;
+    protected int size=0;
 
-    private static MemoryRepo instance=null;
-    public static MemoryRepo getInstance(){
-        if(instance==null) return new MemoryRepo();
-        return instance;
-
-    }
-    private MemoryRepo(){
+    protected void initiateRepo(){
         list= new ArrayList<E>();
         size=0;
     }
-
     @Override
     public boolean save(E entity) {
+        if(entity.getId()==null) entity.setId(generateId());
         if(get(entity.getId())!=null) return false;
         list.add(entity);
         size++;
@@ -41,8 +38,7 @@ public class MemoryRepo<Id, E extends Entity<Id>> implements Repository<Id,E> {
     @Override
     public boolean update(Id id,E entity) {
         if(!delete(id))return false;
-        list.add(entity);
-        size++;
+        save(entity);
         return true;
     }
 
@@ -75,4 +71,15 @@ public class MemoryRepo<Id, E extends Entity<Id>> implements Repository<Id,E> {
         return -1;
     }
 
+    public List<Id> getAllIds(){
+        List<Id> listId= new ArrayList<Id>();
+        for (E ent: list){
+            listId.add(ent.getId());
+        }
+        return listId;
+    }
+
+    protected abstract Id generateId();
+
+    public abstract E getByOther(String... other);
 }
