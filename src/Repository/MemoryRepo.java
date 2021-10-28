@@ -19,7 +19,7 @@ public abstract class MemoryRepo<Id, E extends Entity<Id>> implements Repository
     @Override
     public boolean save(E entity) {
         if(entity.getId()==null) entity.setId(generateId());
-        if(get(entity.getId())!=null) return false;
+        else if(get(entity.getId())!=null) return false;
         list.add(entity);
         size++;
         return true;
