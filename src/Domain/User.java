@@ -1,23 +1,13 @@
 package Domain;
 import Domain.Persone;
 
-public class User {
-    int id;
+public class User extends Entity<Long>{
     String username;
     Persone pers;
 
-    public User(int id, String username, Persone pers) {
-        this.id = id;
+    public User(String username, Persone pers) {
         this.username = username;
         this.pers = pers;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getUsername() {
@@ -34,5 +24,14 @@ public class User {
 
     public void setPers(Persone pers) {
         this.pers = pers;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id" + super.getId().toString()+
+                "username='" + username + '\'' +
+                ", pers=" + pers +
+                '}';
     }
 }

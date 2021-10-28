@@ -1,12 +1,16 @@
 package Repository;
 
+import Domain.Entity;
 import Domain.Persone;
 
-import javax.swing.text.html.parser.Entity;
+import java.util.List;
 
-public interface Repository<Id, E extends Persone> {
-    public boolean save(E entity);
-    public E get(int id);
-    public boolean update (int id);
-    public boolean delete (int id);
+
+public interface Repository<Id, E extends Entity<Id>> {
+     boolean save(E entity);
+     E get(Id id);
+     boolean update (Id id,E entity);
+     boolean delete (Id id);
+     int getSize();
+     List<E> getAll();
 }
