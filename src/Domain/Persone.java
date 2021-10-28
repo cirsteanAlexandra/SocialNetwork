@@ -3,28 +3,28 @@ package Domain;
 import java.util.Objects;
 
 public class Persone {
-    String name;
-    String prename;
+    String firstName; //prenume
+    String lastName;  //nume de familie
 
-    public Persone(String name, String prename) {
-        this.name = name;
-        this.prename = prename;
+    public Persone(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
-    public String getPrename() {
-        return prename;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setPrename(String prename) {
-        this.prename = prename;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getName() {
-        return name;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     @Override
@@ -32,19 +32,19 @@ public class Persone {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Persone persone = (Persone) o;
-        return name.equals(persone.name) && prename.equals(persone.prename);
+        return Objects.equals(firstName, persone.firstName) && Objects.equals(lastName, persone.lastName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, prename);
+        return Objects.hash(firstName, lastName);
     }
 
     @Override
     public String toString() {
         return "Persone{" +
-                "name='" + name + '\'' +
-                ", prename='" + prename + '\'' +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 '}';
     }
 }

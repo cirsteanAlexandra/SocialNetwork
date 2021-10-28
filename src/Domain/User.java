@@ -1,6 +1,8 @@
 package Domain;
 import Domain.Persone;
 
+import java.util.Objects;
+
 public class User extends Entity<Long>{
     String username;
     Persone pers;
@@ -8,6 +10,12 @@ public class User extends Entity<Long>{
     public User(String username, Persone pers) {
         this.username = username;
         this.pers = pers;
+    }
+
+    public User(Long id,String username, Persone pers) {
+        this.username = username;
+        this.pers = pers;
+        super.setId(id);
     }
 
     public String getUsername() {
@@ -33,5 +41,18 @@ public class User extends Entity<Long>{
                 "username='" + username + '\'' +
                 ", pers=" + pers +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return getId()==((User) o).getId() || Objects.equals(username, user.username);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(username,getId());
     }
 }
