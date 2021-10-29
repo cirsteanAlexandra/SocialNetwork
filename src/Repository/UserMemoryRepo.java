@@ -21,6 +21,12 @@ public class UserMemoryRepo extends MemoryRepo<Long, User>{
     }
 
     @Override
+    public boolean save(User entity) {
+        if(getByUserName(entity.getUsername())!=null)return false;
+        return saveToRepo(entity);
+    }
+
+    @Override
     protected Long generateId() {
         return Generator.generateId(getAllIds());
     }

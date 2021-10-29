@@ -41,6 +41,13 @@ class UserTest {
     @Test
     void testToString() {
         User user= new User("acadea", new Persone("True","Vasile"));
+        assertTrue(user.toString().equals("User{" +
+                "username='" + "acadea" + '\'' +
+                ", pers=" + "Persone{"+
+                "firstName='" + "True" + '\'' +
+                ", lastName='" + "Vasile" + '\'' +
+                '}' +
+                '}'));
         user.setId(1L);
         assertTrue(user.toString().equals("User{" +
                 "id" +"1"+
@@ -76,5 +83,47 @@ class UserTest {
 
         User user4= new User(2L,"maslin", new Persone("True","Vasile"));
         assertFalse(user1.equals(user4));
+    }
+
+    @Test
+    void addFriend(){
+        User user1= new User(1L,"acadea", new Persone("True","Vasile"));
+        User user2= new User(2L,"maslin", new Persone("Fake","Vasile"));
+
+        user1.addFriend(user2.getUsername());
+        assertTrue(user1.getNumberOfFriends()==1);
+        assertTrue(user2.getNumberOfFriends()==0);
+    }
+
+    @Test
+    void removeFriend(){
+        User user1= new User(1L,"acadea", new Persone("True","Vasile"));
+        User user2= new User(2L,"maslin", new Persone("Fake","Vasile"));
+
+        user1.addFriend(user2.getUsername());
+        user1.removeFriend(user2.getUsername());
+        assertTrue(user1.getNumberOfFriends()==0);
+        user1.removeFriend(user2.getUsername());
+        assertTrue(user1.getNumberOfFriends()==0);
+    }
+
+    @Test
+    void getAllFriends() {
+        User user1= new User(1L,"acadea", new Persone("True","Vasile"));
+        User user2= new User(2L,"maslin", new Persone("Fake","Vasile"));
+        User user3= new User(3L,"merisor", new Persone("All","Vasile"));
+
+        user1.addFriend(user2.getUsername());
+        assertTrue(user1.getFriendsList().get(0).equals("maslin"));
+
+        user1.addFriend(user3.getUsername());
+        assertTrue(user1.getFriendsList().get(0).equals("maslin"));
+        assertTrue(user1.getFriendsList().get(1).equals("merisor"));
+
+        user1.removeFriend(user2.getUsername());
+        assertTrue(user1.getFriendsList().get(0).equals("merisor"));
+
+        user1.removeFriend(user3.getUsername());
+        assertTrue(user1.getFriendsList().size()==0);
     }
 }
