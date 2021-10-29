@@ -22,6 +22,9 @@ class UserMemoryRepoTest {
         assertFalse(repo.save(user));
 
         assertEquals(repo.getSize(),1);
+
+        User user1= new User(1L,"acadea", new Persone("Vasile","Purcel"));
+        assertFalse(repo.save(user1));
     }
 
     @Test

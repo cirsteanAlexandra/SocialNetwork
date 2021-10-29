@@ -16,8 +16,11 @@ public abstract class MemoryRepo<Id, E extends Entity<Id>> implements Repository
         list= new ArrayList<E>();
         size=0;
     }
+
     @Override
-    public boolean save(E entity) {
+    public abstract boolean save(E entity);
+
+    protected boolean saveToRepo(E entity) {
         if(entity.getId()==null) entity.setId(generateId());
         else if(get(entity.getId())!=null) return false;
         list.add(entity);
@@ -37,7 +40,11 @@ public abstract class MemoryRepo<Id, E extends Entity<Id>> implements Repository
 
     @Override
     public boolean update(Id id,E entity) {
-        if(!delete(id))return false;
+        E entity_copy=get(id);
+        if(!delete(id) && !save(entity)){
+            save(entity_copy);
+            return false;
+        }
         save(entity);
         return true;
     }
