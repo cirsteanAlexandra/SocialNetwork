@@ -1,43 +1,31 @@
 package Controller;
 
+import Domain.Entity;
 import Domain.User;
-import Repository.Repository;
-import Repository.UserMemoryRepo;
 import Repository.MemoryRepo;
-import Utils.Exceptions.UserRepoException;
+import Utils.Exceptions.EntityRepoException;
 
-public class Controller {
-    MemoryRepo repoUser;
+public abstract class Controller<T,E extends Entity> {
+    MemoryRepo repo;
 
-    public Controller(MemoryRepo rep) {
-        this.repoUser = rep;
-    }
-
-    public boolean addUser(User user){
-        if(repoUser.save(user)==false)
-            throw new UserRepoException("The user is already in data base\n");
+    public boolean add(E entity){
+        if(repo.save(entity)==false)
+            throw new EntityRepoException("The user is already in data base\n");
         return true;
     }
 
-    public boolean removeUserById(Long id){
-        if (!repoUser.delete(id))
-            throw new UserRepoException("There in not a user with that id\n");
+    public boolean removeById(T id){
+        if (!repo.delete(id))
+            throw new EntityRepoException("There in not a user with that id\n");
         return true;
     }
 
-    public boolean removeUserByUsername(String username){
-        User user= (User)repoUser.getByOther(username);
-        if(user==null)
-            throw new UserRepoException("There in not a user with that id\n");
-        repoUser.delete(user.getId());
-        return true;
+    public abstract boolean removeByOthers(String... others);
+
+    public E getById(T id){
+        return (E) repo.get(id);
     }
 
-    public User getUserById(Long id){
-        return (User)repoUser.get(id);
-    }
+    public abstract E getByOther(String... others);
 
-    public User getUserByUsername(String username){
-        return (User)repoUser.getByOther(username);
-    }
 }
