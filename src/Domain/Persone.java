@@ -2,7 +2,7 @@ package Domain;
 
 import java.util.Objects;
 
-public class Persone {
+public class Persone extends Entity {
     String firstName; //prenume
     String lastName;  //nume de familie
 
