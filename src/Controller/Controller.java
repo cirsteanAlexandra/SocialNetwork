@@ -5,6 +5,8 @@ import Domain.User;
 import Repository.MemoryRepo;
 import Utils.Exceptions.EntityRepoException;
 
+import java.util.List;
+
 public abstract class Controller<T,E extends Entity> {
     MemoryRepo repo;
 
@@ -27,5 +29,9 @@ public abstract class Controller<T,E extends Entity> {
     }
 
     public abstract E getByOther(String... others);
+
+    public List<E> getAll(){
+        return repo.getAll();
+    }
 
 }
