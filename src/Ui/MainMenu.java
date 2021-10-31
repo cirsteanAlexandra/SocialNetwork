@@ -2,6 +2,7 @@ package Ui;
 
 import Controller.RelationshipController;
 import Controller.UserController;
+import Controller.Validator.AbstractValidator;
 import Controller.Validator.ContextValidator;
 import Controller.Validator.Strategy;
 import Controller.Validator.Validator;
@@ -129,6 +130,8 @@ public class MainMenu {
             if(contUser.getByOther(username1)==null || contUser.getByOther(username2)==null )
                 throw new EntityRepoException("A relationship is only applied between tow existing users\n");
             contRel.add(rel);
+            contUser.addFriend(contUser.getByOther(username1),username2);
+            contUser.addFriend(contUser.getByOther(username2),username1);
             System.out.println("Relationship created succesfully");
         }
         catch(RelationshipException e){
@@ -140,6 +143,27 @@ public class MainMenu {
         catch(EntityRepoException e){
             System.out.println(e.getDescription());
         }
+    }
+
+    private void removeUser(){
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Delete by : 1-Id or 2-Username\nYour option: ");
+        int option=scan.nextInt();
+        switch(option){
+            case 1:
+                System.out.println("Id:");
+                long id=scan.nextLong();
+                try{
+                    AbstractValidator vali=ContextValidator.createValidator(Strategy.USER);
+                    vali.checkId(id);
+                    contUser.removeById(id);
+                    System.out.println("User remove with succes");
+                    ///delete all the relations of that user
+                }
+
+        }
+        System.out.println("Provide all the necesary information: ");
+
     }
 
     private void printAllUsers(){

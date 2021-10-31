@@ -11,17 +11,12 @@ public class UserController extends Controller<Long, User>{
         super.repo=rep;
     }
 
-    @Override
-    public boolean removeByOthers(String... others) {
-        User user= (User) repo.getByOther(others);
-        if(user==null)
-            throw new UserRepoException("There in not a user with that id\n");
-        repo.delete(user.getId());
-        return true;
+
+    public void addFriend(User user,String username){
+        user.addFriend(username);
     }
 
-    @Override
-    public User getByOther(String... others) {
-        return (User) repo.getByOther(others);
+    public void removeFriend(User user,String username){
+        user.removeFriend(username);
     }
 }

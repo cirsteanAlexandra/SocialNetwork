@@ -12,6 +12,7 @@ public class Main {
         MemoryRepo repoR= new RelationshipMemoryRepo();
         Controller contU=new UserController((UserMemoryRepo) repoU);
         Controller contR= new RelationshipController((RelationshipMemoryRepo)repoR);
+        //System.out.println(contU.getClass());
         MainMenu ui= new MainMenu((UserController) contU,(RelationshipController) contR);
         ui.mainMenu();
 
