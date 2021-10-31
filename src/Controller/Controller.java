@@ -1,43 +1,46 @@
 package Controller;
 
+import Domain.Entity;
 import Domain.User;
-import Repository.Repository;
-import Repository.UserMemoryRepo;
 import Repository.MemoryRepo;
+import Utils.Exceptions.EntityRepoException;
 import Utils.Exceptions.UserRepoException;
 
-public class Controller {
-    MemoryRepo repoUser;
+import java.util.List;
 
-    public Controller(MemoryRepo rep) {
-        this.repoUser = rep;
-    }
+public abstract class Controller<T,E extends Entity> {
+    MemoryRepo repo;
 
-    public boolean addUser(User user){
-        if(repoUser.save(user)==false)
-            throw new UserRepoException("The user is already in data base\n");
+    public boolean add(E entity){
+        if(repo.save(entity)==false)
+            throw new EntityRepoException("This entity is already in data base\n");
         return true;
     }
 
-    public boolean removeUserById(Long id){
-        if (!repoUser.delete(id))
-            throw new UserRepoException("There in not a user with that id\n");
+    public boolean removeById(T id){
+        if (!repo.delete(id))
+            throw new EntityRepoException("There is not an entity with that id\n");
         return true;
     }
 
-    public boolean removeUserByUsername(String username){
-        User user= (User)repoUser.getByOther(username);
-        if(user==null)
-            throw new UserRepoException("There in not a user with that id\n");
-        repoUser.delete(user.getId());
+    public boolean removeByOthers(String... others){
+        E entity= (E) repo.getByOther(others);
+        if(entity==null)
+            throw new EntityRepoException("There is not an entity with that id\n");
+        repo.delete(entity.getId());
         return true;
+    };
+
+    public E getById(T id){
+        return (E) repo.get(id);
     }
 
-    public User getUserById(Long id){
-        return (User)repoUser.get(id);
+    public E getByOther(String... others){
+        return (E) repo.getByOther(others);
+    };
+
+    public List<E> getAll(){
+        return repo.getAll();
     }
 
-    public User getUserByUsername(String username){
-        return (User)repoUser.getByOther(username);
-    }
 }
