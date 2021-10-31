@@ -5,6 +5,8 @@ import Repository.UserMemoryRepo;
 import Utils.Exceptions.EntityRepoException;
 import Utils.Exceptions.UserRepoException;
 
+import java.util.List;
+
 public class UserController extends Controller<Long, User>{
 
     public UserController(UserMemoryRepo rep) {
@@ -18,5 +20,11 @@ public class UserController extends Controller<Long, User>{
 
     public void removeFriend(User user,String username){
         user.removeFriend(username);
+    }
+
+    public void removeUserFromAllFriends(String username){
+        for (User el: (List<User>)repo.getAll()){
+            el.removeFriend(username);
+        }
     }
 }

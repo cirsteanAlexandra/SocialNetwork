@@ -56,6 +56,12 @@ public class MainMenu {
                 case 2:
                     addRelationship();
                     break;
+                case 3:
+                    removeUser();
+                    break;
+                case 4:
+                    removeRelationship();
+                    break;
                 case 5:
                     printAllUsers();
                     break;
@@ -65,6 +71,8 @@ public class MainMenu {
                 case 9:
                    done=true;
                    break;
+                case 404:
+                    setCurrentMode();
                 default:
                     System.out.println("Invalid Option");
             }
@@ -151,25 +159,125 @@ public class MainMenu {
         int option=scan.nextInt();
         switch(option){
             case 1:
-                System.out.println("Id:");
-                long id=scan.nextLong();
-                try{
-                    AbstractValidator vali=ContextValidator.createValidator(Strategy.USER);
-                    vali.checkId(id);
-                    contUser.removeById(id);
-                    System.out.println("User remove with succes");
-                    ///delete all the relations of that user
-                }
-
+                removeUserById();
+                break;
+            case 2:
+                removeUserByUsername();
+                break;
+            default:
+                System.out.println("Invalid option!");
         }
-        System.out.println("Provide all the necesary information: ");
+    }
 
+    private void removeRelationship(){
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Delete by : 1-Id or 2-By two usernames\nYour option: ");
+        int option=scan.nextInt();
+        switch(option){
+            case 1:
+                removeRelationshipById();
+                break;
+            case 2:
+                removeRelationshipByUsernames();
+                break;
+            default:
+                System.out.println("Invalid option!");
+        }
+    }
+
+    private void removeRelationshipById(){
+        Scanner scan=new Scanner(System.in);
+        System.out.println("Id:");
+        long id=scan.nextLong();
+        try{
+            AbstractValidator vali=ContextValidator.createValidator(Strategy.USER);
+            vali.checkId(id);
+            Relationship rel= contRel.getById(id);
+            contRel.removeById(id);
+            contUser.removeFriend(contUser.getByOther(rel.getFirstUserName()),rel.getSecondUserName());
+            contUser.removeFriend(contUser.getByOther(rel.getSecondUserName()),rel.getFirstUserName());
+            System.out.println("Relationship removed with succes");
+        }
+        catch (RelationshipRepoException e){
+            System.out.println(e.getDescription());
+        }
+    }
+
+    private void removeRelationshipByUsernames(){
+        Scanner scan=new Scanner(System.in);
+        System.out.println("First Username :");
+        String username1=scan.nextLine();
+        System.out.println("Second Username");
+        String username2=scan.nextLine();
+        try{
+            AbstractValidator vali=ContextValidator.createValidator(Strategy.USER);
+            vali.checkUserName(username1);
+            vali.checkUserName(username2);
+            Relationship rel= contRel.getByOther(username1,username2);
+            contRel.removeByOthers(username1,username2);
+            contUser.removeFriend(contUser.getByOther(rel.getFirstUserName()),rel.getSecondUserName());
+            contUser.removeFriend(contUser.getByOther(rel.getSecondUserName()),rel.getFirstUserName());
+            System.out.println("Relationship removed with succes");
+        }
+        catch (RelationshipRepoException e){
+            System.out.println(e.getDescription());
+        }
+    }
+
+    private void removeUserById(){
+        Scanner scan=new Scanner(System.in);
+        System.out.println("Id:");
+        long id=scan.nextLong();
+        try{
+            AbstractValidator vali=ContextValidator.createValidator(Strategy.USER);
+            vali.checkId(id);
+            User user= contUser.getById(id);
+            contUser.removeById(id);
+            contUser.removeUserFromAllFriends(user.getUsername());
+            System.out.println(Integer.toString(contRel.deleteAllRelationsByUsername(user.getUsername())) +" relations deleted");
+            System.out.println("User removed with succes");
+        }
+        catch(UserRepoException e){
+            System.out.println(e.getDescription());
+        }
+        catch (RelationshipRepoException e){
+            System.out.println(e.getDescription());
+        }
+    }
+
+    private void removeUserByUsername(){
+        Scanner scan=new Scanner(System.in);
+        System.out.println("Username:");
+        String username=scan.nextLine();
+        try{
+            AbstractValidator vali=ContextValidator.createValidator(Strategy.USER);
+            vali.checkUserName(username);
+            User user= contUser.getByOther(username);
+            contUser.removeByOthers(username);
+            contUser.removeUserFromAllFriends(user.getUsername());
+            System.out.println(Integer.toString(contRel.deleteAllRelationsByUsername(user.getUsername())) +" relations deleted");
+            System.out.println("User removed with succes");
+        }
+        catch(UserRepoException e){
+            System.out.println(e.getDescription());
+        }
+        catch (RelationshipRepoException e){
+            System.out.println(e.getDescription());
+        }
+    }
+
+    private void setCurrentMode(){
+        Scanner scan=new Scanner(System.in);
+        System.out.println("Set the current mode : ");
+        currentMode= scan.nextLine();
+        System.out.println("Entering to " + currentMode +" mode");
     }
 
     private void printAllUsers(){
         List<User> list=contUser.getAll();
         for (User el: list){
             System.out.println(el);
+            System.out.println(el.getFriendsList());
         }
     }
 
@@ -179,4 +287,5 @@ public class MainMenu {
             System.out.println(el);
         }
     }
+
 }
