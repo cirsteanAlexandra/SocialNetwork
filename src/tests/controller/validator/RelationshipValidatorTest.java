@@ -1,4 +1,4 @@
-package tests.domain.validator;
+package tests.controller.validator;
 
 import Controller.Validator.AbstractValidator;
 import Controller.Validator.ContextValidator;

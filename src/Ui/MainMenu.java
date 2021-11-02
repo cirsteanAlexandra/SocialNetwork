@@ -31,6 +31,8 @@ public class MainMenu {
         options.put(4,"- to remove a relationship");
         options.put(5,"- print all users");
         options.put(6,"- print all relationships");
+        options.put(7,"- number of cummunities");
+        options.put(8,"- the most sociable community");
         options.put(9,"- to exit");
         return options;
     }

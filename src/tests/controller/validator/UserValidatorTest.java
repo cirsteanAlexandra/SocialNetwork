@@ -1,4 +1,4 @@
-package tests.domain.validator;
+package tests.controller.validator;
 
 import Domain.Persone;
 import Domain.User;
