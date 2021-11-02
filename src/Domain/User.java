@@ -1,6 +1,4 @@
 package Domain;
-import Domain.Persone;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -18,7 +16,11 @@ public class User extends Entity<Long>{
         initialize(username,pers);
         super.setId(id);
     }
-
+    /**
+     * Initializez the fields of the class
+     * @param username
+     * @param pers
+     */
     private void initialize(String username, Persone pers){
         this.username = username;
         this.pers = pers;
@@ -57,6 +59,10 @@ public class User extends Entity<Long>{
         return friendsList.size();
     }
 
+    /**
+     * Return the user in an elegant way
+     * @return a string that contains the data of that user
+     */
     @Override
     public String toString() {
         if(getId()!=null)
@@ -71,6 +77,11 @@ public class User extends Entity<Long>{
                 '}';
     }
 
+    /**
+     * Checks The Equality of 2 objects
+     * @param o the object to be compared with
+     * @return true, the the objects are equal, false otherwise
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -79,6 +90,10 @@ public class User extends Entity<Long>{
         return (getId()!=null && getId()==((User) o).getId()) || Objects.equals(username, user.username);
     }
 
+    /**
+     * Gives the hash code of that object
+     * @return hash code of the object
+     */
     @Override
     public int hashCode() {
         return Objects.hash(username,getId());

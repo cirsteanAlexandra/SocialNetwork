@@ -1,8 +1,6 @@
 package Controller.Validator;
 
-import Domain.Entity;
 import Domain.Persone;
-import Utils.Exceptions.PersoneException;
 
 public class PersoneValidator extends AbstractValidator<Persone> {
 
@@ -10,6 +8,11 @@ public class PersoneValidator extends AbstractValidator<Persone> {
         listOfErrors=new String();
     }
 
+    /**
+     * Checks if the names of a persone are valid
+     * @param entity the object to be verified
+     * @return true if the persone is valid, false otherwise
+     */
     @Override
     public boolean validate(Persone entity) {
         checkName(entity.getFirstName());

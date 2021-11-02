@@ -9,9 +9,13 @@ import Controller.Validator.Validator;
 import Domain.Persone;
 import Domain.Relationship;
 import Domain.User;
+import Utils.Exceptions.Exception;
 import Utils.Exceptions.*;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 
 public class MainMenu {
     String currentMode=new String();
@@ -47,39 +51,54 @@ public class MainMenu {
 
     public void mainMenu(){
         boolean done=false;
-        while(!done) {
-            printMenu();
-            Scanner scan = new Scanner(System.in);
-            int option=scan.nextInt();
-            switch(option){
-                case 1:
-                    addUser();
-                    break;
-                case 2:
-                    addRelationship();
-                    break;
-                case 3:
-                    removeUser();
-                    break;
-                case 4:
-                    removeRelationship();
-                    break;
-                case 5:
-                    printAllUsers();
-                    break;
-                case 6:
-                    printAllRelationships();
-                    break;
-                case 9:
-                   done=true;
-                   break;
-                case 404:
-                    setCurrentMode();
-                default:
-                    System.out.println("Invalid Option");
+        try {
+            contUser.loadData("user.csv", "friend.csv");
+            contRel.loadData("relation.csv");
+            while (!done) {
+                printMenu();
+                Scanner scan = new Scanner(System.in);
+                int option = scan.nextInt();
+                switch (option) {
+                    case 1:
+                        addUser();
+                        break;
+                    case 2:
+                        addRelationship();
+                        break;
+                    case 3:
+                        removeUser();
+                        break;
+                    case 4:
+                        removeRelationship();
+                        break;
+                    case 5:
+                        printAllUsers();
+                        break;
+                    case 6:
+                        printAllRelationships();
+                        break;
+                    case 7:
+                        printNumberOfCommunities();
+                        break;
+                    case 8:
+                        printTheMostSociableCommunity();
+                        break;
+                    case 9:
+                        done = true;
+                        break;
+                    case 404:
+                        setCurrentMode();
+                    default:
+                        System.out.println("Invalid Option");
+                }
             }
-        }
 
+            contUser.saveData("user.csv", "friend.csv");
+            contRel.saveData("relation.csv");
+        }
+         catch (Exception e) {
+             System.out.println(e.getDescription());
+        }
     }
 
     private void addUser(){
@@ -92,6 +111,7 @@ public class MainMenu {
         if(currentMode.equals("admin")){
             System.out.print("Id: ");
             id= scan.nextLong();
+            scan.nextLine();
         }
         System.out.println("First Name :");
         firstName=scan.nextLine();
@@ -126,6 +146,7 @@ public class MainMenu {
         if(currentMode.equals("admin")){
             System.out.print("Id: ");
             id= scan.nextLong();
+            scan.nextLine();
         }
         System.out.println("First Username :");
         username1=scan.nextLine();
@@ -288,6 +309,18 @@ public class MainMenu {
         for (Relationship el: list){
             System.out.println(el);
         }
+    }
+
+    private void printNumberOfCommunities(){
+        System.out.println("Number of active communities" + contRel.getNumberOfCommunities(contUser.getSize()));
+    }
+
+    private void printTheMostSociableCommunity(){
+        List<String>list= contRel.getTheMostSociableCommunity(contUser.getSize());
+        System.out.println("The most sociable communty is formed with : ");
+        for(String el:list)
+            System.out.print(el);
+        System.out.println("It has "+ list.size()+ " members");
     }
 
 }

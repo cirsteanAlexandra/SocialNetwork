@@ -7,9 +7,19 @@ import Utils.Exceptions.UserException;
 public abstract class AbstractValidator<E extends Entity> implements Validator<E> {
     protected String listOfErrors;
 
+    /**
+     * Validates an entity
+     * @param entity the object to be verified
+     * @return true if it is valid, false otherwise
+     */
     @Override
     public abstract boolean validate(E entity);
 
+    /**
+     * Checks if the username is null or it has forbidden characters
+     * @param username the string to be verified
+     * @return true if it is valid, false otherwise
+     */
     public boolean checkUserName(String username){
         if(username=="")
             throw new UserException("Username shoundn't be empty\n");
@@ -17,6 +27,12 @@ public abstract class AbstractValidator<E extends Entity> implements Validator<E
             throw new UserException("Username shound contain english letters or/and digits\n");
         return true;
     }
+
+    /**
+     * Checks if the username has forbidden characters
+     * @param username the string to be verified
+     * @return true if it is valid, false otherwise
+     */
     public boolean checkUserNameChar(String username){
         for (int i=0;i<username.length();i++){
             if (!((username.charAt(i)>='a' && username.charAt(i)<='z')||
@@ -27,13 +43,22 @@ public abstract class AbstractValidator<E extends Entity> implements Validator<E
         return true;
     }
 
+    /**
+     * Checks if the id is valid(if it is pozitive)
+     * @param id the int to be verified
+     * @return true if it is valid, false otherwise
+     */
     public boolean checkId(Long id){
         if(id<0)
             throw new UserException("Id should be a pozitive number\n");
         return true;
     }
 
-
+    /**
+     * Checks if the name is null or it has forbidden characters
+     * @param name the string to be verified
+     * @return true if it is valid, false otherwise
+     */
     public boolean checkName(String name){
         if(name=="") throw new PersoneException("The first name and the last name shouldn't be empty\n");
         for (int i=0;i<name.length();i++){

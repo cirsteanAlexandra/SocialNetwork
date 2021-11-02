@@ -11,6 +11,12 @@ public class UserValidator extends AbstractValidator<User>{
         listOfErrors= new String();
     }
 
+    /**
+     * Checks is an user has valid components
+     * @param entity the object to be verified
+     * @return true if it is valid
+     * Throws UserException if the usernames/id/names of the persone are not valid
+     */
     @Override
     public boolean validate(User entity) {
         listOfErrors=new String();

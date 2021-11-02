@@ -1,7 +1,7 @@
 package Utils.Algoritms;
 
 import Domain.Relationship;
-import Repository.RelationshipMemoryRepo;
+import Repository.RelationshipFileRepo;
 
 import java.util.*;
 
@@ -48,12 +48,12 @@ public class Graph {
         return listEdges;
     }
 
-    public int numberOfCommunities(RelationshipMemoryRepo repo){
+    public int numberOfCommunities(RelationshipFileRepo repo){
         convertRepo(repo);
         return numberOfConexComponents();
     }
 
-    public List<String> theMostSociableCommunity(RelationshipMemoryRepo repo){
+    public List<String> theMostSociableCommunity(RelationshipFileRepo repo){
         Map<String,Integer> listOfVer=convertRepo(repo);
         List<Integer> listOfParticipants=theLongestElementeryRoad();
         return convertIntToUsername(listOfParticipants,listOfVer);
@@ -155,13 +155,13 @@ public class Graph {
         return adLs;
     }
 
-    public Map<String,Integer> convertRepo(RelationshipMemoryRepo repo){
+    public Map<String,Integer> convertRepo(RelationshipFileRepo repo){
         Map<String,Integer> listOfVer=convertUsernameToInt(repo);
         fillEdges(repo,listOfVer);
         return listOfVer;
     }
 
-    public Map<String,Integer> convertUsernameToInt(RelationshipMemoryRepo repo){
+    public Map<String,Integer> convertUsernameToInt(RelationshipFileRepo repo){
         Map<String,Integer> listOfVer=new HashMap();
         for(Relationship rel: repo.getAll()){
             if(listOfVer.get(rel.getFirstUserName())==null){
@@ -174,7 +174,7 @@ public class Graph {
         return listOfVer;
     }
 
-    public void fillEdges(RelationshipMemoryRepo repo, Map<String,Integer> listOfVer){
+    public void fillEdges(RelationshipFileRepo repo, Map<String,Integer> listOfVer){
         for(Relationship rel: repo.getAll()){
             addEdge(listOfVer.get(rel.getFirstUserName()),listOfVer.get(rel.getSecondUserName()));
         }

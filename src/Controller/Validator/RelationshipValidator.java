@@ -3,13 +3,18 @@ package Controller.Validator;
 import Domain.Relationship;
 import Utils.Exceptions.Exception;
 import Utils.Exceptions.RelationshipException;
-import Utils.Exceptions.UserException;
 
 public class RelationshipValidator extends AbstractValidator<Relationship>{
     public RelationshipValidator() {
         listOfErrors=new String();
     }
 
+    /**
+     * Checks is a ralationship has valid components
+     * @param entity the object to be verified
+     * @return true if it is valid
+     * Throws RelationshipException if the usernames/id are not valid
+     */
     @Override
     public boolean validate(Relationship entity) {
         listOfErrors=new String();
