@@ -21,7 +21,7 @@ public class RelationshipController extends Controller<Long, Relationship>{
             }
         }
         for(Long el: listId){
-            repo.delete(repo.get(el));
+            repo.delete(el);
         }
         return listId.size();
     }

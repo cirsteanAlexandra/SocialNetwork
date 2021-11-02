@@ -61,20 +61,27 @@ public class Graph {
 
     public List<String>convertIntToUsername(List<Integer>listParticipants,Map<String,Integer>listOfVer){
         List<String>list= new ArrayList<>();
-        for(Map.Entry<String,Integer> el: listOfVer.entrySet()){
-            if(listParticipants.get(el.getValue())==1){
-                list.add(el.getKey());
+        for(Integer elem:listParticipants){
+            for(Map.Entry<String,Integer> el: listOfVer.entrySet()){
+                if(el.getValue().equals(elem))
+                    list.add(el.getKey());
             }
         }
         return list;
     }
     public List<Integer> theLongestElementeryRoad(){
         int maxim=0;
-        List<Integer> listParticipants= new ArrayList<>(numberOfVertices);
+        List<Integer> listParticipants= new ArrayList<>();
+        for(Integer i=0;i<=numberOfVertices;i++)
+            listParticipants.add(0);
         Map<Integer,List<Integer>> adiacencyList=getAdiacencyList();
         for (int i=1;i<=numberOfVertices;i++){
             List<Integer> listColours= new ArrayList<>(numberOfVertices);
             List<Integer> listPath= new ArrayList<>(numberOfVertices);
+            for(Integer j=0;j<=numberOfVertices;j++) {
+                listColours.add(0);
+                listPath.add(0);
+            }
             if(adiacencyList.get((Integer) i).size()==1){
                 bfs((Integer)i,adiacencyList,listColours,listPath);
                 int max=Collections.max(listPath);
@@ -100,8 +107,8 @@ public class Graph {
         listPath.set(node,0);
         while(!queue.isEmpty()){
             Integer currentNode=queue.remove();
-            for(Integer neighb: adiacencyList.get(node)){
-                if(listColours.get(neighb)==null){
+            for(Integer neighb: adiacencyList.get(currentNode)){
+                if(listColours.get(neighb)==0){
                     queue.add(neighb);
                     listPath.set(neighb,listPath.get(currentNode)+1);
                 }
@@ -112,7 +119,9 @@ public class Graph {
 
     public int numberOfConexComponents(){
         Map<Integer,List<Integer>> adiacencyList=getAdiacencyList();
-        List<Integer> listVisited= new ArrayList<>(numberOfVertices);
+        List<Integer> listVisited= new ArrayList<>();
+        for(Integer i=0;i<=numberOfVertices;i++)
+            listVisited.add(null);
         int numberOfComponents=0;
         for(int i=1;i<=numberOfVertices;i++){
             if(listVisited.get(i)==null){
