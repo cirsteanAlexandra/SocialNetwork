@@ -1,10 +1,8 @@
 package Controller;
 
 import Domain.Entity;
-import Domain.User;
 import Repository.MemoryRepo;
 import Utils.Exceptions.EntityRepoException;
-import Utils.Exceptions.UserRepoException;
 
 import java.util.List;
 
@@ -41,6 +39,10 @@ public abstract class Controller<T,E extends Entity> {
 
     public List<E> getAll(){
         return repo.getAll();
+    }
+
+    public int getSize(){
+        return repo.getSize();
     }
 
 }

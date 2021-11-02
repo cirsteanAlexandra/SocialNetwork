@@ -1,11 +1,8 @@
 package Controller;
 
 import Domain.Relationship;
-import Domain.User;
-import Repository.MemoryRepo;
 import Repository.RelationshipMemoryRepo;
-import Utils.Exceptions.EntityRepoException;
-import Utils.Exceptions.RelationshipRepoException;
+import Utils.Algoritms.Graph;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,5 +24,15 @@ public class RelationshipController extends Controller<Long, Relationship>{
             repo.delete(repo.get(el));
         }
         return listId.size();
+    }
+
+    public int getNumberOfCommunities(int numOfUsers){
+        Graph graph= new Graph(numOfUsers,repo.getSize());
+        return graph.numberOfCommunities((RelationshipMemoryRepo) repo);
+    }
+
+    public List<String> getTheMostSociableCommunity(int numOfUsers){
+        Graph graph= new Graph(numOfUsers,repo.getSize());
+        return graph.theMostSociableCommunity((RelationshipMemoryRepo) repo);
     }
 }
