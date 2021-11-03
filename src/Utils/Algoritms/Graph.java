@@ -20,45 +20,90 @@ public class Graph {
         listEdges=new ArrayList<>();
     }
 
+    /**
+     * Updates the number of vertices
+     * @param numberOfVertices the number to be updated with
+     */
     public void setNumberOfVertices(int numberOfVertices) {
         this.numberOfVertices = numberOfVertices;
     }
-
+    /**
+     * Updates the number of edges
+     * @param numberOfEdges the number to be updated with
+     */
     public void setNumberOfEdges(int numberOfEdges) {
         this.numberOfEdges = numberOfEdges;
     }
 
+    /**
+     * Adds an edge to the list
+     * @param f the first node of the edge
+     * @param s the second node of the edge
+     */
     public void addEdge(int f, int s){
         listEdges.add(new Pair<>(f,s));
     }
 
+    /**
+     * Removes an edge from the list
+     * @param f the first node of the edge
+     * @param s the second node of the edge
+     */
     public void removeEdge(int f,int s){
         listEdges.remove(new Pair<>(f,s));
     }
 
+    /**
+     * Gives the number of vertices
+     * @return the current number of vertices
+     */
     public int getNumberOfVertices() {
         return numberOfVertices;
     }
 
+    /**
+     * Gives the number of edges
+     * @return the current number of edges
+     */
     public int getNumberOfEdges() {
         return numberOfEdges;
     }
 
+    /**
+     * Gives the list of the edges
+     * @return a list of pairs with the first and the second node of an edge
+     */
     public List<Pair<Integer, Integer>> getListEdges() {
         return listEdges;
     }
 
+    /**
+     * Gives the number of communities from a repository
+     * @param repo the network to be searched
+     * @return the number of communities
+     */
     public int numberOfCommunities(RelationshipFileRepo repo){
         convertRepo(repo);
         return numberOfConexComponents();
     }
 
+    /**
+     * Gives the most sociable network from repository
+     * @param repo the network to be searched
+     * @return a list of usernames tahat take part of that community
+     */
     public List<String> theMostSociableCommunity(RelationshipFileRepo repo){
         Map<String,Integer> listOfVer=convertRepo(repo);
         List<Integer> listOfParticipants=theLongestElementeryRoad();
         return convertIntToUsername(listOfParticipants,listOfVer);
     }
 
+    /**
+     * Gives the corespondent a list of strings to a list of int
+     * @param listParticipants the list to be to be converted
+     * @param listOfVer the list to be searched
+     * @return the corespondent a list of strings to a list of int
+     */
     public List<String>convertIntToUsername(List<Integer>listParticipants,Map<String,Integer>listOfVer){
         List<String>list= new ArrayList<>();
         for(Integer elem:listParticipants){
@@ -69,6 +114,11 @@ public class Graph {
         }
         return list;
     }
+
+    /**
+     * Search for the longest elementery road from a graph
+     * @return a list of nodes that makes the path of that road
+     */
     public List<Integer> theLongestElementeryRoad(){
         int maxim=0;
         List<Integer> listParticipants= new ArrayList<>();
@@ -100,7 +150,13 @@ public class Graph {
         return listOfElems;
     }
 
-
+    /**
+     * Does bfs in a graph
+     * @param node the node from where the search is started
+     * @param adiacencyList the adiacency list of all nodes of the graph
+     * @param listColours list of visited nodes
+     * @param listPath list of distances from the start node to the current node
+     */
     public void bfs(Integer node,Map<Integer,List<Integer>> adiacencyList,List<Integer> listColours,List<Integer> listPath){
         Queue<Integer> queue= new LinkedList<>();
         queue.add(node);
@@ -117,6 +173,10 @@ public class Graph {
         }
     }
 
+    /**
+     * Gives the number of the conex components of the graph
+     * @return the number of the conex components of the graph
+     */
     public int numberOfConexComponents(){
         Map<Integer,List<Integer>> adiacencyList=getAdiacencyList();
         List<Integer> listVisited= new ArrayList<>();
@@ -132,6 +192,12 @@ public class Graph {
         return numberOfComponents;
     }
 
+    /**
+     * Does dfs on a graph
+     * @param node the node from where the search is started
+     * @param listVisited list of visited nodes
+     * @param adiacencyList the adiacency list of all nodes of the graph
+     */
     public void dfs(Integer node,List<Integer> listVisited,Map<Integer,List<Integer>> adiacencyList){
         if(listVisited.get(node)==null){
             listVisited.set(node,1);
@@ -142,6 +208,10 @@ public class Graph {
         }
     }
 
+    /**
+     * Gives the adiacency list of all nodes from a graph
+     * @return a map that contains the node and the list of neighbours of that node
+     */
     public Map<Integer,List<Integer>> getAdiacencyList(){
         Map<Integer,List<Integer>> adLs=new HashMap<>();
         for(Pair el: listEdges){
@@ -155,12 +225,22 @@ public class Graph {
         return adLs;
     }
 
+    /**
+     * Gives to each username a corespondent id
+     * @param repo the repository to extract the usernames
+     * @return a map that contains the username and the corespondent id
+     */
     public Map<String,Integer> convertRepo(RelationshipFileRepo repo){
         Map<String,Integer> listOfVer=convertUsernameToInt(repo);
         fillEdges(repo,listOfVer);
         return listOfVer;
     }
 
+    /**
+     * Gives the corespondent a list of strings to a list of int
+     * @param repo the repository to extract the usernames
+     * @return the corespondent a list of strings to a list of int
+     */
     public Map<String,Integer> convertUsernameToInt(RelationshipFileRepo repo){
         Map<String,Integer> listOfVer=new HashMap();
         for(Relationship rel: repo.getAll()){
@@ -174,6 +254,11 @@ public class Graph {
         return listOfVer;
     }
 
+    /**
+     * fills the list of edges with the relationships from the repo
+     * @param repo the repository to check the usernames
+     * @param listOfVer map that contains the username and the corespondent id
+     */
     public void fillEdges(RelationshipFileRepo repo, Map<String,Integer> listOfVer){
         for(Relationship rel: repo.getAll()){
             addEdge(listOfVer.get(rel.getFirstUserName()),listOfVer.get(rel.getSecondUserName()));

@@ -1,8 +1,5 @@
 package Repository;
-import Domain.*;
-import Utils.Generator;
-
-import java.util.Random;
+import Domain.Entity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,14 +9,27 @@ public abstract class MemoryRepo<Id, E extends Entity<Id>> implements Repository
     protected List<E> list;
     protected int size=0;
 
+    /**
+     * Initializez the fields of the class
+     */
     protected void initiateRepo(){
         list= new ArrayList<E>();
         size=0;
     }
 
+    /**
+     * Saves an entity to repository
+     * @param entity the object to be saved
+     * @return true if it has been saved with succes, flse otherwise
+     */
     @Override
     public abstract boolean save(E entity);
 
+    /**
+     * Saves an entity to repository
+     * @param entity the object to be saved
+     * @return true if it has been saved with succes, flse otherwise
+     */
     protected boolean saveToRepo(E entity) {
         if(entity.getId()==null) entity.setId(generateId());
         else if(get(entity.getId())!=null) return false;
@@ -28,6 +38,11 @@ public abstract class MemoryRepo<Id, E extends Entity<Id>> implements Repository
         return true;
     }
 
+    /**
+     * Retrives the corespondent object of that id
+     * @param id the id of the object to be found
+     * @return the object that has that id or null if there is no object with that id
+     */
     @Override
     public E get(Id id) {
         E entity = null;
@@ -38,6 +53,12 @@ public abstract class MemoryRepo<Id, E extends Entity<Id>> implements Repository
         return entity;
     }
 
+    /**
+     * Replaces and Entity with that id with a new Entity
+     * @param id the id of the object to be replased
+     * @param entity the entity to be replased with
+     * @return true if the entity has been updated with succes, false otherwise
+     */
     @Override
     public boolean update(Id id,E entity) {
         E entity_copy=get(id);
@@ -49,6 +70,11 @@ public abstract class MemoryRepo<Id, E extends Entity<Id>> implements Repository
         return true;
     }
 
+    /**
+     * Deletes the object from the repository with that id
+     * @param id the id of the object to be deleted
+     * @return true if it was deleted with succes, false otherwise
+     */
     @Override
     public boolean delete(Id id) {
         int index=getIndexOf(id);
@@ -58,16 +84,29 @@ public abstract class MemoryRepo<Id, E extends Entity<Id>> implements Repository
         return true;
     }
 
+    /**
+     * Gives the current Number of entities stored in repository
+     * @return the current Number of entities
+     */
     @Override
     public int getSize() {
         return size;
     }
 
+    /**
+     * Gives a list with the entities stored in repository
+     * @return a list of entities
+     */
     @Override
     public List<E> getAll() {
         return list;
     }
 
+    /**
+     * Gives the index of the object stored in repository with that id
+     * @param id the id of the object to be found
+     * @return the index of the object in repository or -1 if there is not an object iwth that id
+     */
     private int getIndexOf(Id id){
         int index=0;
         for (E ent : list) {
@@ -78,6 +117,10 @@ public abstract class MemoryRepo<Id, E extends Entity<Id>> implements Repository
         return -1;
     }
 
+    /**
+     * Gives a list with all the ids store din repository
+     * @return a list of ids
+     */
     public List<Id> getAllIds(){
         List<Id> listId= new ArrayList<Id>();
         for (E ent: list){
@@ -86,7 +129,15 @@ public abstract class MemoryRepo<Id, E extends Entity<Id>> implements Repository
         return listId;
     }
 
+    /**
+     * Generates an id for an entity
+     */
     protected abstract Id generateId();
 
+    /**
+     * Checks if it is an object stored with some distinguishable components
+     * @param other a list of string with distinguishable components
+     * @return the object to be found or null if there is no object with that components
+     */
     public abstract E getByOther(String... other);
 }

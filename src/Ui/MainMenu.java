@@ -27,6 +27,10 @@ public class MainMenu {
         this.contRel = contRel;
     }
 
+    /**
+     * Generates a map with the option and the corespondent number of that option on the maniu
+     * @return a map with Integer as Keys and String as Values
+     */
     private Map<Integer,String> generateOptions(){
         Map<Integer,String> options= new HashMap();
         options.put(1,"- to add a user");
@@ -41,6 +45,9 @@ public class MainMenu {
         return options;
     }
 
+    /**
+     * prints the menu of the screen
+     */
     private void printMenu(){
         Map<Integer,String> options= generateOptions();
         System.out.println("Main Manu");
@@ -49,6 +56,9 @@ public class MainMenu {
         System.out.print("Option: ");
     }
 
+    /**
+     * The main manu of the application
+     */
     public void mainMenu(){
         boolean done=false;
         try {
@@ -101,6 +111,9 @@ public class MainMenu {
         }
     }
 
+    /**
+     * adds an user
+     */
     private void addUser(){
         long id=0;
         String username=new String();
@@ -137,6 +150,9 @@ public class MainMenu {
         }
     }
 
+    /**
+     * adds a relationship
+     */
     private void addRelationship(){
         long id=0;
         String username1=new String();
@@ -176,6 +192,9 @@ public class MainMenu {
         }
     }
 
+    /**
+     * removes an user
+     */
     private void removeUser(){
         Scanner scan = new Scanner(System.in);
         System.out.println("Delete by : 1-Id or 2-Username\nYour option: ");
@@ -192,6 +211,9 @@ public class MainMenu {
         }
     }
 
+    /**
+     * removes a relationship
+     */
     private void removeRelationship(){
         Scanner scan = new Scanner(System.in);
         System.out.println("Delete by : 1-Id or 2-By two usernames\nYour option: ");
@@ -208,6 +230,9 @@ public class MainMenu {
         }
     }
 
+    /**
+     * removes a relationship by id
+     */
     private void removeRelationshipById(){
         Scanner scan=new Scanner(System.in);
         System.out.println("Id:");
@@ -226,6 +251,9 @@ public class MainMenu {
         }
     }
 
+    /**
+     * removes a relationship by the corespondent usernames
+     */
     private void removeRelationshipByUsernames(){
         Scanner scan=new Scanner(System.in);
         System.out.println("First Username :");
@@ -247,6 +275,9 @@ public class MainMenu {
         }
     }
 
+    /**
+     * removes an user by id
+     */
     private void removeUserById(){
         Scanner scan=new Scanner(System.in);
         System.out.println("Id:");
@@ -268,6 +299,9 @@ public class MainMenu {
         }
     }
 
+    /**
+     * removes an user by username
+     */
     private void removeUserByUsername(){
         Scanner scan=new Scanner(System.in);
         System.out.println("Username:");
@@ -289,6 +323,9 @@ public class MainMenu {
         }
     }
 
+    /**
+     * set the current state of the class
+     */
     private void setCurrentMode(){
         Scanner scan=new Scanner(System.in);
         System.out.println("Set the current mode : ");
@@ -296,6 +333,9 @@ public class MainMenu {
         System.out.println("Entering to " + currentMode +" mode");
     }
 
+    /**
+     * prints all the users to the console
+     */
     private void printAllUsers(){
         List<User> list=contUser.getAll();
         for (User el: list){
@@ -304,6 +344,9 @@ public class MainMenu {
         }
     }
 
+    /**
+     * prints all the relationship to the console
+     */
     private void printAllRelationships(){
         List<Relationship> list=contRel.getAll();
         for (Relationship el: list){
@@ -311,10 +354,16 @@ public class MainMenu {
         }
     }
 
+    /**
+     * prints the current number of networks to the console
+     */
     private void printNumberOfCommunities(){
         System.out.println("Number of active communities" + contRel.getNumberOfCommunities(contUser.getSize()));
     }
 
+    /**
+     * prints the most sociable network to the console
+     */
     private void printTheMostSociableCommunity(){
         List<String>list= contRel.getTheMostSociableCommunity(contUser.getSize());
         System.out.println("The most sociable communty is formed with : ");

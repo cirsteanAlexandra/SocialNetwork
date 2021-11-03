@@ -27,34 +27,66 @@ public class User extends Entity<Long>{
         friendsList=new ArrayList<String>();
     }
 
+    /**
+     * Gives the username of the user
+     * @return a string that represents the username
+     */
     public String getUsername() {
         return username;
     }
 
+    /**
+     * Updates teh username of an user
+     * @param username the string to be replased with
+     */
     public void setUsername(String username) {
         this.username = username;
     }
 
+    /**
+     * Gives the persone of an user
+     * @return an object of type Persone
+     */
     public Persone getPers() {
         return pers;
     }
 
+    /**
+     * Modifies the Persone of a user
+     * @param pers the persone to  be replaced with
+     */
     public void setPers(Persone pers) {
         this.pers = pers;
     }
 
+    /**
+     * Adds a friend to the friend list
+     * @param userName the username of the user to be added
+     */
     public void addFriend(String userName){
         friendsList.add(userName);
     }
 
+    /**
+     * Removes a friend from the friends list
+     * @param userName the username of the user to be removed
+     */
     public void removeFriend(String userName){
         friendsList.remove(userName);
     }
 
+    /**
+     * Gives the friends list
+     * @return a list of strings with the usernames of yhe friends
+     */
     public List<String> getFriendsList(){
         return friendsList;
     }
 
+    /**
+     * Gives the number of friends
+     * @return the size of the friends list
+     */
     public int getNumberOfFriends(){
         return friendsList.size();
     }

@@ -17,11 +17,19 @@ public class UserFileRepo extends FileRepo<Long,User>{
     public UserFileRepo() {
         initiateRepo();
     }
+    /**
+     * Loads data from files
+     * @param other a list of strings with the name of the files
+     */
     @Override
     public void loadData(String... other){
         loadUsers(other[0]);
         loadFriends(other[1]);
     }
+    /**
+     * Loads all the users from a file
+     * @param filename the name of the file
+     */
     public void loadUsers(String filename){
         try{
             File file=new File(filename);
@@ -37,6 +45,11 @@ public class UserFileRepo extends FileRepo<Long,User>{
             throw(new EntityRepoException("The data cannot be loaded"));
         }
     }
+
+    /**
+     * Loads all the friends from a file
+     * @param filename the name of the file
+     */
     public void loadFriends(String filename)  {
         File file=new File(filename);
         Scanner scan= null;
@@ -58,12 +71,20 @@ public class UserFileRepo extends FileRepo<Long,User>{
         }
     }
 
+    /**
+     * Saves data to files
+     * @param other a list of strings with the name of the files
+     */
     @Override
     public void saveData(String... other){
         saveUsers(other[0]);
         saveFriends(other[1]);
     }
 
+    /**
+     * Saves all the users to a file
+     * @param filename the name of the file
+     */
     public void saveUsers(String filename){
         try {
             FileWriter file=new FileWriter(filename);
@@ -77,6 +98,10 @@ public class UserFileRepo extends FileRepo<Long,User>{
         }
     }
 
+    /**
+     * Saves all the friends to a file
+     * @param filename the name of the file
+     */
     public void saveFriends(String filename){
         try {
             FileWriter file=new FileWriter(filename);
@@ -93,6 +118,11 @@ public class UserFileRepo extends FileRepo<Long,User>{
         }
     }
 
+    /**
+     * Checks if there is any user that has the corespondent username
+     * @param username the username of the user to be found
+     * @return the corespondent object or null otherwise
+     */
     public User getByUserName(String username){
         User user=null;
         for(User use:getAll()){
@@ -102,17 +132,31 @@ public class UserFileRepo extends FileRepo<Long,User>{
         return user;
     }
 
+    /**
+     * Saves an user to repository
+     * @param entity the object to be saved
+     * @return true if it has been saved with succes, flse otherwise
+     */
     @Override
     public boolean save(User entity) {
         if(getByUserName(entity.getUsername())!=null)return false;
         return saveToRepo(entity);
     }
 
+    /**
+     *Generates an id for an entity
+     * @return and id that there isnt in repository
+     */
     @Override
     protected Long generateId() {
         return Generator.generateId(getAllIds());
     }
 
+    /**
+     * Checks if there is any user that has the corespondent username
+     * @param other the username of the user to be found
+     * @return the corespondent object or null otherwise
+     */
     @Override
     public User getByOther(String... other) {
         return getByUserName(other[0]);
