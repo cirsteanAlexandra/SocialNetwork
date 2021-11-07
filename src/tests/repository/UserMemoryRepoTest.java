@@ -1,10 +1,10 @@
 package tests.repository;
 
+import Repository.Memory.MemoryRepo;
+import Repository.Memory.UserMemoryRepo;
 import org.junit.jupiter.api.Test;
 import Domain.*;
-import Repository.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;

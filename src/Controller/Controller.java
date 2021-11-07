@@ -1,7 +1,7 @@
 package Controller;
 
 import Domain.Entity;
-import Repository.FileRepo;
+import Repository.File.FileRepo;
 import Utils.Exceptions.EntityRepoException;
 
 import java.util.List;

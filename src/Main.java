@@ -1,7 +1,9 @@
 import Controller.Controller;
 import Controller.RelationshipController;
 import Controller.UserController;
-import Repository.*;
+import Repository.File.RelationshipFileRepo;
+import Repository.File.UserFileRepo;
+import Repository.Memory.MemoryRepo;
 import Ui.MainMenu;
 
 public class Main {

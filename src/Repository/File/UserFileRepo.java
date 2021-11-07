@@ -1,4 +1,4 @@
-package Repository;
+package Repository.File;
 
 import Domain.Persone;
 import Domain.User;
@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
-public class UserFileRepo extends FileRepo<Long,User>{
+public class UserFileRepo extends FileRepo<Long,User> {
     private String delimiter=new String(",");
     public UserFileRepo() {
         initiateRepo();
@@ -148,7 +148,7 @@ public class UserFileRepo extends FileRepo<Long,User>{
      * @return and id that there isnt in repository
      */
     @Override
-    protected Long generateId() {
+    public Long generateId() {
         return Generator.generateId(getAllIds());
     }
 

@@ -1,9 +1,9 @@
-package Repository;
+package Repository.Memory;
 
 import Domain.Relationship;
 import Utils.Generator;
 
-public class RelationshipMemoryRepo extends  MemoryRepo<Long, Relationship>{
+public class RelationshipMemoryRepo extends MemoryRepo<Long, Relationship> {
 
     public RelationshipMemoryRepo(){initiateRepo();}
 
@@ -23,7 +23,7 @@ public class RelationshipMemoryRepo extends  MemoryRepo<Long, Relationship>{
      * @return and id that there isnt in repository
      */
     @Override
-    protected Long generateId() {
+    public Long generateId() {
         return Generator.generateId(getAllIds());
     }
 

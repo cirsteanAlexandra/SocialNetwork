@@ -1,9 +1,9 @@
-package Repository;
+package Repository.Memory;
 
 import Domain.User;
 import Utils.Generator;
 
-public class UserMemoryRepo extends MemoryRepo<Long, User>{
+public class UserMemoryRepo extends MemoryRepo<Long, User> {
 
     public UserMemoryRepo(){
         initiateRepo();
@@ -39,7 +39,7 @@ public class UserMemoryRepo extends MemoryRepo<Long, User>{
      * @return and id that there isnt in repository
      */
     @Override
-    protected Long generateId() {
+    public Long generateId() {
         return Generator.generateId(getAllIds());
     }
 

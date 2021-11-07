@@ -1,8 +1,8 @@
 package tests.repository;
 
 import Domain.Relationship;
-import Repository.MemoryRepo;
-import Repository.RelationshipMemoryRepo;
+import Repository.Memory.MemoryRepo;
+import Repository.Memory.RelationshipMemoryRepo;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

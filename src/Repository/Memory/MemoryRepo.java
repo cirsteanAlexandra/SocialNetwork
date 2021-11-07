@@ -1,5 +1,6 @@
-package Repository;
+package Repository.Memory;
 import Domain.Entity;
+import Repository.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -121,6 +122,7 @@ public abstract class MemoryRepo<Id, E extends Entity<Id>> implements Repository
      * Gives a list with all the ids store din repository
      * @return a list of ids
      */
+    @Override
     public List<Id> getAllIds(){
         List<Id> listId= new ArrayList<Id>();
         for (E ent: list){
@@ -132,7 +134,7 @@ public abstract class MemoryRepo<Id, E extends Entity<Id>> implements Repository
     /**
      * Generates an id for an entity
      */
-    protected abstract Id generateId();
+    public abstract Id generateId();
 
     /**
      * Checks if it is an object stored with some distinguishable components

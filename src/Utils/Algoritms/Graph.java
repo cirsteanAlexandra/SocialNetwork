@@ -1,7 +1,7 @@
 package Utils.Algoritms;
 
 import Domain.Relationship;
-import Repository.RelationshipFileRepo;
+import Repository.File.RelationshipFileRepo;
 
 import java.util.*;
 
@@ -137,6 +137,7 @@ public class Graph {
                 int max=Collections.max(listPath);
                 if(max>maxim){
                     maxim=max;
+                    System.out.println(maxim);
                     listParticipants=listColours;
                 }
             }

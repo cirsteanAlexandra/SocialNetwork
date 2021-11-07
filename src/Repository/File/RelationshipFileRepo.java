@@ -1,4 +1,4 @@
-package Repository;
+package Repository.File;
 
 import Domain.Relationship;
 import Utils.Exceptions.EntityRepoException;
@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
-public class RelationshipFileRepo extends FileRepo<Long,Relationship>{
+public class RelationshipFileRepo extends FileRepo<Long,Relationship> {
     private String delimiter=new String(",");
 
     public RelationshipFileRepo() {
@@ -88,7 +88,7 @@ public class RelationshipFileRepo extends FileRepo<Long,Relationship>{
      * @return and id that there isnt in repository
      */
     @Override
-    protected Long generateId() {
+    public Long generateId() {
         return Generator.generateId(getAllIds());
     }
 

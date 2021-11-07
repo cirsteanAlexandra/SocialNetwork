@@ -1,7 +1,7 @@
 package Controller;
 
 import Domain.Relationship;
-import Repository.RelationshipFileRepo;
+import Repository.File.RelationshipFileRepo;
 import Utils.Algoritms.Graph;
 
 import java.util.ArrayList;

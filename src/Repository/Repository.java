@@ -46,4 +46,22 @@ public interface Repository<Id, E extends Entity<Id>> {
       * @return a list of entities
       */
      List<E> getAll();
+
+     /**
+      * Gives a list with all the ids store din repository
+      * @return a list of ids
+      */
+     public List<Id> getAllIds();
+
+     /**
+      * Generates an id for an entity
+      */
+      Id generateId();
+
+     /**
+      * Checks if it is an object stored with some distinguishable components
+      * @param other a list of string with distinguishable components
+      * @return the object to be found or null if there is no object with that components
+      */
+     E getByOther(String... other);
 }

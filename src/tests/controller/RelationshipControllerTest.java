@@ -3,7 +3,7 @@ package tests.controller;
 import Controller.Controller;
 import Controller.RelationshipController;
 import Domain.Relationship;
-import Repository.RelationshipFileRepo;
+import Repository.File.RelationshipFileRepo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -198,5 +198,70 @@ class RelationshipControllerTest {
         List<String> list1=new ArrayList<>();
         list1.add("a");list1.add("b");list1.add("d");
         Assertions.assertEquals(cont.getTheMostSociableCommunity(11),list1);
+    }
+
+    @Test
+    void getTheMostSociableCommunity1() {
+        RelationshipFileRepo repo=new RelationshipFileRepo();
+        RelationshipController cont=new RelationshipController(repo);
+        repo.save(new Relationship(1L,"1","2"));
+        repo.save(new Relationship(2L,"2","3"));
+        repo.save(new Relationship(3L,"2","4"));
+        repo.save(new Relationship(4L,"3","6"));
+        repo.save(new Relationship(5L,"4","5"));
+        repo.save(new Relationship(6L,"5","6"));
+        repo.save(new Relationship(7L,"6","7"));
+
+        repo.save(new Relationship(11L,"11","21"));
+        repo.save(new Relationship(21L,"11","31"));
+        repo.save(new Relationship(31L,"11","41"));
+        repo.save(new Relationship(41L,"11","51"));
+        repo.save(new Relationship(51L,"11","61"));
+        repo.save(new Relationship(61L,"11","71"));
+        repo.save(new Relationship(71L,"11","81"));
+        repo.save(new Relationship(81L,"11","91"));
+        repo.save(new Relationship(91L,"11","101"));
+        repo.save(new Relationship(101L,"11","111"));
+
+        List<String> list=new ArrayList<>();
+        list.add("1");list.add("2");list.add("3");list.add("4");list.add("6");list.add("5");list.add("7");
+        Assertions.assertEquals(
+                cont.getTheMostSociableCommunity(7)
+                ,list);
+
+        /*
+        cont.removeById(2L);
+        cont.removeById(4L);
+        List<String> list1=new ArrayList<>();
+        list1.add("a");list1.add("b");list1.add("d");
+        Assertions.assertEquals(cont.getTheMostSociableCommunity(11),list1);
+        */
+    }
+
+    @Test
+    void getTheMostSociableCommunity2() {
+        RelationshipFileRepo repo=new RelationshipFileRepo();
+        RelationshipController cont=new RelationshipController(repo);
+        repo.save(new Relationship(1L,"1","2"));
+        repo.save(new Relationship(2L,"1","3"));
+        repo.save(new Relationship(3L,"1","4"));
+        repo.save(new Relationship(4L,"1","5"));
+        repo.save(new Relationship(5L,"1","6"));
+        repo.save(new Relationship(6L,"1","7"));
+        repo.save(new Relationship(7L,"1","8"));
+        repo.save(new Relationship(8L,"1","9"));
+        repo.save(new Relationship(9L,"1","10"));
+        repo.save(new Relationship(10L,"1","11"));
+        List<String> list=new ArrayList<>();
+        list.add("a");list.add("b");list.add("c");list.add("d");list.add("e");list.add("f");
+        Assertions.assertEquals(cont.getTheMostSociableCommunity(11),list);
+
+        /*
+        cont.removeById(2L);
+        cont.removeById(4L);
+        List<String> list1=new ArrayList<>();
+        list1.add("a");list1.add("b");list1.add("d");
+        Assertions.assertEquals(cont.getTheMostSociableCommunity(11),list1);
+        */
     }
 }
