@@ -1,6 +1,6 @@
-import Controller.Controller;
-import Controller.RelationshipController;
-import Controller.UserController;
+import Controller.OldController.Controller;
+import Controller.OldController.RelationshipController;
+import Controller.OldController.UserController;
 import Repository.File.RelationshipFileRepo;
 import Repository.File.UserFileRepo;
 import Repository.Memory.MemoryRepo;

@@ -1,15 +1,16 @@
-package Controller;
+package Controller.NewController;
 
 import Domain.Relationship;
+import Repository.Db.RelationshipDbRepo;
 import Repository.File.RelationshipFileRepo;
 import Utils.Algoritms.Graph;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RelationshipController extends Controller<Long, Relationship>{
+public class RelationshipController extends Controller<Long, Relationship> {
 
-    public RelationshipController(RelationshipFileRepo rep) {
+    public RelationshipController(RelationshipDbRepo rep) {
         super.repo=rep;
     }
 
@@ -38,7 +39,7 @@ public class RelationshipController extends Controller<Long, Relationship>{
      */
     public int getNumberOfCommunities(int numOfUsers){
         Graph graph= new Graph(numOfUsers,repo.getSize());
-        return graph.numberOfCommunities((RelationshipFileRepo) repo);
+        return graph.numberOfCommunities((RelationshipDbRepo) repo);
     }
 
     /**
@@ -48,23 +49,19 @@ public class RelationshipController extends Controller<Long, Relationship>{
      */
     public List<String> getTheMostSociableCommunity(int numOfUsers){
         Graph graph= new Graph(numOfUsers,repo.getSize());
-        return graph.theMostSociableCommunity((RelationshipFileRepo) repo);
+        return graph.theMostSociableCommunity((RelationshipDbRepo) repo);
     }
 
     /**
      * Loads the data from a file
      * @param filename the file where the data needs to be loaded
      */
-    public void loadData(String filename){
-        repo.loadData(filename);
-    }
+   // public void loadData(String filename){repo.loadData(filename);}
 
     /**
      * Saveds the data from a file
      * @param filename the file where the data needs to be saved
      */
-    public void saveData(String filename){
-        repo.saveData(filename);
-    }
+   // public void saveData(String filename){repo.saveData(filename);}
 
 }

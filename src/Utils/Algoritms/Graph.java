@@ -1,7 +1,7 @@
 package Utils.Algoritms;
 
 import Domain.Relationship;
-import Repository.File.RelationshipFileRepo;
+import Repository.RelationshipRepo;
 
 import java.util.*;
 
@@ -82,7 +82,7 @@ public class Graph {
      * @param repo the network to be searched
      * @return the number of communities
      */
-    public int numberOfCommunities(RelationshipFileRepo repo){
+    public int numberOfCommunities(RelationshipRepo repo){
         convertRepo(repo);
         return numberOfConexComponents();
     }
@@ -92,7 +92,7 @@ public class Graph {
      * @param repo the network to be searched
      * @return a list of usernames tahat take part of that community
      */
-    public List<String> theMostSociableCommunity(RelationshipFileRepo repo){
+    public List<String> theMostSociableCommunity(RelationshipRepo repo){
         Map<String,Integer> listOfVer=convertRepo(repo);
         List<Integer> listOfParticipants=theLongestElementeryRoad();
         return convertIntToUsername(listOfParticipants,listOfVer);
@@ -231,7 +231,7 @@ public class Graph {
      * @param repo the repository to extract the usernames
      * @return a map that contains the username and the corespondent id
      */
-    public Map<String,Integer> convertRepo(RelationshipFileRepo repo){
+    public Map<String,Integer> convertRepo(RelationshipRepo repo){
         Map<String,Integer> listOfVer=convertUsernameToInt(repo);
         fillEdges(repo,listOfVer);
         return listOfVer;
@@ -242,7 +242,7 @@ public class Graph {
      * @param repo the repository to extract the usernames
      * @return the corespondent a list of strings to a list of int
      */
-    public Map<String,Integer> convertUsernameToInt(RelationshipFileRepo repo){
+    public Map<String,Integer> convertUsernameToInt(RelationshipRepo repo){
         Map<String,Integer> listOfVer=new HashMap();
         for(Relationship rel: repo.getAll()){
             if(listOfVer.get(rel.getFirstUserName())==null){
@@ -260,7 +260,7 @@ public class Graph {
      * @param repo the repository to check the usernames
      * @param listOfVer map that contains the username and the corespondent id
      */
-    public void fillEdges(RelationshipFileRepo repo, Map<String,Integer> listOfVer){
+    public void fillEdges(RelationshipRepo repo, Map<String,Integer> listOfVer){
         for(Relationship rel: repo.getAll()){
             addEdge(listOfVer.get(rel.getFirstUserName()),listOfVer.get(rel.getSecondUserName()));
         }

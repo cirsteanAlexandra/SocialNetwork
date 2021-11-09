@@ -1,7 +1,7 @@
 package Ui;
 
-import Controller.RelationshipController;
-import Controller.UserController;
+import Controller.OldController.RelationshipController;
+import Controller.OldController.UserController;
 import Controller.Validator.AbstractValidator;
 import Controller.Validator.ContextValidator;
 import Controller.Validator.Strategy;
@@ -62,8 +62,8 @@ public class MainMenu {
     public void mainMenu(){
         boolean done=false;
         try {
-            contUser.loadData("user.csv", "friend.csv");
-            contRel.loadData("relation.csv");
+            //contUser.loadData("user.csv", "friend.csv");
+           // contRel.loadData("relation.csv");
             while (!done) {
                 printMenu();
                 Scanner scan = new Scanner(System.in);
@@ -103,8 +103,8 @@ public class MainMenu {
                 }
             }
 
-            contUser.saveData("user.csv", "friend.csv");
-            contRel.saveData("relation.csv");
+           // contUser.saveData("user.csv", "friend.csv");
+            //contRel.saveData("relation.csv");
         }
          catch (Exception e) {
              System.out.println(e.getDescription());

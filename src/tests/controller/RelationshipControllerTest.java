@@ -1,7 +1,7 @@
 package tests.controller;
 
-import Controller.Controller;
-import Controller.RelationshipController;
+import Controller.OldController.Controller;
+import Controller.OldController.RelationshipController;
 import Domain.Relationship;
 import Repository.File.RelationshipFileRepo;
 import org.junit.jupiter.api.Assertions;

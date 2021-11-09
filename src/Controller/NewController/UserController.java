@@ -1,13 +1,13 @@
-package Controller;
+package Controller.NewController;
 
 import Domain.User;
-import Repository.File.UserFileRepo;
+import Repository.Db.UserDbRepo;
 
 import java.util.List;
 
-public class UserController extends Controller<Long, User>{
+public class UserController extends Controller<Long, User> {
 
-    public UserController(UserFileRepo rep) {
+    public UserController(UserDbRepo rep) {
         super.repo=rep;
     }
 
@@ -39,22 +39,19 @@ public class UserController extends Controller<Long, User>{
         }
     }
 
+
     /**
      * Loads Data from a file
      * @param fileUser the location where the users are stored
      * @param fileFriend the location where the friends of the users are stored
      */
-    public void loadData(String fileUser,String fileFriend){
-        repo.loadData(fileUser,fileFriend);
-    }
+    //public void loadData(String fileUser,String fileFriend){repo.loadData(fileUser,fileFriend);}
 
     /**
      * Saves data to a file
      * @param fileUser the location where the users need to be stored
      * @param fileFriend the location where the friends of the users need to be stored
      */
-    public void saveData(String fileUser,String fileFriend){
-        repo.saveData(fileUser,fileFriend);
-    }
+    //public void saveData(String fileUser,String fileFriend){repo.saveData(fileUser,fileFriend);}
 
 }

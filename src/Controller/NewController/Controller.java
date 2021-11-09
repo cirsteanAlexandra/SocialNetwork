@@ -1,14 +1,14 @@
-package Controller;
+package Controller.NewController;
 
 import Domain.Entity;
-import Repository.File.FileRepo;
+import Repository.Repository;
 import Utils.Exceptions.EntityRepoException;
 
 import java.util.List;
 
 public abstract class Controller<T,E extends Entity> {
-    FileRepo repo;
-
+    //FileRepo repo;
+    Repository repo;
     /**
      * Adds an entity to the repository
      * @param entity the object to be added, must inherite from Entity object
