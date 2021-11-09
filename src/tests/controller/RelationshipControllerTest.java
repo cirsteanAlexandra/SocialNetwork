@@ -3,7 +3,7 @@ package tests.controller;
 import Controller.OldController.Controller;
 import Controller.OldController.RelationshipController;
 import Domain.Relationship;
-import Repository.File.RelationshipFileRepo;
+import Repository.Memory.RelationshipMemoryRepo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +16,7 @@ class RelationshipControllerTest {
 
     @Test
     void add() {
-        RelationshipFileRepo repo=new RelationshipFileRepo();
+        RelationshipMemoryRepo repo=new RelationshipMemoryRepo();
         Controller cont=new RelationshipController(repo);
         try{
             cont.add(new Relationship(1L,"a","b"));
@@ -28,7 +28,7 @@ class RelationshipControllerTest {
 
     @Test
     void addException() {
-        RelationshipFileRepo repo=new RelationshipFileRepo();
+        RelationshipMemoryRepo repo=new RelationshipMemoryRepo();
         Controller cont=new RelationshipController(repo);
         cont.add(new Relationship(1L,"a","b"));
         try{
@@ -47,7 +47,7 @@ class RelationshipControllerTest {
 
     @Test
     void removeById() {
-        RelationshipFileRepo repo=new RelationshipFileRepo();
+        RelationshipMemoryRepo repo=new RelationshipMemoryRepo();
         Controller cont=new RelationshipController(repo);
         cont.add(new Relationship(1L,"a","b"));
         cont.add(new Relationship(2L,"b","c"));
@@ -62,7 +62,7 @@ class RelationshipControllerTest {
 
     @Test
     void removeByIdException() {
-        RelationshipFileRepo repo=new RelationshipFileRepo();
+        RelationshipMemoryRepo repo=new RelationshipMemoryRepo();
         Controller cont=new RelationshipController(repo);
         cont.add(new Relationship(1L,"a","b"));
         cont.add(new Relationship(2L,"b","c"));
@@ -75,7 +75,7 @@ class RelationshipControllerTest {
     }
     @Test
     void removeByOthers() {
-        RelationshipFileRepo repo=new RelationshipFileRepo();
+        RelationshipMemoryRepo repo=new RelationshipMemoryRepo();
         Controller cont=new RelationshipController(repo);
         cont.add(new Relationship(1L,"a","b"));
         cont.add(new Relationship(2L,"b","c"));
@@ -90,7 +90,7 @@ class RelationshipControllerTest {
 
     @Test
     void removeByOthersException() {
-        RelationshipFileRepo repo=new RelationshipFileRepo();
+        RelationshipMemoryRepo repo=new RelationshipMemoryRepo();
         Controller cont=new RelationshipController(repo);
         cont.add(new Relationship(1L,"a","b"));
         cont.add(new Relationship(2L,"b","c"));
@@ -104,7 +104,7 @@ class RelationshipControllerTest {
 
     @Test
     void getById() {
-        RelationshipFileRepo repo=new RelationshipFileRepo();
+        RelationshipMemoryRepo repo=new RelationshipMemoryRepo();
         RelationshipController cont=new RelationshipController(repo);
         cont.add(new Relationship(1L,"a","b"));
         cont.add(new Relationship(2L,"b","c"));
@@ -116,7 +116,7 @@ class RelationshipControllerTest {
 
     @Test
     void getByOther() {
-        RelationshipFileRepo repo=new RelationshipFileRepo();
+        RelationshipMemoryRepo repo=new RelationshipMemoryRepo();
         RelationshipController cont=new RelationshipController(repo);
         cont.add(new Relationship(1L,"a","b"));
         cont.add(new Relationship(2L,"b","c"));
@@ -127,7 +127,7 @@ class RelationshipControllerTest {
 
     @Test
     void getAll() {
-        RelationshipFileRepo repo=new RelationshipFileRepo();
+        RelationshipMemoryRepo repo=new RelationshipMemoryRepo();
         RelationshipController cont=new RelationshipController(repo);
         cont.add(new Relationship(1L,"a","b"));
         cont.add(new Relationship(2L,"b","c"));
@@ -143,7 +143,7 @@ class RelationshipControllerTest {
 
     @Test
     void deleteAllRelationsByUsername() {
-        RelationshipFileRepo repo=new RelationshipFileRepo();
+        RelationshipMemoryRepo repo=new RelationshipMemoryRepo();
         RelationshipController cont=new RelationshipController(repo);
         cont.add(new Relationship(1L,"a","b"));
         cont.add(new Relationship(2L,"b","c"));
@@ -155,7 +155,7 @@ class RelationshipControllerTest {
 
     @Test
     void getNumberOfCommunities() {
-        RelationshipFileRepo repo=new RelationshipFileRepo();
+        RelationshipMemoryRepo repo=new RelationshipMemoryRepo();
         RelationshipController cont=new RelationshipController(repo);
         repo.save(new Relationship(1L,"a","b"));
         repo.save(new Relationship(2L,"b","c"));
@@ -177,7 +177,7 @@ class RelationshipControllerTest {
 
     @Test
     void getTheMostSociableCommunity() {
-        RelationshipFileRepo repo=new RelationshipFileRepo();
+        RelationshipMemoryRepo repo=new RelationshipMemoryRepo();
         RelationshipController cont=new RelationshipController(repo);
         repo.save(new Relationship(1L,"a","b"));
         repo.save(new Relationship(2L,"b","c"));
@@ -202,7 +202,7 @@ class RelationshipControllerTest {
 
     @Test
     void getTheMostSociableCommunity1() {
-        RelationshipFileRepo repo=new RelationshipFileRepo();
+        RelationshipMemoryRepo repo=new RelationshipMemoryRepo();
         RelationshipController cont=new RelationshipController(repo);
         repo.save(new Relationship(1L,"1","2"));
         repo.save(new Relationship(2L,"2","3"));
@@ -240,7 +240,7 @@ class RelationshipControllerTest {
 
     @Test
     void getTheMostSociableCommunity2() {
-        RelationshipFileRepo repo=new RelationshipFileRepo();
+        RelationshipMemoryRepo repo=new RelationshipMemoryRepo();
         RelationshipController cont=new RelationshipController(repo);
         repo.save(new Relationship(1L,"1","2"));
         repo.save(new Relationship(2L,"1","3"));
@@ -253,7 +253,9 @@ class RelationshipControllerTest {
         repo.save(new Relationship(9L,"1","10"));
         repo.save(new Relationship(10L,"1","11"));
         List<String> list=new ArrayList<>();
-        list.add("a");list.add("b");list.add("c");list.add("d");list.add("e");list.add("f");
+        //list.add("1");list.add("b");list.add("c");list.add("d");list.add("e");list.add("f");
+        list.add("1");list.add("2");list.add("3");list.add("4");list.add("5");list.add("6");list.add("7");
+        list.add("8");list.add("9"); list.add("10"); list.add("11");
         Assertions.assertEquals(cont.getTheMostSociableCommunity(11),list);
 
         /*

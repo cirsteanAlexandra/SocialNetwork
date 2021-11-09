@@ -1,7 +1,7 @@
 package Controller.OldController;
 
 import Domain.Relationship;
-import Repository.File.RelationshipFileRepo;
+import Repository.Memory.RelationshipMemoryRepo;
 import Repository.RelationshipRepo;
 import Utils.Algoritms.Graph;
 
@@ -10,7 +10,7 @@ import java.util.List;
 
 public class RelationshipController extends Controller<Long, Relationship>{
 
-    public RelationshipController(RelationshipFileRepo rep) {
+    public RelationshipController(RelationshipMemoryRepo rep) {
         super.repo=rep;
     }
 

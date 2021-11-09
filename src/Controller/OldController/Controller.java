@@ -1,13 +1,13 @@
 package Controller.OldController;
 
 import Domain.Entity;
-import Repository.File.FileRepo;
+import Repository.Repository;
 import Utils.Exceptions.EntityRepoException;
 
 import java.util.List;
 
 public abstract class Controller<T,E extends Entity> {
-    FileRepo repo;
+    Repository repo;
     //DbRepoId repo;
     /**
      * Adds an entity to the repository

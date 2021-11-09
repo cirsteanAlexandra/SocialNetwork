@@ -1,6 +1,7 @@
 package Repository.File;
 
 import Domain.Relationship;
+import Repository.RelationshipRepo;
 import Utils.Exceptions.EntityRepoException;
 import Utils.Generator;
 
@@ -11,7 +12,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
-public class RelationshipFileRepo extends FileRepo<Long,Relationship> {
+public class RelationshipFileRepo extends FileRepo<Long,Relationship> implements RelationshipRepo {
     private String delimiter=new String(",");
 
     public RelationshipFileRepo() {

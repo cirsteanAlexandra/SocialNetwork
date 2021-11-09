@@ -1,9 +1,10 @@
 package Repository.Memory;
 
 import Domain.Relationship;
+import Repository.RelationshipRepo;
 import Utils.Generator;
 
-public class RelationshipMemoryRepo extends MemoryRepo<Long, Relationship> {
+public class RelationshipMemoryRepo extends MemoryRepo<Long, Relationship> implements RelationshipRepo {
 
     public RelationshipMemoryRepo(){initiateRepo();}
 

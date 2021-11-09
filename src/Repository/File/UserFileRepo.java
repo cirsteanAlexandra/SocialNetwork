@@ -2,6 +2,7 @@ package Repository.File;
 
 import Domain.Persone;
 import Domain.User;
+import Repository.UserRepo;
 import Utils.Exceptions.EntityRepoException;
 import Utils.Generator;
 
@@ -12,7 +13,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
-public class UserFileRepo extends FileRepo<Long,User> {
+public class UserFileRepo extends FileRepo<Long,User> implements UserRepo {
     private String delimiter=new String(",");
     public UserFileRepo() {
         initiateRepo();

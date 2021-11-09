@@ -1,9 +1,10 @@
 package Repository.Memory;
 
 import Domain.User;
+import Repository.UserRepo;
 import Utils.Generator;
 
-public class UserMemoryRepo extends MemoryRepo<Long, User> {
+public class UserMemoryRepo extends MemoryRepo<Long, User> implements UserRepo {
 
     public UserMemoryRepo(){
         initiateRepo();

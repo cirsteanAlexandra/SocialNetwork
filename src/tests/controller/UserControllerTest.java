@@ -3,7 +3,7 @@ package tests.controller;
 import Controller.OldController.UserController;
 import Domain.Persone;
 import Domain.User;
-import Repository.File.UserFileRepo;
+import Repository.Memory.UserMemoryRepo;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -16,7 +16,7 @@ class UserControllerTest {
 
     @Test
     void add() {
-        UserFileRepo repo = new UserFileRepo();
+        UserMemoryRepo repo = new UserMemoryRepo();
         UserController cont = new UserController(repo);
         try {
             cont.add(new User(1L, "maimuta", new Persone("Marieta", "Gazela")));
@@ -29,7 +29,7 @@ class UserControllerTest {
 
     @Test
     void addException() {
-        UserFileRepo repo = new UserFileRepo();
+        UserMemoryRepo repo = new UserMemoryRepo();
         UserController cont = new UserController(repo);
         cont.add(new User(1L, "maimuta", new Persone("Marieta", "Gazela")));
         try {
@@ -51,7 +51,7 @@ class UserControllerTest {
 
     @Test
     void removeById() {
-        UserFileRepo repo = new UserFileRepo();
+        UserMemoryRepo repo = new UserMemoryRepo();
         UserController cont = new UserController(repo);
         cont.add(new User(1L, "maimuta", new Persone("Marieta", "Gazela")));
         try {
@@ -65,7 +65,7 @@ class UserControllerTest {
 
     @Test
     void removeByIdException() {
-        UserFileRepo repo = new UserFileRepo();
+        UserMemoryRepo repo = new UserMemoryRepo();
         UserController cont = new UserController(repo);
         cont.add(new User(1L, "maimuta", new Persone("Marieta", "Gazela")));
         try {
@@ -79,7 +79,7 @@ class UserControllerTest {
 
     @Test
     void removeByOthers() {
-        UserFileRepo repo = new UserFileRepo();
+        UserMemoryRepo repo = new UserMemoryRepo();
         UserController cont = new UserController(repo);
         cont.add(new User(1L, "maimuta", new Persone("Marieta", "Gazela")));
         try {
@@ -93,7 +93,7 @@ class UserControllerTest {
 
     @Test
     void removeByOthersException() {
-        UserFileRepo repo = new UserFileRepo();
+        UserMemoryRepo repo = new UserMemoryRepo();
         UserController cont = new UserController(repo);
         cont.add(new User(1L, "maimuta", new Persone("Marieta", "Gazela")));
         try {
@@ -107,7 +107,7 @@ class UserControllerTest {
 
     @Test
     void getById() {
-        UserFileRepo repo = new UserFileRepo();
+        UserMemoryRepo repo = new UserMemoryRepo();
         UserController cont = new UserController(repo);
         cont.add(new User(1L, "maimuta", new Persone("Marieta", "Gazela")));
         cont.add(new User(2L, "elenamea", new Persone("Marieta", "Gazela")));
@@ -117,7 +117,7 @@ class UserControllerTest {
 
     @Test
     void getByOther() {
-        UserFileRepo repo = new UserFileRepo();
+        UserMemoryRepo repo = new UserMemoryRepo();
         UserController cont = new UserController(repo);
         cont.add(new User(1L, "maimuta", new Persone("Marieta", "Gazela")));
         cont.add(new User(2L, "elenamea", new Persone("Marieta", "Gazela")));
@@ -127,7 +127,7 @@ class UserControllerTest {
 
     @Test
     void getAll() {
-        UserFileRepo repo = new UserFileRepo();
+        UserMemoryRepo repo = new UserMemoryRepo();
         UserController cont = new UserController(repo);
         cont.add(new User(1L, "maimuta", new Persone("Marieta", "Gazela")));
         cont.add(new User(2L, "elenamea", new Persone("Marieta", "Gazela")));
@@ -143,7 +143,7 @@ class UserControllerTest {
 
     @Test
     void getSize() {
-        UserFileRepo repo = new UserFileRepo();
+        UserMemoryRepo repo = new UserMemoryRepo();
         UserController cont = new UserController(repo);
         cont.add(new User(1L, "maimuta", new Persone("Marieta", "Gazela")));
         cont.add(new User(2L, "elenamea", new Persone("Marieta", "Gazela")));
@@ -155,7 +155,7 @@ class UserControllerTest {
 
     @Test
     void addFriend() {
-        UserFileRepo repo = new UserFileRepo();
+        UserMemoryRepo repo = new UserMemoryRepo();
         UserController cont = new UserController(repo);
         cont.add(new User(1L, "maimuta", new Persone("Marieta", "Gazela")));
         cont.add(new User(2L, "elenamea", new Persone("Marieta", "Gazela")));
@@ -167,7 +167,7 @@ class UserControllerTest {
 
     @Test
     void removeFriend() {
-        UserFileRepo repo = new UserFileRepo();
+        UserMemoryRepo repo = new UserMemoryRepo();
         UserController cont = new UserController(repo);
         cont.add(new User(1L, "maimuta", new Persone("Marieta", "Gazela")));
         cont.add(new User(2L, "elenamea", new Persone("Marieta", "Gazela")));
@@ -178,7 +178,7 @@ class UserControllerTest {
 
     @Test
     void removeUserFromAllFriends() {
-        UserFileRepo repo = new UserFileRepo();
+        UserMemoryRepo repo = new UserMemoryRepo();
         UserController cont = new UserController(repo);
         cont.add(new User(1L, "maimuta", new Persone("Marieta", "Gazela")));
         cont.add(new User(2L, "elenamea", new Persone("Marieta", "Gazela")));
