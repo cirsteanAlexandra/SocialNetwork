@@ -119,6 +119,10 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
         return null;
     }
 
+    public void restoreToDefault(){
+        deleteAll();
+    }
+
     @Override
     public abstract Id generateId();
 
@@ -135,11 +139,17 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
         }
     };
 
+    protected int getSizeStatement(ResultSet ps) throws SQLException{
+        int size=0;
+        if (ps.next()) {
+            size = ps.getInt("size");
+        }
+        return size;
+    }
+
     protected abstract void setSaveStatement(PreparedStatement ps,E entity) throws SQLException;
 
     protected abstract E getGetStatement(ResultSet ps) throws SQLException;
-
-    protected abstract int getSizeStatement(ResultSet ps) throws SQLException;
 
     protected abstract E getGetOtherStatement(ResultSet ps) throws SQLException;
 

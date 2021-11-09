@@ -25,7 +25,7 @@ public class UserDbRepo extends DbRepoId<Long, User> implements UserRepo {
         try{
             User user=null;
             user=getByOther(entity.getUsername());
-            if(user!=null)throw new UserRepoException("There is a user with the same username");
+            if(user!=null)throw new UserRepoException("There is an user with the same username");
             else{
                 super.sql= "insert into public.\"Users\" values (?, ?, ?)";
                 return super.save(entity);
@@ -43,9 +43,7 @@ public class UserDbRepo extends DbRepoId<Long, User> implements UserRepo {
         return super.get(id);
     }
 
-    public void restoreToDefault(){
-        deleteAll();
-    }
+
     @Override
     protected void deleteAll(){
         sql= "delete from public.\"Users\" where id_user != 0";
@@ -121,14 +119,6 @@ public class UserDbRepo extends DbRepoId<Long, User> implements UserRepo {
         return user;
     }
 
-    @Override
-    protected int getSizeStatement(ResultSet ps) throws SQLException {
-        int size=0;
-        if (ps.next()) {
-            size = ps.getInt("size");
-        }
-        return size;
-    }
 
     @Override
     protected User getGetOtherStatement(ResultSet ps) throws SQLException {
