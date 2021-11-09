@@ -101,13 +101,6 @@ public class PersoneDbRepo extends DbRepoId<Long, Persone> implements Repository
         return pers;
     }
 
-
-
-    @Override
-    protected Persone getGetOtherStatement(ResultSet ps) throws SQLException {
-        return getGetStatement(ps);
-    }
-
     @Override
     protected List<Long> getAllIdStatement(ResultSet ps) throws SQLException {
         List<Long> listId=new ArrayList<>();

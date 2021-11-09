@@ -120,10 +120,7 @@ public class UserDbRepo extends DbRepoId<Long, User> implements UserRepo {
     }
 
 
-    @Override
-    protected User getGetOtherStatement(ResultSet ps) throws SQLException {
-        return getGetStatement(ps);
-    }
+
 
     @Override
     protected List<Long> getAllIdStatement(ResultSet ps)throws SQLException {

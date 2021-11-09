@@ -151,7 +151,9 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
 
     protected abstract E getGetStatement(ResultSet ps) throws SQLException;
 
-    protected abstract E getGetOtherStatement(ResultSet ps) throws SQLException;
+    protected E getGetOtherStatement(ResultSet ps) throws SQLException{
+        return getGetStatement(ps);
+    };
 
     protected abstract List<Id> getAllIdStatement(ResultSet ps) throws SQLException;
 
