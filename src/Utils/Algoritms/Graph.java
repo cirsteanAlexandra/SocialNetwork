@@ -132,7 +132,7 @@ public class Graph {
                 listColours.add(0);
                 listPath.add(0);
             }
-            if(adiacencyList.get((Integer) i).size()==1){
+            if(adiacencyList.get((Integer) i)!=null && adiacencyList.get((Integer) i).size()==1){
                 bfs((Integer)i,adiacencyList,listColours,listPath);
                 int max=Collections.max(listPath);
                 if(max>maxim){
@@ -167,8 +167,8 @@ public class Graph {
             for(Integer neighb: adiacencyList.get(currentNode)){
                 if(listColours.get(neighb)==0){
                     queue.add(neighb);
-                    listPath.set(neighb,listPath.get(currentNode)+1);
                 }
+                if(listPath.get(currentNode)+1>listPath.get(neighb)) listPath.set(neighb,listPath.get(currentNode)+1);
             }
             listColours.set(currentNode,1);
         }

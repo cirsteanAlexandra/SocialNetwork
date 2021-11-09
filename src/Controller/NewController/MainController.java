@@ -1,10 +1,12 @@
 package Controller.NewController;
 
-import Controller.OldController.RelationshipController;
-import Controller.OldController.UserController;
+
 import Domain.Persone;
 import Domain.Relationship;
 import Domain.User;
+import Utils.Exceptions.EntityRepoException;
+import Utils.Exceptions.RelationshipRepoException;
+import Utils.Exceptions.UserRepoException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,9 +26,12 @@ public class MainController {
 
     public boolean addUser(User user) {
         try {
-            contP.add(user.getPers());
+            Persone pers= contP.getByOther(user.getPers().getFirstName(),user.getPers().getLastName());
+            if(pers==null) contP.add(user.getPers());
+            else user.getPers().setId(pers.getId());
         }
-        catch(Exception e){}
+        catch(Exception e){
+        }
         finally{
             contU.add(user);
         }
@@ -34,14 +39,17 @@ public class MainController {
     }
 
     public boolean addRelationship(Relationship rel) {
+        if(contU.getByOther(rel.getFirstUserName())==null || contU.getByOther(rel.getSecondUserName())==null )
+        throw new EntityRepoException("A relationship is only applied between tow existing users\n");
         contR.add(rel);
         return true;
     }
 
     public boolean removeByUserId(Long id) {
         User user= contU.getById(id);
-        contU.removeById(id);
+        if(user==null) throw new UserRepoException("There isnt an user with that if");
         contR.deleteAllRelationsByUsername(user.getUsername());
+        contU.removeById(id);
         return true;
     }
 
@@ -52,8 +60,9 @@ public class MainController {
 
     public boolean removeUserByUsername(String username) {
         User user= contU.getByOther(username);
-        contU.removeByOthers(username);
+        if(user==null) throw new UserRepoException("There isnt an user with that username");
         contR.deleteAllRelationsByUsername(user.getUsername());
+        contU.removeByOthers(username);
         return true;
     }
 
@@ -65,6 +74,7 @@ public class MainController {
 
     public User getUserById(Long id) {
         User user= contU.getById(id);
+        if(user==null) throw new UserRepoException("There isnt an user with that id");
         Persone pers=contP.getById(user.getPers().getId());
         user.setPers(pers);
         return user;
@@ -72,11 +82,13 @@ public class MainController {
 
     public Relationship getRelationshipById(Long id) {
         Relationship rel = contR.getById(id);
+        if(rel==null) throw new RelationshipRepoException("There isnt a relationship with that id");
         return rel;
     }
 
     public User getUserByOther(String username) {
         User user= contU.getByOther(username);
+        if(user==null) throw new UserRepoException("There isnt an user with that username");
         Persone pers=contP.getById(user.getPers().getId());
         user.setPers(pers);
         return user;
@@ -84,26 +96,32 @@ public class MainController {
 
     public Relationship getRelationshipByOther(String username1,String username2) {
         Relationship rel = contR.getByOther(username1,username2);
+        if(rel==null) throw new RelationshipRepoException("There isnt a relationship with that usernames");
         return rel;
     }
 
     public List<User> getAllUsers() {
         Map<String,User> listU= new HashMap<>();
+        ///loading users
         for(User el:contU.getAll()){
             listU.put(el.getUsername(),el);
         }
+        ///loading persones
         for (Map.Entry<String,User> el: listU.entrySet()){
             Persone pers=contP.getById(el.getValue().getPers().getId());
             el.getValue().setPers(pers);
         }
+        ///loading friends
         for(Relationship rel: contR.getAll()){
             listU.get(rel.getFirstUserName()).addFriend(rel.getSecondUserName());
             listU.get(rel.getSecondUserName()).addFriend(rel.getFirstUserName());
         }
+        ///creating list of users
         List<User> list= new ArrayList<>();
         for (Map.Entry<String,User> el: listU.entrySet()){
             list.add(el.getValue());
         }
+
         return list;
     }
 
@@ -117,5 +135,13 @@ public class MainController {
 
     public int getRelationshipSize() {
         return contR.getSize();
+    }
+
+    public int getNumberOfCommunities(){
+        return contR.getNumberOfCommunities(contU.getSize());
+    }
+
+    public List<String> getTheMostSociableCommunity(){
+        return contR.getTheMostSociableCommunity(contU.getSize());
     }
 }

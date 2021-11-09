@@ -22,6 +22,7 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
 
     @Override
     public boolean save(E entity) {
+        System.out.println(entity.toString());
         try (Connection connection = DriverManager.getConnection(url, username, password);
              PreparedStatement ps = connection.prepareStatement(sql)) {
              setSaveStatement(ps,entity);

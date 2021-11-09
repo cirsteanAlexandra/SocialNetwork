@@ -1,4 +1,4 @@
-package Ui;
+package Ui.OldUi;
 
 import Controller.OldController.RelationshipController;
 import Controller.OldController.UserController;

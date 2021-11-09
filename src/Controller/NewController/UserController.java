@@ -1,13 +1,13 @@
 package Controller.NewController;
 
 import Domain.User;
-import Repository.Db.UserDbRepo;
+import Repository.UserRepo;
 
 import java.util.List;
 
 public class UserController extends Controller<Long, User> {
 
-    public UserController(UserDbRepo rep) {
+    public UserController(UserRepo rep) {
         super.repo=rep;
     }
 

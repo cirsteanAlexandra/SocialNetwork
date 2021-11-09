@@ -62,8 +62,8 @@ public abstract class AbstractValidator<E extends Entity> implements Validator<E
     public boolean checkName(String name){
         if(name=="") throw new PersoneException("The first name and the last name shouldn't be empty\n");
         for (int i=0;i<name.length();i++){
-            if (!(name.charAt(i)>='a' && name.charAt(i)<='z')||
-                    (name.charAt(i)>='A' && name.charAt(i)<='Z') || (name.charAt(i)=='-'))
+            if (!((name.charAt(i)>='a' && name.charAt(i)<='z')||
+                    (name.charAt(i)>='A' && name.charAt(i)<='Z') || (name.charAt(i)=='-')))
                 throw new PersoneException("The first name and the last name should contain english characters\n");
             return false;
         }
