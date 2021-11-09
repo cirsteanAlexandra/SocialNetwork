@@ -2,7 +2,7 @@ package Domain;
 
 import java.util.Objects;
 
-public class Persone extends Entity {
+public class Persone extends Entity<Long> {
     String firstName; //prenume
     String lastName;  //nume de familie
 
@@ -10,6 +10,12 @@ public class Persone extends Entity {
     public Persone(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    public Persone(Long id,String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        setId(id);
     }
 
     /**

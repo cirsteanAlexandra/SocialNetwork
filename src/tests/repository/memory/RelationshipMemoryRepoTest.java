@@ -1,4 +1,4 @@
-package tests.repository;
+package tests.repository.memory;
 
 import Domain.Relationship;
 import Repository.Memory.MemoryRepo;

@@ -1,4 +1,4 @@
-package tests.repository;
+package tests.repository.memory;
 
 import Repository.Memory.MemoryRepo;
 import Repository.Memory.UserMemoryRepo;
