@@ -13,13 +13,6 @@ public class Main {
 
     public static void main(String[] args) {
 	// write your code here
-        //MemoryRepo repoU= new UserFileRepo();
-        //MemoryRepo repoR= new RelationshipFileRepo();
-        //Controller contU=new UserController((UserFileRepo) repoU);
-        //Controller contR= new RelationshipController((RelationshipFileRepo)repoR);
-        //System.out.println(contU.getClass());
-        //MainMenu ui= new MainMenu((UserController) contU,(RelationshipController) contR);
-        //ui.mainMenu();
 
         UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/ReteaDeSocializare","postgres","852456");
         PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/ReteaDeSocializare","postgres","852456");
