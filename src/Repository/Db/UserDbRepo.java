@@ -3,7 +3,6 @@ package Repository.Db;
 import Domain.Persone;
 import Domain.User;
 import Repository.UserRepo;
-import Utils.Exceptions.EntityRepoException;
 import Utils.Exceptions.UserRepoException;
 import Utils.Generator;
 
@@ -22,19 +21,14 @@ public class UserDbRepo extends DbRepoId<Long, User> implements UserRepo {
     @Override
     public boolean save(User entity) {
         if(entity.getId()==null) entity.setId(generateId());
-        try{
-            User user=null;
+            User user=null,user1=null;
             user=getByOther(entity.getUsername());
-            if(user!=null)throw new UserRepoException("There is an user with the same username");
+            user1=get(entity.getId());
+            if(user!=null || user1!=null)throw new UserRepoException("There is an user with the same username");
             else{
                 super.sql= "insert into public.\"Users\" values (?, ?, ?)";
                 return super.save(entity);
             }
-        }
-        catch(EntityRepoException e){
-            super.sql= "insert into public.\"Users\" values (?, ?, ?)";
-            return super.save(entity);
-        }
     }
 
     @Override

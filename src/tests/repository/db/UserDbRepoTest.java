@@ -2,9 +2,11 @@ package tests.repository.db;
 
 import Domain.Persone;
 import Domain.User;
+import Repository.Db.PersoneDbRepo;
 import Repository.Db.UserDbRepo;
 import Repository.UserRepo;
 import Utils.Exceptions.EntityRepoException;
+import Utils.Exceptions.UserRepoException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,6 +20,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class UserDbRepoTest {
     @BeforeEach
     void setUp(){
+        PersoneDbRepo repoP=new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
+        repoP.save(new Persone(1L,"wewe","weew"));
+        repoP.save(new Persone(2L,"weew","erui"));
+
         UserRepo repo=new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
         repo.save(new User(1L,"a",new Persone(1L,"wewe","weew")));
         repo.save(new User(2L,"biscuit",new Persone(1L,"wewe","weew")));
@@ -26,8 +32,12 @@ class UserDbRepoTest {
 
     @AfterEach
     void tearDown(){
+
         UserDbRepo repo=new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
         repo.restoreToDefault();
+
+        PersoneDbRepo repoP=new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
+        repoP.restoreToDefault();
     }
 
     @Test
@@ -60,11 +70,12 @@ class UserDbRepoTest {
     void saveExistentId(){
         UserRepo repo = new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "852456");
         try{
-            assertTrue(repo.save(new User(1L,"acadeaua",new Persone(1L,"wewe","weew"))));
-        }catch(EntityRepoException e){
+            assertTrue(
+                    repo.save(new User(1L,"acadeaua",new Persone(1L,"wewe","weew"))));
+        }catch(UserRepoException e){
             assertTrue(true);
         }
-        assertTrue(repo.getSize()==3);
+        assertEquals(repo.getSize(),3);
     }
 
     @Test
@@ -73,6 +84,18 @@ class UserDbRepoTest {
         try{
             assertTrue(
                     repo.save(new User(5L,"a",new Persone(1L,"wewe","weew"))));
+        }catch(Exception e){
+            assertTrue(true);
+        }
+        assertEquals(repo.getSize(),3);
+    }
+
+    @Test
+    void saveExistentIdAndUsername(){
+        UserRepo repo = new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "852456");
+        try{
+            assertTrue(
+                    repo.save(new User(1L,"a",new Persone(2L,"wewe","weew"))));
         }catch(Exception e){
             assertTrue(true);
         }

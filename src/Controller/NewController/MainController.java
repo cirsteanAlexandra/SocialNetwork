@@ -50,6 +50,7 @@ public class MainController {
         if(user==null) throw new UserRepoException("There isnt an user with that if");
         contR.deleteAllRelationsByUsername(user.getUsername());
         contU.removeById(id);
+        removeSinglePersoneFromUsers(user.getPers());
         return true;
     }
 
@@ -63,7 +64,17 @@ public class MainController {
         if(user==null) throw new UserRepoException("There isnt an user with that username");
         contR.deleteAllRelationsByUsername(user.getUsername());
         contU.removeByOthers(username);
+        removeSinglePersoneFromUsers(user.getPers());
         return true;
+    }
+
+    private boolean removeSinglePersoneFromUsers(Persone persone){
+        boolean found=false;
+        for(User user: contU.getAll()){
+            if(user.getPers().equals(persone))found=true;
+        }
+        if(!found) contP.removeById(persone.getId());
+        return found;
     }
 
     public boolean removeRelationshipByUsernames(String username1,String username2) {
@@ -113,8 +124,15 @@ public class MainController {
         }
         ///loading friends
         for(Relationship rel: contR.getAll()){
-            listU.get(rel.getFirstUserName()).addFriend(rel.getSecondUserName());
-            listU.get(rel.getSecondUserName()).addFriend(rel.getFirstUserName());
+            //for the first user
+            User user1=listU.get(rel.getFirstUserName());
+            user1.addFriend(rel.getSecondUserName());
+            listU.put(user1.getUsername(),user1);
+
+            //for the second user
+            User user2=listU.get(rel.getSecondUserName());
+            user2.addFriend(rel.getFirstUserName());
+            listU.put(user2.getUsername(),user2);
         }
         ///creating list of users
         List<User> list= new ArrayList<>();

@@ -128,17 +128,21 @@ public class Graph {
         for (int i=1;i<=numberOfVertices;i++){
             List<Integer> listColours= new ArrayList<>(numberOfVertices);
             List<Integer> listPath= new ArrayList<>(numberOfVertices);
+            List<Integer> listParent= new ArrayList<>(numberOfVertices);
             for(Integer j=0;j<=numberOfVertices;j++) {
                 listColours.add(0);
                 listPath.add(0);
+                listParent.add(0);
             }
             if(adiacencyList.get((Integer) i)!=null && adiacencyList.get((Integer) i).size()==1){
-                bfs((Integer)i,adiacencyList,listColours,listPath);
+                bfs((Integer)i,adiacencyList,listColours,listPath,listParent);
                 int max=Collections.max(listPath);
                 if(max>maxim){
                     maxim=max;
-                    System.out.println(maxim);
+                    //System.out.println(maxim);
                     listParticipants=listColours;
+                    //System.out.println(listParticipants);
+                    //System.out.println(listParent);
                 }
             }
         }
@@ -169,6 +173,25 @@ public class Graph {
                     queue.add(neighb);
                 }
                 if(listPath.get(currentNode)+1>listPath.get(neighb)) listPath.set(neighb,listPath.get(currentNode)+1);
+            }
+            listColours.set(currentNode,1);
+        }
+    }
+
+    public void bfs(Integer node,Map<Integer,List<Integer>> adiacencyList,List<Integer> listColours,List<Integer> listPath,List<Integer>listParent){
+        Queue<Integer> queue= new LinkedList<>();
+        queue.add(node);
+        listPath.set(node,0);
+        while(!queue.isEmpty()){
+            Integer currentNode=queue.remove();
+            for(Integer neighb: adiacencyList.get(currentNode)){
+                if(listColours.get(neighb)==0){
+                    queue.add(neighb);
+                }
+                if(listPath.get(currentNode)+1>listPath.get(neighb)){
+                    listPath.set(neighb,listPath.get(currentNode)+1);
+                    if(listColours.get(neighb)==0)listParent.set(neighb,currentNode);
+                }
             }
             listColours.set(currentNode,1);
         }

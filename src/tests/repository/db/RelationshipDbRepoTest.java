@@ -1,7 +1,12 @@
 package tests.repository.db;
 
+import Domain.Persone;
 import Domain.Relationship;
+import Domain.User;
+import Repository.Db.PersoneDbRepo;
 import Repository.Db.RelationshipDbRepo;
+import Repository.Db.UserDbRepo;
+import Repository.UserRepo;
 import Utils.Exceptions.EntityRepoException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,6 +20,21 @@ import static org.junit.jupiter.api.Assertions.*;
 class RelationshipDbRepoTest {
     @BeforeEach
     void setUp(){
+        PersoneDbRepo repoP=new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
+        repoP.save(new Persone(1L,"wewe","weew"));
+        repoP.save(new Persone(2L,"weew","erui"));
+
+        UserRepo repoU=new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
+        repoU.save(new User(1L,"mama",new Persone(1L,"wewe","weew")));
+        repoU.save(new User(2L,"mea",new Persone(1L,"wewe","weew")));
+        repoU.save(new User(3L,"biscuit",new Persone(1L,"wewe","weew")));
+        repoU.save(new User(4L,"macaron",new Persone(1L,"wewe","weew")));
+        repoU.save(new User(5L,"belea",new Persone(1L,"wewe","weew")));
+        repoU.save(new User(6L,"noua",new Persone(1L,"wewe","weew")));
+        repoU.save(new User(7L,"blah",new Persone(1L,"wewe","weew")));
+        repoU.save(new User(8L,"meh",new Persone(1L,"wewe","weew")));
+        repoU.save(new User(9L,"vespuci",new Persone(1L,"wewe","weew")));
+        repoU.save(new User(10L,"acadea",new Persone(1L,"wewe","weew")));
         RelationshipDbRepo repo=new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
         repo.save(new Relationship(1L,"mama","mea"));
         repo.save(new Relationship(2L,"biscuit","mama"));
@@ -25,6 +45,13 @@ class RelationshipDbRepoTest {
     void tearDown(){
         RelationshipDbRepo repo=new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
         repo.restoreToDefault();
+
+        UserDbRepo repoU=new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
+        repoU.restoreToDefault();
+
+        PersoneDbRepo repoP=new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
+        repoP.restoreToDefault();
+
     }
 
     @Test

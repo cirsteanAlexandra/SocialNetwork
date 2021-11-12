@@ -1,4 +1,4 @@
-package tests.controller;
+package tests.controller.old;
 
 import Controller.OldController.Controller;
 import Controller.OldController.RelationshipController;
