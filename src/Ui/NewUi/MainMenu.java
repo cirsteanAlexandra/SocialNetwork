@@ -30,6 +30,9 @@ public class MainMenu {
      */
     private Map<Integer,String> generateOptions(){
         Map<Integer,String> options= new HashMap();
+        /* 
+        am scris un comentariu
+        */
         options.put(1,"- to add a user");
         options.put(2,"- to add a a relationship between two users");
         options.put(3,"- to remove a user");
