@@ -39,19 +39,4 @@ public class UserController extends Controller<Long, User> {
         }
     }
 
-
-    /**
-     * Loads Data from a file
-     * @param fileUser the location where the users are stored
-     * @param fileFriend the location where the friends of the users are stored
-     */
-    //public void loadData(String fileUser,String fileFriend){repo.loadData(fileUser,fileFriend);}
-
-    /**
-     * Saves data to a file
-     * @param fileUser the location where the users need to be stored
-     * @param fileFriend the location where the friends of the users need to be stored
-     */
-    //public void saveData(String fileUser,String fileFriend){repo.saveData(fileUser,fileFriend);}
-
 }

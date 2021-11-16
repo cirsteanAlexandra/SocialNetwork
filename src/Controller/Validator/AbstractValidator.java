@@ -1,8 +1,8 @@
 package Controller.Validator;
 
 import Domain.Entity;
+import Utils.Exceptions.EntityException;
 import Utils.Exceptions.PersoneException;
-import Utils.Exceptions.UserException;
 
 public abstract class AbstractValidator<E extends Entity> implements Validator<E> {
     protected String listOfErrors;
@@ -22,9 +22,9 @@ public abstract class AbstractValidator<E extends Entity> implements Validator<E
      */
     public boolean checkUserName(String username){
         if(username=="")
-            throw new UserException("Username shoundn't be empty\n");
+            throw new EntityException("Username shoundn't be empty\n");
         if(checkUserNameChar(username)==false)
-            throw new UserException("Username shound contain english letters or/and digits\n");
+            throw new EntityException("Username shound contain english letters or/and digits\n");
         return true;
     }
 
@@ -50,7 +50,7 @@ public abstract class AbstractValidator<E extends Entity> implements Validator<E
      */
     public boolean checkId(Long id){
         if(id<0)
-            throw new UserException("Id should be a pozitive number\n");
+            throw new EntityException("Id should be a pozitive number\n");
         return true;
     }
 

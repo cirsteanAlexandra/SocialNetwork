@@ -1,12 +1,13 @@
 package tests.controller.validator;
 
-import Domain.Persone;
 import Controller.Validator.PersoneValidator;
 import Controller.Validator.Validator;
-import Utils.Exceptions.Exception;
+import Domain.Persone;
+import Utils.Exceptions.PersoneException;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class PersoneValidatorTest {
 
@@ -24,7 +25,7 @@ class PersoneValidatorTest {
         try {
             vali.validate(pers);
         }
-        catch(Exception e){
+        catch(PersoneException e){
             assertTrue(e.getCode()==1);
             assertEquals(e.getDescription(),"The first name and the last name shouldn't be empty\n");
         }
@@ -33,7 +34,7 @@ class PersoneValidatorTest {
         try {
             vali.validate(pers1);
         }
-        catch(Exception e){
+        catch(PersoneException e){
             assertTrue(e.getCode()==1);
             assertEquals(e.getDescription(),"The first name and the last name shouldn't be empty\n");
         }
@@ -42,7 +43,7 @@ class PersoneValidatorTest {
         try {
             vali.validate(pers2);
         }
-        catch(Exception e){
+        catch(PersoneException e){
             assertTrue(e.getCode()==1);
             assertEquals(e.getDescription(),"The first name and the last name shouldn't be empty\n");
         }
@@ -55,7 +56,7 @@ class PersoneValidatorTest {
         try {
             vali.validate(pers);
         }
-        catch(Exception e){
+        catch(PersoneException e){
             assertTrue(e.getCode()==1);
             assertEquals(e.getDescription(),"The first name and the last name should contain english characters");
         }
@@ -64,7 +65,7 @@ class PersoneValidatorTest {
         try {
             vali.validate(pers1);
         }
-        catch(Exception e){
+        catch(PersoneException e){
             assertTrue(e.getCode()==1);
             assertEquals(e.getDescription(),"The first name and the last name should contain english characters");
         }
@@ -73,7 +74,7 @@ class PersoneValidatorTest {
         try {
             vali.validate(pers1);
         }
-        catch(Exception e){
+        catch(PersoneException e){
             assertTrue(e.getCode()==1);
             assertEquals(e.getDescription(),"The first name and the last name should contain english characters");
         }

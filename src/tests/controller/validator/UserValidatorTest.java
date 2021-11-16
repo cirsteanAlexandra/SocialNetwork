@@ -1,13 +1,15 @@
 package tests.controller.validator;
 
-import Domain.Persone;
-import Domain.User;
 import Controller.Validator.UserValidator;
 import Controller.Validator.Validator;
+import Domain.Persone;
+import Domain.User;
 import Utils.Exceptions.Exception;
+import Utils.Exceptions.UserException;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class UserValidatorTest {
 
@@ -21,8 +23,8 @@ class UserValidatorTest {
         try{
             vali.validate(user1);
         }
-        catch (Exception e){
-            assertTrue(e.getCode()==2);
+        catch (UserException e){
+            assertEquals(e.getCode(),2);
             assertEquals(e.getDescription(),"The first name and the last name shouldn't be empty\nUsername shoundn't be empty\n");
         }
 
@@ -39,7 +41,7 @@ class UserValidatorTest {
             vali.validate(user1);
         }
         catch (Exception e){
-            assertTrue(e.getCode()==2);
+            assertEquals(e.getCode(),2);
             assertEquals(e.getDescription(),"Username shound contain english letters or/and digits\n");
         }
 
@@ -47,8 +49,8 @@ class UserValidatorTest {
         try{
             vali.validate(user2);
         }
-        catch (Exception e){
-            assertTrue(e.getCode()==2);
+        catch (UserException e){
+            assertEquals(e.getCode(),2);
             assertEquals(e.getDescription(),"Username shoundn't be empty\n");
         }
     }
@@ -61,8 +63,8 @@ class UserValidatorTest {
         try{
             vali.validate(user);
         }
-        catch (Exception e){
-            assertTrue(e.getCode()==2);
+        catch (UserException e){
+            assertEquals(e.getCode(),2);
             assertEquals(e.getDescription(),"Id should be a pozitive number\n");
         }
     }

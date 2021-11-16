@@ -1,6 +1,6 @@
 package Utils.Exceptions;
 
-public class UserRepoException extends  Exception{
+public class UserRepoException extends UserException{
     public UserRepoException(String description) {
         super(4,description);
     }

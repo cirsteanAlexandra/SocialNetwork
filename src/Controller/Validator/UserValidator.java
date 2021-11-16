@@ -8,17 +8,16 @@ import Utils.Exceptions.UserException;
 public class UserValidator extends AbstractValidator<User>{
 
     public UserValidator(){
-        listOfErrors= new String();
     }
 
     /**
      * Checks is an user has valid components
      * @param entity the object to be verified
      * @return true if it is valid
-     * Throws UserException if the usernames/id/names of the persone are not valid
+     * @throws UserException if the usernames/id/names of the person are not valid
      */
     @Override
-    public boolean validate(User entity) {
+    public boolean validate(User entity) throws UserException {
         listOfErrors=new String();
         try{
             if(entity.getId()!=null){
@@ -29,8 +28,6 @@ public class UserValidator extends AbstractValidator<User>{
             listOfErrors+=e.getDescription();
         }
         try{
-            //PersoneValidator vali=new PersoneValidator();
-            //vali.validate(entity.getPers());
             checkName(entity.getPers().getFirstName());
             checkName(entity.getPers().getLastName());
         }
@@ -43,7 +40,6 @@ public class UserValidator extends AbstractValidator<User>{
         catch (Exception e){
             listOfErrors+=e.getDescription();
         }
-        //System.out.println(listOfErrors);
         if(!listOfErrors.isEmpty()) throw new UserException(listOfErrors);
         return true;
     }

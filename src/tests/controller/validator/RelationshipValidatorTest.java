@@ -5,9 +5,11 @@ import Controller.Validator.ContextValidator;
 import Controller.Validator.Strategy;
 import Domain.Relationship;
 import Utils.Exceptions.Exception;
+import Utils.Exceptions.RelationshipException;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RelationshipValidatorTest {
 
@@ -23,9 +25,10 @@ class RelationshipValidatorTest {
         Relationship rel2=new Relationship(-1L,"acadea","melancolie");
         try{
             vali.validate(rel2);
-        }catch(Exception e){
-            assertTrue(e.getCode()==3);
+        }catch(RelationshipException e){
             assertEquals(e.getDescription(),"Id should be a pozitive number\n");
+            assertEquals(e.getCode(),3);
+
         }
     }
 
@@ -42,7 +45,7 @@ class RelationshipValidatorTest {
         Relationship rel1=new Relationship("acadea&","melancolie");
         try{
             vali.validate(rel1);
-        }catch(Exception e){
+        }catch(RelationshipException e){
             assertTrue(e.getCode()==3);
         }
     }
@@ -60,7 +63,7 @@ class RelationshipValidatorTest {
         Relationship rel1=new Relationship("acadea","melancolie$3");
         try{
             vali.validate(rel1);
-        }catch(Exception e){
+        }catch(RelationshipException e){
             assertTrue(e.getCode()==3);
         }
     }

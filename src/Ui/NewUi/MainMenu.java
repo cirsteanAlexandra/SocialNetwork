@@ -9,7 +9,6 @@ import Domain.Persone;
 import Domain.Relationship;
 import Domain.User;
 import Utils.Exceptions.Exception;
-import Utils.Exceptions.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -59,8 +58,6 @@ public class MainMenu {
     public void mainMenu(){
         boolean done=false;
         try {
-            //contUser.loadData("user.csv", "friend.csv");
-           // contRel.loadData("relation.csv");
             while (!done) {
                 printMenu();
                 Scanner scan = new Scanner(System.in);
@@ -99,9 +96,6 @@ public class MainMenu {
                         System.out.println("Invalid Option");
                 }
             }
-
-           // contUser.saveData("user.csv", "friend.csv");
-            //contRel.saveData("relation.csv");
         }
          catch (Exception e) {
              System.out.println(e.getDescription());
@@ -113,9 +107,9 @@ public class MainMenu {
      */
     private void addUser(){
         long id=0;
-        String username=new String();
-        String firstName=new String();
-        String lastName=new String();
+        String username;
+        String firstName;
+        String lastName;
         Scanner scan = new Scanner(System.in);
         System.out.println("Provide all the necesary information: ");
         if(currentMode.equals("admin")){
@@ -140,12 +134,10 @@ public class MainMenu {
             cont.addUser(user);
             System.out.println("User created succesfully");
         }
-        catch(UserException e){
+        catch(Exception e){
             System.out.println(e.getDescription());
         }
-        catch(UserRepoException e){
-            System.out.println(e.getDescription());
-        }
+
     }
 
     /**
@@ -153,8 +145,7 @@ public class MainMenu {
      */
     private void addRelationship(){
         long id=0;
-        String username1=new String();
-        String username2=new String();
+        String username1,username2;
         Scanner scan = new Scanner(System.in);
         System.out.println("Provide all the necesary information: ");
         if(currentMode.equals("admin")){
@@ -175,15 +166,7 @@ public class MainMenu {
             cont.addRelationship(rel);
             System.out.println("Relationship created succesfully");
         }
-        catch(RelationshipException e){
-            System.out.println(e.getDescription());
-        }
-        catch(RelationshipRepoException e){
-            System.out.println(e.getDescription());
-        }
-        catch(EntityRepoException e){
-            System.out.println(e.getDescription());
-        }
+
         catch(Exception e){
             System.out.println(e.getDescription());
         }
@@ -240,9 +223,6 @@ public class MainMenu {
             cont.removeByRelationshipId(id);
             System.out.println("Relationship removed with succes");
         }
-        catch (RelationshipRepoException e){
-            System.out.println(e.getDescription());
-        }
         catch(Exception e){
             System.out.println(e.getDescription());
         }
@@ -264,9 +244,6 @@ public class MainMenu {
             cont.removeRelationshipByUsernames(username1,username2);
             System.out.println("Relationship removed with succes");
         }
-        catch (RelationshipRepoException e){
-            System.out.println(e.getDescription());
-        }
         catch(Exception e){
             System.out.println(e.getDescription());
         }
@@ -286,12 +263,6 @@ public class MainMenu {
             cont.removeByUserId(id);
             System.out.println("User removed with succes");
         }
-        catch(UserRepoException e){
-            System.out.println(e.getDescription());
-        }
-        catch (RelationshipRepoException e){
-            System.out.println(e.getDescription());
-        }
         catch(Exception e){
             System.out.println(e.getDescription());
         }
@@ -309,12 +280,6 @@ public class MainMenu {
             vali.checkUserName(username);
             cont.removeUserByUsername(username);
             System.out.println("User removed with succes");
-        }
-        catch(UserRepoException e){
-            System.out.println(e.getDescription());
-        }
-        catch (RelationshipRepoException e){
-            System.out.println(e.getDescription());
         }
         catch(Exception e){
             System.out.println(e.getDescription());

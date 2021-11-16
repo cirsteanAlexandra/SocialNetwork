@@ -14,7 +14,7 @@ public interface Repository<Id, E extends Entity<Id>> {
      boolean save(E entity);
 
      /**
-      * Retrives the corespondent object of that id
+      * Retrives the corespondent object with that id
       * @param id the id of the object to be found
       * @return the object that has that id or null if there is no object with that id
       */
@@ -42,7 +42,7 @@ public interface Repository<Id, E extends Entity<Id>> {
      int getSize();
 
      /**
-      * Gives a list with the entities stored in repository
+      * Gives a list with all the entities stored in repository
       * @return a list of entities
       */
      List<E> getAll();

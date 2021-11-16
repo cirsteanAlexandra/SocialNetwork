@@ -142,10 +142,7 @@ public class MainMenu {
             contUser.add(user);
             System.out.println("User created succesfully");
         }
-        catch(UserException e){
-            System.out.println(e.getDescription());
-        }
-        catch(UserRepoException e){
+        catch(Exception e){
             System.out.println(e.getDescription());
         }
     }
@@ -180,12 +177,6 @@ public class MainMenu {
             contUser.addFriend(contUser.getByOther(username1),username2);
             contUser.addFriend(contUser.getByOther(username2),username1);
             System.out.println("Relationship created succesfully");
-        }
-        catch(RelationshipException e){
-            System.out.println(e.getDescription());
-        }
-        catch(RelationshipRepoException e){
-            System.out.println(e.getDescription());
         }
         catch(EntityRepoException e){
             System.out.println(e.getDescription());

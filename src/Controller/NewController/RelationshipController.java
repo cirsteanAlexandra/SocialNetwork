@@ -2,8 +2,8 @@ package Controller.NewController;
 
 import Domain.Relationship;
 import Repository.Db.RelationshipDbRepo;
-import Repository.File.RelationshipFileRepo;
 import Utils.Algoritms.Graph;
+import Utils.Exceptions.EntityException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +18,7 @@ public class RelationshipController extends Controller<Long, Relationship> {
      * Deletes all the relationships that contains the username
      * @param username the string to be used to delete those relationships
      * @return the number of relationships deleted
+     * @throws EntityException if there is an error from the repository
      */
     public int deleteAllRelationsByUsername(String username){
         List<Long> listId= new ArrayList<>();
@@ -35,7 +36,8 @@ public class RelationshipController extends Controller<Long, Relationship> {
     /**
      * Gives the number of network
      * @param numOfUsers the current number of the users in repository
-     * @return the number of current cummunities
+     * @return the number of current communities
+     * @throws EntityException if there is an error from the repository
      */
     public int getNumberOfCommunities(int numOfUsers){
         Graph graph= new Graph(numOfUsers,repo.getSize());
@@ -46,22 +48,12 @@ public class RelationshipController extends Controller<Long, Relationship> {
      * Gives the most sociable community
      * @param numOfUsers the current number of the users in repository
      * @return a list with usernames of that users that belong to that community
+     * @throws EntityException if there is an error from the repository
      */
     public List<String> getTheMostSociableCommunity(int numOfUsers){
         Graph graph= new Graph(numOfUsers,repo.getSize());
         return graph.theMostSociableCommunity((RelationshipDbRepo) repo);
     }
 
-    /**
-     * Loads the data from a file
-     * @param filename the file where the data needs to be loaded
-     */
-   // public void loadData(String filename){repo.loadData(filename);}
-
-    /**
-     * Saveds the data from a file
-     * @param filename the file where the data needs to be saved
-     */
-   // public void saveData(String filename){repo.saveData(filename);}
 
 }
