@@ -1,10 +1,14 @@
 package Domain;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Relationship extends Entity<Long>{
     private String userName1;
     private String userName2;
+    private LocalDate dtf;
 
     public Relationship(String firstUserName, String secondUserName) {
         initialize(firstUserName,secondUserName);
@@ -15,6 +19,13 @@ public class Relationship extends Entity<Long>{
         super.setId(id);
     }
 
+    public Relationship(Long id,String firstUserName, String secondUserName,LocalDate dtf){
+        initialize2(firstUserName,secondUserName,dtf);
+        super.setId(id);
+    }
+
+
+
     /**
      * Initializez the fields of the class
      * @param firstUserName
@@ -23,6 +34,12 @@ public class Relationship extends Entity<Long>{
     private void initialize(String firstUserName, String secondUserName){
         this.userName1 = firstUserName;
         this.userName2 = secondUserName;
+    }
+
+    private void initialize2(String firstUserName, String secondUserName,LocalDate dtf){
+        this.userName1 = firstUserName;
+        this.userName2 = secondUserName;
+        this.dtf=dtf;
     }
 
     /**
@@ -62,6 +79,19 @@ public class Relationship extends Entity<Long>{
      * @param o the object to be compared with
      * @return true, the the objects are equal, false otherwise
      */
+
+    /**
+     * Gives the time of the relationship
+     * @return time of the relationship
+     */
+    public LocalDate getDtf() {
+        return dtf;
+    }
+
+    public void setDtf(LocalDate dtf) {
+        this.dtf = dtf;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

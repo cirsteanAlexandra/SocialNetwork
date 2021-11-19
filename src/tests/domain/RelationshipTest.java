@@ -3,6 +3,11 @@ package tests.domain;
 import Domain.Relationship;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class RelationshipTest {
@@ -48,6 +53,20 @@ class RelationshipTest {
     }
 
     @Test
+    void getTime() {
+        Relationship rel = new Relationship(1L,"acadea","bucales",
+                LocalDate.of(2018, Month.FEBRUARY, 27));
+        assertEquals(rel.getDtf().toString(), "2018-02-27");
+    }
+
+    @Test
+    void setTime() {
+        Relationship rel = new Relationship(1L,"acadea","bucales",
+                LocalDate.of(2018, Month.FEBRUARY, 27));
+        rel.setDtf( LocalDate.of(2019, Month.FEBRUARY, 10));
+        assertEquals(rel.getDtf().toString(), "2019-02-10");
+    }
+    @Test
     void testEquals() {
         Relationship rel = new Relationship("acadea","bucales");
         Relationship rel1 = new Relationship("acadea","bucales");
@@ -80,4 +99,5 @@ class RelationshipTest {
                 '\'' + "bucales" + '\'' +
                 '}');
     }
+
 }
