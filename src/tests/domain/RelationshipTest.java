@@ -1,0 +1,83 @@
+package tests.domain;
+
+import Domain.Relationship;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class RelationshipTest {
+
+    @Test
+    void getId() {
+        Relationship rel = new Relationship(1L,"acadea","bucales");
+        assertEquals(rel.getId(),1L);
+    }
+
+    @Test
+    void setId() {
+        Relationship rel = new Relationship("acadea","bucales");
+        assertEquals(rel.getId(),null);
+        rel.setId(1L);
+        assertEquals(rel.getId(),1L);
+    }
+
+    @Test
+    void getFirstUserName() {
+        Relationship rel = new Relationship("acadea","bucales");
+        assertEquals(rel.getFirstUserName(),"acadea");
+    }
+
+    @Test
+    void setFirstUserName() {
+        Relationship rel = new Relationship("acadea","bucales");
+        rel.setFirstUserName("animal");
+        assertEquals(rel.getFirstUserName(),"animal");
+    }
+
+    @Test
+    void getSecondUserName() {
+        Relationship rel = new Relationship("acadea","bucales");
+        assertEquals(rel.getSecondUserName(),"bucales");
+    }
+
+    @Test
+    void setSecondUserName() {
+        Relationship rel = new Relationship("acadea","bucales");
+        rel.setSecondUserName("maricica");
+        assertEquals(rel.getSecondUserName(),"maricica");
+    }
+
+    @Test
+    void testEquals() {
+        Relationship rel = new Relationship("acadea","bucales");
+        Relationship rel1 = new Relationship("acadea","bucales");
+        assertEquals(rel,rel1);
+
+        rel1.setFirstUserName("maricica");
+        assertFalse(rel.equals(rel1));
+
+        rel.setId(1L);
+        rel1.setId(1L);
+        assertEquals(rel,rel1);
+
+        rel1.setId(2L);
+        assertFalse(rel.equals(rel1));
+
+    }
+
+    @Test
+    void testToString() {
+        Relationship rel = new Relationship("acadea","bucales");
+        assertEquals(rel.toString(),"Relationship{" + " between "
+                    +'\''+ "acadea" + '\'' + " and " +
+                    '\'' + "bucales" + '\'' +
+                    '}');
+
+        rel.setId(1L);
+        assertEquals(rel.toString(),"Relationship{" +
+                "id= "+ "1" + " between " +
+                '\''+ "acadea" + '\'' + " and " +
+                '\'' + "bucales" + '\'' +
+                '}');
+    }
+}
