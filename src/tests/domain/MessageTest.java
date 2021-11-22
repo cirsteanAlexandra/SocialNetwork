@@ -14,6 +14,15 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 class MessageTest {
 
     @Test
+    void Ids(){
+        User user1= new User("habulea",new Persone("maca","baka"));
+        User user2= new User("bila",new Persone("mac","bak"));
+        Message message= new Message(new User("habulea",new Persone("maca","baka")), "hello",Arrays.asList(user2));
+        message.setId(1L);
+        assertEquals(message.getId(),1L);
+    }
+
+    @Test
     void getFrom() {
         User user1= new User("habulea",new Persone("maca","baka"));
         User user2= new User("bila",new Persone("mac","bak"));

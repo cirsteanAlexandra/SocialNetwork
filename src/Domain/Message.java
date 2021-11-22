@@ -18,6 +18,12 @@ public class Message extends Entity<Long>{
         this.date = date;
         this.reply = reply;
     }
+    public Message(Long id,User from, String message, List<User> receivers) {
+        this.from = from;
+        this.message = message;
+        this.receivers = receivers;
+        super.setId(id);
+    }
 
     public Message(Long id,User from, String message, List<User> receivers, LocalDateTime date, Message reply) {
         this.from = from;
@@ -33,6 +39,14 @@ public class Message extends Entity<Long>{
         this.message = message;
         this.receivers = receivers;
         this.date = date;
+    }
+
+    public Message(Long id,User from, String message, List<User> receivers, LocalDateTime date) {
+        this.from = from;
+        this.message = message;
+        this.receivers = receivers;
+        this.date = date;
+        super.setId(id);
     }
 
     public Message(User from, String message, List<User> receivers) {
