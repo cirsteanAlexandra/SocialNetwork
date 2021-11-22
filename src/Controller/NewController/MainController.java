@@ -1,21 +1,21 @@
 package Controller.NewController;
 
 
+import Domain.Message;
 import Domain.Persone;
 import Domain.Relationship;
 import Domain.User;
 import Utils.Exceptions.Exception;
 import Utils.Exceptions.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.util.*;
 
 public class MainController {
     UserController contU;
     RelationshipController contR;
     PersoneController contP;
+    MessageController contM;
 
     /**
      * Basic constructor for this main controller that operates all the secondary controllers
@@ -23,10 +23,11 @@ public class MainController {
      * @param contR controller for relationships
      * @param contP controller for persons
      */
-    public MainController(UserController contU, RelationshipController contR,PersoneController contP) {
+    public MainController(UserController contU, RelationshipController contR,PersoneController contP,MessageController contM) {
         this.contU = contU;
         this.contR = contR;
         this.contP = contP;
+        this.contM = contM;
     }
 
     /**
@@ -277,5 +278,48 @@ public class MainController {
      */
     public List<String> getTheMostSociableCommunity(){
         return contR.getTheMostSociableCommunity(contU.getSize());
+    }
+
+    public User getUserByUsername(String username){
+        User user = contU.getByOther(username);
+        if(user==null) throw new UserRepoException("there is no user with that username");
+        Persone pers=contP.getById(user.getPers().getId());
+        user.setPers(pers);
+        return user;
+    }
+
+    public List<Message> loadConversation(String username1,String username2){
+        List<Message>listMess=contM.loadConversation(username1,username2);
+        User sender=getUserByUsername(username1);
+        User receiver=getUserByUsername(username2);
+        for(var mess: listMess){
+            mess.setFrom(sender);
+            mess.setReceivers(Arrays.asList(receiver));
+        }
+        return listMess;
+    }
+
+    public boolean sendMessage(Message message){
+        Relationship rel=contR.getByOther(message.getFrom().getUsername(),message.getReceivers().get(0).getUsername());
+        if(rel==null) throw new RelationshipRepoException("There is no relationship between these 2 users");
+        User sender=getUserByUsername(message.getFrom().getUsername());
+        User receiver=getUserByUsername(message.getReceivers().get(0).getUsername());
+        contM.add(new Message(message.getId(),sender, message.getMessage(), Arrays.asList(receiver), LocalDateTime.now(),message.getReply()));
+        return true;
+    }
+
+    public boolean sendMessageToAll(Message message){
+        for (int i=0;i<message.getReceivers().size();i++) {
+            Relationship rel = contR.getByOther(message.getFrom().getUsername(), message.getReceivers().get(i).getUsername());
+            if (rel == null) throw new RelationshipRepoException("There is no relationship between these 2 users");
+        }
+        User sender=getUserByUsername(message.getFrom().getUsername());
+        List<User> receivers=new ArrayList<>();
+        for (int i=0;i<message.getReceivers().size();i++) {
+            User receiver = getUserByUsername(message.getReceivers().get(i).getUsername());
+            receivers.add(receiver);
+        }
+        contM.add(new Message(message.getId(),sender, message.getMessage(), receivers, LocalDateTime.now(),message.getReply()));
+        return true;
     }
 }
