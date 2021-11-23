@@ -1,9 +1,14 @@
 package Domain;
 
 import java.util.Objects;
+
 import java.util.function.Function;
 
-public class Persone extends Entity<Long>{
+
+
+
+public class Persone extends Entity<Long> {
+
     String firstName; //prenume
     String lastName;  //nume de familie
 

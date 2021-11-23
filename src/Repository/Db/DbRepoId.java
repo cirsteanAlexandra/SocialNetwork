@@ -8,9 +8,10 @@ import java.sql.*;
 import java.util.List;
 
 public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,E> {
-    private String url;
-    private String username;
-    private String password;
+
+    protected String url;
+    protected String username;
+    protected String password;
     protected String sql;
 
     /**
@@ -79,7 +80,9 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
             ps.executeUpdate();
             return true;
         } catch (SQLException e) {
+
             e.printStackTrace();
+
             throw new EntityRepoException(e.getMessage());
         }
     }
@@ -125,17 +128,20 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
      */
     @Override
     public int getSize() {
-        int size=0;
+
+        int size;
+
         try (Connection connection = DriverManager.getConnection(url, username, password);
              PreparedStatement ps = connection.prepareStatement(sql);
              ResultSet resultSet = ps.executeQuery()) {
             size=getSizeStatement(resultSet);
             return size;
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new EntityRepoException(e.getMessage());
         }
-        return size;
+
     }
+
 
     /**
      * Gives a list with all the entities stored in repository
@@ -152,10 +158,12 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
              list=getAllStatement(resultSet);
              return list;
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new EntityRepoException(e.getMessage());
+
         }
-        return null;
-    }
+
+        }
+
 
     /**
      * Gives a list with all the ids store din repository
@@ -172,9 +180,10 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
              list=getAllIdStatement(resultSet);
              return list;
         } catch (SQLException e) {
-            e.printStackTrace();
+
+            throw new EntityRepoException(e.getMessage());
         }
-        return null;
+
     }
 
     /**

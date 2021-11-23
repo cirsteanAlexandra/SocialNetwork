@@ -1,15 +1,19 @@
 package Domain;
 
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+
 import java.util.Objects;
 
 public class Relationship extends Entity<Long>{
     private String userName1;
     private String userName2;
+
     private LocalDate dtf;
+
 
     public Relationship(String firstUserName, String secondUserName) {
         initialize(firstUserName,secondUserName);
@@ -20,6 +24,7 @@ public class Relationship extends Entity<Long>{
         super.setId(id);
     }
 
+
     public Relationship(Long id,String firstUserName, String secondUserName,LocalDate dtf){
         initialize2(firstUserName,secondUserName,dtf);
         super.setId(id);
@@ -28,6 +33,7 @@ public class Relationship extends Entity<Long>{
     public Relationship(String firstUserName, String secondUserName,LocalDate dtf){
         initialize2(firstUserName,secondUserName,dtf);
     }
+
 
     /**
      * Initializez the fields of the class
@@ -44,6 +50,7 @@ public class Relationship extends Entity<Long>{
         this.userName2 = secondUserName;
         this.dtf=dtf;
     }
+
 
     /**
      * Gives the First username of the relationship
@@ -95,6 +102,7 @@ public class Relationship extends Entity<Long>{
         this.dtf = dtf;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -118,11 +126,16 @@ public class Relationship extends Entity<Long>{
      */
     @Override
     public String toString() {
+
         if (getId()!=null )
+
+        if (getId()!=null)
+
             return "Relationship{" +
                 "id= "+ super.getId().toString() + " between "
                 +'\''+ userName1 + '\'' + " and " +
                 '\'' + userName2 + '\'' +
+
                 ' '+ "started at " + ' '+
                  dtf +
                 '}';
@@ -131,6 +144,15 @@ public class Relationship extends Entity<Long>{
                 '\'' + userName2 + '\''+
                 '}';
     }
+
+
+
+            /*    '}';
+        return "Relationship{" + " between "
+                +'\''+ userName1 + '\'' + " and " +
+                '\'' + userName2 + '\'' +
+                '}';
+    }*/
 
 
 }

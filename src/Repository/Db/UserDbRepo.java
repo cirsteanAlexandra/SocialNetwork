@@ -145,6 +145,7 @@ public class UserDbRepo extends DbRepoId<Long, User> implements UserRepo {
     }
 
 
+
     /**
      * Generates an id for an entity
      */

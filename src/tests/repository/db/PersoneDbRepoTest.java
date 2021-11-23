@@ -16,6 +16,8 @@ class PersoneDbRepoTest {
     @BeforeEach
     void setUp(){
         PersoneDbRepo repo=new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+
+
         repo.save(new Persone(1L,"wewe","weew"));
         repo.save(new Persone(2L,"wewe","weew"));
         repo.save(new Persone(3L,"mama","mea"));
@@ -24,12 +26,16 @@ class PersoneDbRepoTest {
     @AfterEach
     void tearDown(){
         PersoneDbRepo repo=new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+
+
         repo.restoreToDefault();
     }
 
     @Test
     void save() {
         PersoneDbRepo repo = new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+
+
         try {
             assertTrue(
                     repo.save(new Persone(4L, "wwne", "reje")));
@@ -43,6 +49,8 @@ class PersoneDbRepoTest {
     @Test
     void saveWithNoID() {
         PersoneDbRepo repo = new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+
+
         try {
             assertTrue(
                     repo.save(new Persone("jerk", "erjk")));
@@ -55,7 +63,10 @@ class PersoneDbRepoTest {
 
     @Test
     void saveExistentId(){
+
         PersoneDbRepo repo = new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+
+
         try{
             assertTrue(repo.save(new Persone(1L,"jkwe","wejk")));
         }catch(EntityRepoException e){
@@ -67,20 +78,27 @@ class PersoneDbRepoTest {
 
     @Test
     void get() {
+
         PersoneDbRepo repo = new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+
+
         Persone pers= repo.get(1L);
         assertEquals(new Persone(1L,"wewe","weew"),pers);
     }
 
     @Test
     void getNull() {
+
         PersoneDbRepo repo = new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+
+
         Persone pers= repo.get(10L);
         assertEquals(pers,null);
     }
 
     @Test
     void update() {
+
         PersoneDbRepo repo = new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
         try{
             assertTrue(
@@ -96,7 +114,9 @@ class PersoneDbRepoTest {
 
     @Test
     void updateInexistent() {
+
         PersoneDbRepo repo = new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+
         try{
             assertTrue(repo.update(7L,new Persone(2L,"weew","erui")));
             assertTrue(false);
@@ -110,6 +130,7 @@ class PersoneDbRepoTest {
     @Test
     void delete() {
         PersoneDbRepo repo = new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+
         try{
             assertTrue(
                     repo.delete(1L));
@@ -121,7 +142,9 @@ class PersoneDbRepoTest {
 
     @Test
     void deleteInexistent() {
+
         PersoneDbRepo repo = new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+
         try{
             assertTrue(
                     repo.delete(5L));
@@ -134,6 +157,7 @@ class PersoneDbRepoTest {
     @Test
     void getAll() {
         PersoneDbRepo repo = new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+
         List<Persone> list=repo.getAll();
         List<Persone> comparableList= Arrays.asList(new Persone(1L,"wewe","weew"),
                 new Persone(2L,"wewe","weew"),
@@ -145,6 +169,7 @@ class PersoneDbRepoTest {
     @Test
     void getByOther() {
         PersoneDbRepo repo = new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+
         try{
             assertEquals(repo.getByOther("mama","mea"),new Persone(3L,"mama","mea"));
         }catch(Exception e){
@@ -154,7 +179,9 @@ class PersoneDbRepoTest {
 
     @Test
     void getByOtherInexistent() {
+
         PersoneDbRepo repo = new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+
         try{
             assertEquals(repo.getByOther("hjer","hjwek"),null);
         }catch(Exception e){

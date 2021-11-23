@@ -18,6 +18,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -43,6 +44,7 @@ class MainControllerTest {
         repoU.save(new User(9L,"vespuci",new Persone(1L,"wewe","weew")));
         repoU.save(new User(10L,"acadea",new Persone(1L,"wewe","weew")));
 
+
         RelationshipDbRepo repo=new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         repo.save(new Relationship(1L,"mama","mea",LocalDate.of(
                 2021,11,21
@@ -51,6 +53,8 @@ class MainControllerTest {
                 2021,11,21)));
         repo.save(new Relationship(3L,"macaron","mea",LocalDate.of(
                 2021,11,21)));
+
+
     }
 
     @AfterEach
@@ -62,11 +66,13 @@ class MainControllerTest {
         repoU.restoreToDefault();
 
         PersoneDbRepo repoP=new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+
         repoP.restoreToDefault();
     }
 
     @Test
     void addUserUnchangedPersone() {
+
         UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
@@ -88,6 +94,7 @@ class MainControllerTest {
         PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
 
+
         UserController contU=new UserController(repoU);
         RelationshipController contR=new RelationshipController((RelationshipDbRepo) repoR);
         PersoneController contP=new PersoneController(repoP);
@@ -101,9 +108,12 @@ class MainControllerTest {
 
     @Test
     void addExistingUser() {
+
         UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+
+
 
         UserController contU=new UserController(repoU);
         RelationshipController contR=new RelationshipController((RelationshipDbRepo) repoR);
@@ -126,9 +136,11 @@ class MainControllerTest {
 
     @Test
     void addRelationship() {
+
         UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+
 
         UserController contU=new UserController(repoU);
         RelationshipController contR=new RelationshipController((RelationshipDbRepo) repoR);
@@ -136,8 +148,11 @@ class MainControllerTest {
 
         MainController cont= new MainController(contU,contR,contP);
 
+
         assertTrue(cont.addRelationship(new Relationship(6L,"blah","meh",
                 LocalDate.of(2020,11,21))));
+
+
         assertEquals(contR.getSize(),4);
         assertEquals(contU.getSize(),10);
         assertEquals(contP.getSize(),2);
@@ -145,9 +160,12 @@ class MainControllerTest {
 
     @Test
     void addRelationshipInexistingFirstUser() {
+
         UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+
+
 
         UserController contU=new UserController(repoU);
         RelationshipController contR=new RelationshipController((RelationshipDbRepo) repoR);
@@ -171,6 +189,8 @@ class MainControllerTest {
         PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
 
+
+
         UserController contU=new UserController(repoU);
         RelationshipController contR=new RelationshipController((RelationshipDbRepo) repoR);
         PersoneController contP=new PersoneController(repoP);
@@ -193,6 +213,8 @@ class MainControllerTest {
         PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
 
+
+
         UserController contU=new UserController(repoU);
         RelationshipController contR=new RelationshipController((RelationshipDbRepo) repoR);
         PersoneController contP=new PersoneController(repoP);
@@ -211,9 +233,11 @@ class MainControllerTest {
 
     @Test
     void addExistingInvertRelationship() {
+
         UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+
 
         UserController contU=new UserController(repoU);
         RelationshipController contR=new RelationshipController((RelationshipDbRepo) repoR);
@@ -233,9 +257,11 @@ class MainControllerTest {
 
     @Test
     void removeByUserId() {
+
         UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+
 
         UserController contU=new UserController(repoU);
         RelationshipController contR=new RelationshipController((RelationshipDbRepo) repoR);
@@ -243,10 +269,13 @@ class MainControllerTest {
 
         MainController cont= new MainController(contU,contR,contP);
 
+
         cont.addRelationship(new Relationship(4L,"mama","noua",
                 LocalDate.of(2020,11,21)));
         cont.addRelationship(new Relationship(5L,"mama","belea",
                 LocalDate.of(2020,11,21)));
+
+
 
         assertTrue(cont.removeByUserId(1L));
         assertEquals(contR.getSize(),1);
@@ -259,6 +288,7 @@ class MainControllerTest {
         UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+
 
         UserController contU=new UserController(repoU);
         RelationshipController contR=new RelationshipController((RelationshipDbRepo) repoR);
@@ -278,9 +308,11 @@ class MainControllerTest {
 
     @Test
     void removeByInexistedUserId() {
+
         UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+
 
         UserController contU=new UserController(repoU);
         RelationshipController contR=new RelationshipController((RelationshipDbRepo) repoR);
@@ -302,9 +334,11 @@ class MainControllerTest {
 
     @Test
     void removeByRelationshipId() {
+
         UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+
 
         UserController contU=new UserController(repoU);
         RelationshipController contR=new RelationshipController((RelationshipDbRepo) repoR);
@@ -312,10 +346,13 @@ class MainControllerTest {
 
         MainController cont= new MainController(contU,contR,contP);
 
+
         cont.addRelationship(new Relationship(5L,"mama","noua",
                 LocalDate.of(2020,11,21)));
         cont.addRelationship(new Relationship(6L,"mama","belea",
                 LocalDate.of(2020,11,21)));
+
+
 
         assertTrue(cont.removeByRelationshipId(5L));
         assertEquals(contR.getSize(),4);
@@ -325,9 +362,12 @@ class MainControllerTest {
 
     @Test
     void removeByInexistedRelationshipdId() {
+
         UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+
+
 
         UserController contU=new UserController(repoU);
         RelationshipController contR=new RelationshipController((RelationshipDbRepo) repoR);
@@ -349,9 +389,11 @@ class MainControllerTest {
 
     @Test
     void removeUserByUsername() {
+
         UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+
 
         UserController contU=new UserController(repoU);
         RelationshipController contR=new RelationshipController((RelationshipDbRepo) repoR);
@@ -359,10 +401,13 @@ class MainControllerTest {
 
         MainController cont= new MainController(contU,contR,contP);
 
+
         cont.addRelationship(new Relationship(12L,"mama","noua",
         LocalDate.of(2020,11,21)));
         cont.addRelationship(new Relationship(22L,"mama","belea",
                 LocalDate.of(2020,11,21)));
+
+
 
         assertTrue(cont.removeUserByUsername("mama"));
         assertEquals(contR.getSize(),1);
@@ -372,9 +417,11 @@ class MainControllerTest {
 
     @Test
     void removeUserByUsernameRemovePersone() {
+
         UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+
 
         UserController contU=new UserController(repoU);
         RelationshipController contR=new RelationshipController((RelationshipDbRepo) repoR);
@@ -395,9 +442,12 @@ class MainControllerTest {
 
     @Test
     void removeInexistingUserByUsername() {
+
         UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+
+
 
         UserController contU=new UserController(repoU);
         RelationshipController contR=new RelationshipController((RelationshipDbRepo) repoR);
@@ -420,9 +470,11 @@ class MainControllerTest {
 
     @Test
     void removeX2User() {
+
         UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+
 
         UserController contU=new UserController(repoU);
         RelationshipController contR=new RelationshipController((RelationshipDbRepo) repoR);
@@ -445,9 +497,11 @@ class MainControllerTest {
 
     @Test
     void removeRelationshipByUsernames() {
+
         UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+
 
         UserController contU=new UserController(repoU);
         RelationshipController contR=new RelationshipController((RelationshipDbRepo) repoR);
@@ -460,6 +514,8 @@ class MainControllerTest {
         cont.addRelationship(new Relationship(6L,"mama","belea",
                 LocalDate.of(2020,11,21)));
 
+
+
         assertTrue(cont.removeRelationshipByUsernames("belea","mama"));
         assertEquals(contR.getSize(),4);
         assertEquals(contU.getSize(),10);
@@ -468,9 +524,11 @@ class MainControllerTest {
 
     @Test
     void removeInexistedRelationshipByUsernamesd() {
+
         UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+
 
         UserController contU=new UserController(repoU);
         RelationshipController contR=new RelationshipController((RelationshipDbRepo) repoR);
@@ -492,9 +550,11 @@ class MainControllerTest {
 
     @Test
     void removeX2Relationship() {
+
         UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+
 
         UserController contU=new UserController(repoU);
         RelationshipController contR=new RelationshipController((RelationshipDbRepo) repoR);
@@ -521,6 +581,7 @@ class MainControllerTest {
         PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
 
+
         UserController contU=new UserController(repoU);
         RelationshipController contR=new RelationshipController((RelationshipDbRepo) repoR);
         PersoneController contP=new PersoneController(repoP);
@@ -536,6 +597,8 @@ class MainControllerTest {
         UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+
+
 
         UserController contU=new UserController(repoU);
         RelationshipController contR=new RelationshipController((RelationshipDbRepo) repoR);
@@ -553,9 +616,11 @@ class MainControllerTest {
 
     @Test
     void getRelationshipById() {
+
         UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+
 
         UserController contU=new UserController(repoU);
         RelationshipController contR=new RelationshipController((RelationshipDbRepo) repoR);
@@ -569,9 +634,11 @@ class MainControllerTest {
 
     @Test
     void getInexistedRelationshipById() {
+
         UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+
 
         UserController contU=new UserController(repoU);
         RelationshipController contR=new RelationshipController((RelationshipDbRepo) repoR);
@@ -589,9 +656,11 @@ class MainControllerTest {
 
     @Test
     void getUserByOther() {
+
         UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+
 
         UserController contU=new UserController(repoU);
         RelationshipController contR=new RelationshipController((RelationshipDbRepo) repoR);
@@ -607,6 +676,7 @@ class MainControllerTest {
         UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+
 
         UserController contU=new UserController(repoU);
         RelationshipController contR=new RelationshipController((RelationshipDbRepo) repoR);
@@ -628,6 +698,7 @@ class MainControllerTest {
         PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
 
+
         UserController contU=new UserController(repoU);
         RelationshipController contR=new RelationshipController((RelationshipDbRepo) repoR);
         PersoneController contP=new PersoneController(repoP);
@@ -640,9 +711,11 @@ class MainControllerTest {
 
     @Test
     void getInexistedRelationshipByOther() {
+
         UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+
 
         UserController contU=new UserController(repoU);
         RelationshipController contR=new RelationshipController((RelationshipDbRepo) repoR);
@@ -660,9 +733,11 @@ class MainControllerTest {
 
     @Test
     void getAllUsers() {
+
         UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+
 
         UserController contU=new UserController(repoU);
         RelationshipController contR=new RelationshipController((RelationshipDbRepo) repoR);
@@ -685,6 +760,7 @@ class MainControllerTest {
         PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
 
+
         UserController contU=new UserController(repoU);
         RelationshipController contR=new RelationshipController((RelationshipDbRepo) repoR);
         PersoneController contP=new PersoneController(repoP);
@@ -696,14 +772,18 @@ class MainControllerTest {
 
         Relationship rel= new Relationship(1L,"mama","mea",
                 LocalDate.of(2021,11,21));
+
+
         assertEquals(list.get(0),rel);
     }
 
     @Test
     void getUserSize() {
+
         UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+
 
         UserController contU=new UserController(repoU);
         RelationshipController contR=new RelationshipController((RelationshipDbRepo) repoR);
@@ -716,6 +796,7 @@ class MainControllerTest {
 
     @Test
     void getRelationshipSize() {
+
         UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");

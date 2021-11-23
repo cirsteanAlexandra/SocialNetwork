@@ -14,9 +14,11 @@ public class Main {
     public static void main(String[] args) {
 	// write your code here
 
+
         UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/ReteaDeSocializare","postgres","hexagon");
         PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/ReteaDeSocializare","postgres","hexagon");
         RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/ReteaDeSocializare","postgres","hexagon");
+
 
         UserController contU=new UserController(repoU);
         RelationshipController contR=new RelationshipController((RelationshipDbRepo) repoR);

@@ -3,11 +3,13 @@ package tests.domain;
 import Domain.Relationship;
 import org.junit.jupiter.api.Test;
 
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -69,6 +71,7 @@ class RelationshipTest {
         assertEquals(rel.getDtf().toString(), "2019-02-10");
     }
     @Test
+
     void testEquals() {
         Relationship rel = new Relationship("acadea","bucales");
         Relationship rel1 = new Relationship("acadea","bucales");
@@ -95,7 +98,9 @@ class RelationshipTest {
                     '}');
 
         rel.setId(1L);
+
         rel.setDtf(LocalDate.of(2020,12,12));
+
         assertEquals(rel.toString(),"Relationship{" +
                 "id= "+ "1" + " between " +
                 '\''+ "acadea" + '\'' + " and " +

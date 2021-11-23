@@ -25,6 +25,8 @@ class UserDbRepoTest {
         repoP.save(new Persone(2L,"weew","erui"));
 
         UserRepo repo=new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+
+
         repo.save(new User(1L,"a",new Persone(1L,"wewe","weew")));
         repo.save(new User(2L,"biscuit",new Persone(1L,"wewe","weew")));
         repo.save(new User(3L,"macaron",new Persone(1L,"wewe","weew")));
@@ -33,15 +35,18 @@ class UserDbRepoTest {
     @AfterEach
     void tearDown(){
 
+
         UserDbRepo repo=new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         repo.restoreToDefault();
 
         PersoneDbRepo repoP=new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+
         repoP.restoreToDefault();
     }
 
     @Test
     void save() {
+
         UserRepo repo = new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
         try {
             assertTrue(
@@ -55,7 +60,9 @@ class UserDbRepoTest {
 
     @Test
     void saveWithNoID() {
+
         UserRepo repo = new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+
         try {
             assertTrue(
                     repo.save(new User("blah", new Persone(1L, "wewe", "weew"))));
@@ -68,6 +75,7 @@ class UserDbRepoTest {
 
     @Test
     void saveExistentId(){
+
         UserRepo repo = new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
         try{
             assertTrue(
@@ -80,6 +88,7 @@ class UserDbRepoTest {
 
     @Test
     void saveExistentUsername(){
+
         UserRepo repo = new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
         try{
             assertTrue(
@@ -92,6 +101,7 @@ class UserDbRepoTest {
 
     @Test
     void saveExistentIdAndUsername(){
+
         UserRepo repo = new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
         try{
             assertTrue(
@@ -104,6 +114,7 @@ class UserDbRepoTest {
 
     @Test
     void get() {
+
         UserRepo repo = new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
         User user= repo.get(1L);
         assertEquals(new User(1L,"a",new Persone(1L,"","")),user);
@@ -111,14 +122,18 @@ class UserDbRepoTest {
 
     @Test
     void getNull() {
+
         UserRepo repo = new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+
         User user= repo.get(10L);
         assertEquals(user,null);
     }
 
     @Test
     void update() {
+
         UserRepo repo = new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+
         try{
             assertTrue(
                     repo.update(1L,new User(5L,"acadea",new Persone(2L,"weew","erui"))));
@@ -132,6 +147,7 @@ class UserDbRepoTest {
 
     @Test
     void updateInexistent() {
+
         UserRepo repo = new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
         try{
             assertTrue(repo.update(7L,new User(5L,"acadea",new Persone(2L,"weew","erui"))));
@@ -145,7 +161,9 @@ class UserDbRepoTest {
 
     @Test
     void delete() {
+
         UserRepo repo = new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+
         try{
             assertTrue(
                     repo.delete(1L));
@@ -156,7 +174,9 @@ class UserDbRepoTest {
 
     @Test
     void deleteInexistent() {
+
         UserRepo repo = new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+
         try{
             assertTrue(
                     repo.delete(5L));
@@ -168,7 +188,9 @@ class UserDbRepoTest {
 
     @Test
     void getAll() {
+
         UserRepo repo = new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+
         List<User> list=repo.getAll();
         List<User> comparableList= Arrays.asList(new User(1L,"a",new Persone(1L,"wewe","weew")),
                 new User(2L,"biscuit",new Persone(1L,"wewe","weew")),
@@ -179,7 +201,9 @@ class UserDbRepoTest {
 
     @Test
     void getByOther() {
+
         UserRepo repo = new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+
         try{
             assertEquals(repo.getByOther("biscuit"),new User(2L,"biscuit",new Persone(1L,"wewe","weew")));
         }catch(Exception e){
@@ -189,7 +213,9 @@ class UserDbRepoTest {
 
     @Test
     void getByOtherInexistent() {
+
         UserRepo repo = new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+
         try{
             assertEquals(repo.getByOther("hjer"),null);
         }catch(Exception e){

@@ -13,6 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,11 +22,13 @@ import static org.junit.jupiter.api.Assertions.*;
 class RelationshipDbRepoTest {
     @BeforeEach
     void setUp(){
+
         PersoneDbRepo repoP=new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         repoP.save(new Persone(1L,"wewe","weew"));
         repoP.save(new Persone(2L,"weew","erui"));
 
         UserRepo repoU=new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+
         repoU.save(new User(1L,"mama",new Persone(1L,"wewe","weew")));
         repoU.save(new User(2L,"mea",new Persone(1L,"wewe","weew")));
         repoU.save(new User(3L,"biscuit",new Persone(1L,"wewe","weew")));
@@ -36,6 +39,7 @@ class RelationshipDbRepoTest {
         repoU.save(new User(8L,"meh",new Persone(1L,"wewe","weew")));
         repoU.save(new User(9L,"vespuci",new Persone(1L,"wewe","weew")));
         repoU.save(new User(10L,"acadea",new Persone(1L,"wewe","weew")));
+
         RelationshipDbRepo repo=new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
         repo.save(new Relationship(1L,"mama","mea",
                 LocalDate.of(2020,10,10)));
@@ -43,6 +47,7 @@ class RelationshipDbRepoTest {
                 LocalDate.of(2020,10,10)));
         repo.save(new Relationship(3L,"macaron","mea",
                 LocalDate.of(2020,10,10)));
+
     }
 
     @AfterEach
@@ -54,27 +59,33 @@ class RelationshipDbRepoTest {
         repoU.restoreToDefault();
 
         PersoneDbRepo repoP=new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+
         repoP.restoreToDefault();
 
     }
 
     @Test
     void save() {
+
         RelationshipDbRepo repo = new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
         try {
             assertTrue(
                     repo.save(new Relationship(4L, "belea", "noua",
-                            LocalDate.of(2021,11,21))));
-        } catch (EntityRepoException e) {
-            System.out.println(e.getDescription());
-            assertTrue(false);
-        }
-        assertEquals(repo.getSize(),4);
+                            LocalDate.of(2021, 11, 21))));
+
+            } catch (EntityRepoException e) {
+                System.out.println(e.getDescription());
+                assertTrue(false);
+            }
+            assertEquals(repo.getSize(), 4);
+
     }
 
     @Test
     void saveWithNoID() {
         RelationshipDbRepo repo = new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+
+
         try {
             assertTrue(
                     repo.save(new Relationship("blah", "meh")));
@@ -87,11 +98,14 @@ class RelationshipDbRepoTest {
 
     @Test
     void saveExistentId(){
+
         RelationshipDbRepo repo = new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
         try{
             assertTrue(repo.save(new Relationship(1L,"acadeaua","weew", LocalDate.of(
                     2020,12,12
             ))));
+
+
         }catch(EntityRepoException e){
             assertTrue(true);
         }
@@ -100,11 +114,14 @@ class RelationshipDbRepoTest {
 
     @Test
     void saveExistentUsernames(){
+
         RelationshipDbRepo repo = new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
         try{
             assertTrue(
                     repo.save(new Relationship(5L,"mama","mea",
                             LocalDate.of(2020,10,10))));
+
+
         }catch(Exception e){
             assertTrue(true);
         }
@@ -113,13 +130,16 @@ class RelationshipDbRepoTest {
 
     @Test
     void get() {
+
         RelationshipDbRepo repo = new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+
         Relationship rel= repo.get(1L);
         assertEquals(new Relationship(1L,"mama","mea"),rel);
     }
 
     @Test
     void getNull() {
+
         RelationshipDbRepo repo = new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
         Relationship rel= repo.get(10L);
         assertNull(rel);
@@ -128,6 +148,7 @@ class RelationshipDbRepoTest {
     @Test
     void update() {
         RelationshipDbRepo repo = new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+
         try{
             assertTrue(
                     repo.update(1L,new Relationship(5L,"acadea","vespuci")));
@@ -142,7 +163,9 @@ class RelationshipDbRepoTest {
 
     @Test
     void updateInexistent() {
+
         RelationshipDbRepo repo = new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+
         try{
             assertTrue(repo.update(7L,new Relationship(5L,"acadea","erui")));
             assertTrue(false);
@@ -155,7 +178,9 @@ class RelationshipDbRepoTest {
 
     @Test
     void delete() {
+
         RelationshipDbRepo repo = new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+
         try{
             assertTrue(
                     repo.delete(1L));
@@ -166,7 +191,9 @@ class RelationshipDbRepoTest {
 
     @Test
     void deleteInexistent() {
+
         RelationshipDbRepo repo = new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+
         try{
             assertTrue(
                     repo.delete(5L));
@@ -178,7 +205,9 @@ class RelationshipDbRepoTest {
 
     @Test
     void getAll() {
+
         RelationshipDbRepo repo = new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+
         List<Relationship> list=repo.getAll();
         List<Relationship> comparableList= Arrays.asList(new Relationship(1L,"mama","mea"),
                 new Relationship(2L,"biscuit","mama"),
@@ -189,7 +218,9 @@ class RelationshipDbRepoTest {
 
     @Test
     void getByOther() {
+
         RelationshipDbRepo repo = new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+
         try{
             assertEquals(repo.getByOther("biscuit","mama"),new Relationship(2L,"biscuit","mama"));
         }catch(Exception e){
@@ -199,7 +230,9 @@ class RelationshipDbRepoTest {
 
     @Test
     void getByOtherInexistent() {
+
         RelationshipDbRepo repo = new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+
         try{
             assertEquals(repo.getByOther("hjer","mea"),null);
         }catch(Exception e){
@@ -207,8 +240,10 @@ class RelationshipDbRepoTest {
         }
     }
 
+
     @Test
     void getFriendsListByUserName(){
 
     }
+
 }

@@ -1,6 +1,8 @@
 package Controller.NewController;
 
+
 import Domain.Persone;
+
 import Domain.User;
 import Repository.UserRepo;
 
@@ -40,15 +42,8 @@ public class UserController extends Controller<Long, User> {
         }
     }
 
-    public Persone getS(String str){
-        for (User el: (List<User>)repo.getAll()){
-            System.out.println(el);
-            //if (el.getUsername().equals(str));
-            //{
-              //  System.out.println(el.toString());
-              //  return el.getPers();
-            //}
-        }return null;
-    }
+
+
+
 
 }
