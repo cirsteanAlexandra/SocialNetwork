@@ -13,20 +13,19 @@ public class MessageValidator extends AbstractValidator<Message> {
     @Override
     public boolean validate(Message entity) {
         listOfErrors=new String();
-        Validator validU= ContextValidator.createValidator(Strategy.USER);
         try{
             if(entity.getId()!=null)checkId(entity.getId());
         }catch(Exception e){
             listOfErrors+=e.getDescription();
         }
         try{
-            validU.validate(entity.getFrom());
+            checkUserName(entity.getFrom().getUsername());
         }catch(UserException e){
             listOfErrors+=e.getDescription();
         }
         for(User user:entity.getReceivers()){
             try{
-                validU.validate(user);
+                checkUserName(user.getUsername());
             }catch(UserException e){
                 listOfErrors+=user.getUsername()+" "+e.getDescription();
             }

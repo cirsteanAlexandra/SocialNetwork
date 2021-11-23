@@ -7,15 +7,10 @@ import Domain.User;
 import Utils.Exceptions.Exception;
 import Utils.Exceptions.*;
 
-
 import java.time.LocalDate;
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
-
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class MainController {
     UserController contU;
@@ -340,7 +335,7 @@ public class MainController {
         return userList;
     }
 
-    public  Map<Persone,LocalDate> FirstTry1(String username){
+    public  Map<Persone,LocalDate> getFriendsByUsername(String username){
         List<String> friendsUsername=getUserFriendsUsername(username);
         List<User> list=ListUserByUsername(friendsUsername);
 
@@ -361,7 +356,7 @@ public class MainController {
 
 
 
-    public  Map<Persone,LocalDate> SecondTry1(String username,int month){
+    public  Map<Persone,LocalDate> getFriendsByUsernameAndMonth(String username,int month){
         List<String> friendsUsername=getUserFriendsUsername(username);
         List<User> list=ListUserByUsernameAndMonth(friendsUsername,month,username);
 
@@ -436,13 +431,17 @@ public class MainController {
     }
 
     public List<Message> loadConversation(String username1,String username2){
+        if(getUserByUsername(username1)==null || getUserByUsername(username2)==null )
+            throw new UserException("There are no users with that usernames");
         List<Message>listMess=contM.loadConversation(username1,username2);
-        User sender=getUserByUsername(username1);
-        User receiver=getUserByUsername(username2);
         for(var mess: listMess){
-            mess.setFrom(sender);
-            mess.setReceivers(Arrays.asList(receiver));
+            mess.setFrom(getUserByUsername(mess.getFrom().getUsername()));
+            mess.setReceivers(Arrays.asList(getUserByUsername(mess.getReceivers().get(0).getUsername())));
         }
+        Comparator<Message> messageComparator= (m1,m2)->{
+            return Math.toIntExact(Long.valueOf(m1.getDate().compareTo(m2.getDate())));
+        };
+        Collections.sort(listMess,messageComparator);
         return listMess;
     }
 
@@ -464,9 +463,12 @@ public class MainController {
         List<User> receivers=new ArrayList<>();
         for (int i=0;i<message.getReceivers().size();i++) {
             User receiver = getUserByUsername(message.getReceivers().get(i).getUsername());
+            if(receiver==null)
+                throw new UserException("There are no users with that usernames");
             receivers.add(receiver);
         }
-        contM.add(new Message(message.getId(),sender, message.getMessage(), receivers, LocalDateTime.now(),message.getReply()));
+        if(!contM.add(new Message(message.getId(),sender, message.getMessage(), receivers, LocalDateTime.now(),message.getReply())))
+            throw new MessageException("The message cannot be sent");
         return true;
     }
 

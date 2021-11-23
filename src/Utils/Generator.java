@@ -12,7 +12,7 @@ public class Generator {
     public static Long generateId(List<Long> listId){
         Random rand=new Random();
         Long id= rand.nextLong();
-        while(isIn(listId,id)){
+        while(isIn(listId,id) || id<=0){
             id= rand.nextLong();
         }
         return id;

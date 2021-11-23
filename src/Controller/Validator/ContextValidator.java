@@ -17,6 +17,8 @@ public class ContextValidator {
               return new UserValidator();
           case RELATIONSHIP:
               return new RelationshipValidator();
+          case MESSAGE:
+              return new MessageValidator();
       }
       return null;
     }

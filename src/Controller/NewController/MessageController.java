@@ -12,7 +12,7 @@ public class MessageController extends Controller<Long, Message>{
 
     public List<Message> loadConversation(String username1,String username2){
         List<Message> listMess= repoM.getBySR(username1,username2);
-        for(var el:repoM.getBySR(username1,username2))
+        for(var el:repoM.getBySR(username2,username1))
             listMess.add(el);
         return listMess;
     }
