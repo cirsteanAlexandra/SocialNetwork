@@ -10,13 +10,8 @@ import Domain.Relationship;
 import Domain.User;
 import Utils.Exceptions.Exception;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,11 +42,11 @@ public class MainMenu {
         options.put(6,"- print all relationships");
         options.put(7,"- number of cummunities");
         options.put(8,"- the most sociable community");
-        options.put(9,"- to exit");
-
-        options.put(10,"-get friends by username");
-        options.put(11,"-get friends by username and month");
+        options.put(9,"-get friends by username");
+        options.put(10,"-get friends by username and month");
+        options.put(11,"- to exit");
         options.put(12,"-ceva get pus numa asa");
+
 
 
         return options;
@@ -104,21 +99,22 @@ public class MainMenu {
                         printTheMostSociableCommunity();
                         break;
                     case 9:
+                        getFriendsByUsername();
+                        break;
+                    case 10:
+                        getFriendsByUsernameAndMonth();
+                        break;
+                    case 11:
                         done = true;
                         break;
 
-                    case 10:
-                        getFriendsByUsername();
-                        break;
-                    case 11:
-                        getFriendsByUsernameAndMonth();
-                        break;
                     case 12:
                         //System.out.println(cont.getAllRequests());
                         //System.out.println(cont.getFriendshipsRequests("allex"));
                         //List<String> stringList=cont.getFriendshipsRequests("allex");
                         //cont.UpdateStatusRequest("accepted","ab");
                         break;
+
 
                     case 404:
                         setCurrentMode();
@@ -407,7 +403,7 @@ public class MainMenu {
         System.out.println("Add the username: ");
         username=scan.nextLine();
         //cauta in repo
-        System.out.println(cont.FirstTry1(username));
+        System.out.println(cont.getFriendsByUsername(username));
 
         }
 
@@ -421,7 +417,7 @@ public class MainMenu {
         month=scan.nextInt();
         //cauta in repo
         if(month<=0 || month>=13) throw new Exception("Invalid month!!!");
-        System.out.println(cont.SecondTry1(username,month));
+        System.out.println(cont.getFriendsByUsernameAndMonth(username,month));
 
     }
     }

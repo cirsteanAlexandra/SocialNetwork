@@ -5,17 +5,10 @@ import Repository.RelationshipRepo;
 import Utils.Exceptions.EntityRepoException;
 import Utils.Exceptions.RelationshipRepoException;
 import Utils.Generator;
-
 import org.postgresql.util.PSQLException;
 
 import java.sql.*;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -262,6 +255,9 @@ public class RelationshipDbRepo extends DbRepoId<Long, Relationship> implements 
                lu=ps.getDate("the_data").toLocalDate();
             }catch(PSQLException e){
                lu=null;
+            }
+            catch(NullPointerException e){
+                lu=null;
             }
             Relationship rel =new Relationship(id,fU,sU,lu);
 
