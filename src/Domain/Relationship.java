@@ -3,6 +3,7 @@ package Domain;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Objects;
 
 public class Relationship extends Entity<Long>{
@@ -24,7 +25,9 @@ public class Relationship extends Entity<Long>{
         super.setId(id);
     }
 
-
+    public Relationship(String firstUserName, String secondUserName,LocalDate dtf){
+        initialize2(firstUserName,secondUserName,dtf);
+    }
 
     /**
      * Initializez the fields of the class
@@ -115,16 +118,19 @@ public class Relationship extends Entity<Long>{
      */
     @Override
     public String toString() {
-        if (getId()!=null)
+        if (getId()!=null )
             return "Relationship{" +
                 "id= "+ super.getId().toString() + " between "
                 +'\''+ userName1 + '\'' + " and " +
                 '\'' + userName2 + '\'' +
+                ' '+ "started at " + ' '+
+                 dtf +
                 '}';
         return "Relationship{" + " between "
                 +'\''+ userName1 + '\'' + " and " +
-                '\'' + userName2 + '\'' +
+                '\'' + userName2 + '\''+
                 '}';
     }
+
 
 }

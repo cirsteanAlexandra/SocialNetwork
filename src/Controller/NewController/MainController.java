@@ -7,10 +7,11 @@ import Domain.User;
 import Utils.Exceptions.Exception;
 import Utils.Exceptions.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDate;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class MainController {
     UserController contU;
@@ -231,6 +232,136 @@ public class MainController {
         }
 
         return list;
+    }
+
+    /**
+     * search in friendships list for the friends with the given usernames
+     * @param username the username for the a friend
+     * @param username1 the username for the other friend
+     * @return the date when the friendship of the first and second user started
+     */
+    public LocalDate getDate(String username,String username1){
+        for(Relationship r: contR.getAll()) {
+            if (r.getFirstUserName().equals(username) && r.getSecondUserName().equals(username1))
+                return r.getDtf();
+            if (r.getFirstUserName().equals(username1) && r.getSecondUserName().equals(username))
+                return r.getDtf();
+        }
+            return null;
+    }
+
+    /**
+     *  search in list of users for the user with given username
+     * @param username of a users
+     * @return the name and last name for a user
+     */
+    public Persone getPersonByUsername(String username){
+
+        for(User user:getAllUsers())
+            if(user.getUsername().equals(username))
+               return user.getPers();
+            return null;
+    }
+
+    /**
+     * check if it exists a friendships  between username and username1 that started in the month
+     * @param month
+     * @param username
+     * @param username1
+     * @return true if there exist and false other
+     */
+    public boolean Month(int month,String username,String username1){
+        for(Relationship r: contR.getAll()) {
+            if (r.getFirstUserName().equals(username) && r.getSecondUserName().equals(username1)
+                    && r.getDtf().getMonth().getValue()==month)
+                return true;
+
+            if (r.getFirstUserName().equals(username1) && r.getSecondUserName().equals(username)
+                    && r.getDtf().getMonth().getValue()==month)
+                return true;
+        }
+            return false;
+
+    }
+
+
+    /**
+     * search in users list for the friends of the user with given username
+     * @param username
+     * @return return a list of usernames of the friends of the user
+     */
+    public List<String> getUserFriendsUsername(String username){
+        for (User user : getAllUsers()) {
+            if(user.getUsername().equals(username))
+            return user.getFriendsList();}
+        return null;
+    }
+
+
+
+    /**
+     * for each username add in a list the specific user
+     * @param usernameList a list of usernames
+     * @return a list of user with the given usernames
+     */
+    public List<User> ListUserByUsername(List<String> usernameList){
+        List<User> userList=new ArrayList<>();
+        for(String i : usernameList)
+            userList.add(getUserByOther(i));
+        return userList;
+
+    }
+
+    /**
+     * for each username add in a list the specific user
+     * @param usernameList a list of usernames
+     * @return a list of user with the given usernames
+     */public List<User> ListUserByUsernameAndMonth(List<String> usernameList,int month,String username){
+        List<User> userList=new ArrayList<>();
+        for(String i : usernameList)
+            if(Month(month,i,username)==true)
+                  userList.add(getUserByOther(i));
+        return userList;
+    }
+
+    public  Map<Persone,LocalDate> FirstTry1(String username){
+        List<String> friendsUsername=getUserFriendsUsername(username);
+        List<User> list=ListUserByUsername(friendsUsername);
+
+        Map<Persone,String> map=list
+                .stream()
+                 .collect(Collectors.toMap(
+                         y->getPersonByUsername(y.getUsername()),
+                         User::getUsername
+                 ));
+        Map<Persone,LocalDate > map1=
+                map.entrySet()
+                        .stream()
+                        .collect(Collectors.toMap(Map.Entry::getKey,
+                        x->getDate(x.getValue(),username)
+                        ));
+        return map1;
+    }
+
+
+
+    public  Map<Persone,LocalDate> SecondTry1(String username,int month){
+        List<String> friendsUsername=getUserFriendsUsername(username);
+        List<User> list=ListUserByUsernameAndMonth(friendsUsername,month,username);
+
+        Map<Persone,String> map=list
+                .stream()
+                .collect(Collectors.toMap(
+                        y->getPersonByUsername(y.getUsername()),
+                        User::getUsername
+                ));
+        Map<Persone,LocalDate > map1=
+                map.entrySet()
+                        .stream()
+                        .collect(Collectors.toMap(Map.Entry::getKey,
+                                x->getDate(x.getValue(),username)
+                        ));
+        return map1;
     }
 
     /**

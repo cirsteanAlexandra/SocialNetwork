@@ -5,10 +5,11 @@ import Repository.RelationshipRepo;
 import Utils.Exceptions.EntityRepoException;
 import Utils.Exceptions.RelationshipRepoException;
 import Utils.Generator;
+import org.postgresql.util.PSQLException;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,12 +34,12 @@ public class RelationshipDbRepo extends DbRepoId<Long, Relationship> implements 
             rel=getByOther(entity.getFirstUserName(),entity.getSecondUserName());
             if(rel!=null)throw new RelationshipRepoException("There is a relationship with the same usernames");
             else{
-                super.sql= "insert into public.\"Relationship\" values (?, ?, ?)";
+                super.sql= "insert into public.\"Relationship\" values (?, ?, ?,?)";
                 return super.save(entity);
             }
         }
         catch(EntityRepoException e){
-            super.sql= "insert into public.\"Relationship\" values (?, ?, ?)";
+            super.sql= "insert into public.\"Relationship\" values (?, ?, ?,?)";
             return super.save(entity);
         }
     }
@@ -68,7 +69,7 @@ public class RelationshipDbRepo extends DbRepoId<Long, Relationship> implements 
     @Override
     public boolean update(Long id, Relationship entity) {
         if(get(id)==null) throw new RelationshipRepoException("There is no relationship with that id");
-        sql= "update public.\"Relationship\" set id_rel=?,first_username=?,second_username=? where id_rel=?";
+        sql= "update public.\"Relationship\" set id_rel=?,first_username=?,second_username=?, the_data=? where id_rel=?";
         return super.update(id, entity);
 
     }
@@ -170,6 +171,7 @@ public class RelationshipDbRepo extends DbRepoId<Long, Relationship> implements 
     }
 
 
+
     /**
      * This function fills the request( prepared statement) with actual data for the sql
      * command for saving a relationship to repository
@@ -180,8 +182,15 @@ public class RelationshipDbRepo extends DbRepoId<Long, Relationship> implements 
     @Override
     protected void setSaveStatement(PreparedStatement ps, Relationship entity) throws SQLException {
         ps.setLong(1, entity.getId());
+
         ps.setString(2, entity.getFirstUserName());
         ps.setString(3, entity.getSecondUserName());
+        if(entity.getDtf()!=null)
+        ps.setDate(4, Date.valueOf(entity.getDtf()));
+        else
+            ps.setNull(4, Types.DATE);
+
+
     }
 
     /**
@@ -198,7 +207,13 @@ public class RelationshipDbRepo extends DbRepoId<Long, Relationship> implements 
             Long id = ps.getLong("id_rel");
             String fU = ps.getString("first_username");
             String sU = ps.getString("second_username");
-            rel =new Relationship(id,fU,sU);
+            LocalDate the_data;
+            try {
+                the_data= ps.getDate("the_data").toLocalDate();
+            }catch(PSQLException e){
+                the_data=null;
+            }
+            rel =new Relationship(id,fU,sU,the_data);
         }
         return rel;
     }
@@ -234,7 +249,13 @@ public class RelationshipDbRepo extends DbRepoId<Long, Relationship> implements 
             Long id = ps.getLong("id_rel");
             String fU = ps.getString("first_username");
             String sU = ps.getString("second_username");
-            Relationship rel =new Relationship(id,fU,sU);
+            LocalDate lu;
+            try {
+               lu=ps.getDate("the_data").toLocalDate();
+            }catch(PSQLException e){
+               lu=null;
+            }
+            Relationship rel =new Relationship(id,fU,sU,lu);
             relations.add(rel);
         }
         return relations;
@@ -265,7 +286,12 @@ public class RelationshipDbRepo extends DbRepoId<Long, Relationship> implements 
         ps.setLong(1, entity.getId());
         ps.setString(2, entity.getFirstUserName());
         ps.setString(3, entity.getSecondUserName());
-        ps.setLong(4, id);
+        if(entity.getDtf()!=null)
+            ps.setDate(4, Date.valueOf(entity.getDtf()));
+        else
+            ps.setNull(4, Types.DATE);
+        ps.setLong(5, id);
+
     }
 
     /**

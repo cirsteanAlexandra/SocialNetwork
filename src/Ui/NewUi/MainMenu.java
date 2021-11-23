@@ -10,10 +10,12 @@ import Domain.Relationship;
 import Domain.User;
 import Utils.Exceptions.Exception;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 public class MainMenu {
     String currentMode=new String();
@@ -41,6 +43,8 @@ public class MainMenu {
         options.put(7,"- number of cummunities");
         options.put(8,"- the most sociable community");
         options.put(9,"- to exit");
+        options.put(10,"-get friends by username");
+        options.put(11,"-get friends by username and month");
         return options;
     }
 
@@ -92,6 +96,12 @@ public class MainMenu {
                         break;
                     case 9:
                         done = true;
+                        break;
+                    case 10:
+                        getFriendsByUsername();
+                        break;
+                    case 11:
+                        getFriendsByUsernameAndMonth();
                         break;
                     case 404:
                         setCurrentMode();
@@ -146,9 +156,11 @@ public class MainMenu {
     /**
      * adds a relationship
      */
-    private void addRelationship(){
+    private void addRelationship()  {
         long id=0;
-        String username1,username2;
+        int year,month,day;
+        String username1,username2,d;
+
         Scanner scan = new Scanner(System.in);
         System.out.println("Provide all the necesary information: ");
         if(currentMode.equals("admin")){
@@ -160,14 +172,28 @@ public class MainMenu {
         username1=scan.nextLine();
         System.out.println("Second Username :");
         username2=scan.nextLine();
+        System.out.println("Add the date : ");
+        System.out.println("year: ");
+        year=scan.nextInt();
+        System.out.println("month: ");
+        month=scan.nextInt();
+        System.out.println("day: ");
+        day=scan.nextInt();
         try{
             Relationship rel;
-            if(id!=0)rel=new Relationship(id,username1,username2);
-            else rel=new Relationship(username1,username2);
+            if(id!=0)
+                rel=new Relationship(id,username1,username2,
+                   LocalDate.of(year,month,day));
+            else rel=new Relationship(username1,username2,
+                    LocalDate.of(year,month,day));
             Validator vali= ContextValidator.createValidator(Strategy.RELATIONSHIP);
             vali.validate(rel);
             cont.addRelationship(rel);
             System.out.println("Relationship created succesfully");
+
+        }
+        catch (DateTimeException e){
+            System.out.println(e.getMessage());
         }
 
         catch(Exception e){
@@ -321,7 +347,7 @@ public class MainMenu {
         try{
             List<Relationship> list=cont.getAllRelationships();
             for (Relationship el: list){
-                System.out.println(el);
+                System.out.println(el.toString());
             }
         }catch(Exception e){
             System.out.println(e.getDescription());
@@ -346,4 +372,33 @@ public class MainMenu {
         System.out.println("It has "+ list.size()+ " members");
     }
 
-}
+    /**
+     * prints the first, last name, and date
+     * for all the friends of a user by his username
+     */
+    private void getFriendsByUsername(){
+        String username;
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Add the username: ");
+        username=scan.nextLine();
+        //cauta in repo
+        System.out.println(cont.FirstTry1(username));
+
+        }
+
+    private void getFriendsByUsernameAndMonth(){
+        String username;
+        int month;
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Add the username: ");
+        username=scan.nextLine();
+        System.out.println("Add month: ");
+        month=scan.nextInt();
+        //cauta in repo
+        if(month<=0 || month>=13) throw new Exception("Invalid month!!!");
+        System.out.println(cont.SecondTry1(username,month));
+
+    }
+    }
+
+//}

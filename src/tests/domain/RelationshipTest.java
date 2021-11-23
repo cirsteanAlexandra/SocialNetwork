@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -54,16 +55,17 @@ class RelationshipTest {
 
     @Test
     void getTime() {
+
         Relationship rel = new Relationship(1L,"acadea","bucales",
-                LocalDate.of(2018, Month.FEBRUARY, 27));
+                LocalDate.of(2018, 02, 27));
+
         assertEquals(rel.getDtf().toString(), "2018-02-27");
     }
-
     @Test
     void setTime() {
         Relationship rel = new Relationship(1L,"acadea","bucales",
-                LocalDate.of(2018, Month.FEBRUARY, 27));
-        rel.setDtf( LocalDate.of(2019, Month.FEBRUARY, 10));
+                LocalDate.of(2018, 02, 27));
+        rel.setDtf( LocalDate.of(2019, 02, 10));
         assertEquals(rel.getDtf().toString(), "2019-02-10");
     }
     @Test
@@ -93,10 +95,12 @@ class RelationshipTest {
                     '}');
 
         rel.setId(1L);
+        rel.setDtf(LocalDate.of(2020,12,12));
         assertEquals(rel.toString(),"Relationship{" +
                 "id= "+ "1" + " between " +
                 '\''+ "acadea" + '\'' + " and " +
                 '\'' + "bucales" + '\'' +
+                " started at  2020-12-12"+
                 '}');
     }
 
