@@ -144,6 +144,7 @@ public class UserDbRepo extends DbRepoId<Long, User> implements UserRepo {
         return super.getByOther(username);
     }
 
+
     /**
      * Generates an id for an entity
      */

@@ -17,6 +17,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -43,9 +44,13 @@ class MainControllerTest {
         repoU.save(new User(10L,"acadea",new Persone(1L,"wewe","weew")));
 
         RelationshipDbRepo repo=new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
-        repo.save(new Relationship(1L,"mama","mea"));
-        repo.save(new Relationship(2L,"biscuit","mama"));
-        repo.save(new Relationship(3L,"macaron","mea"));
+        repo.save(new Relationship(1L,"mama","mea",LocalDate.of(
+                2021,11,21
+        )));
+        repo.save(new Relationship(2L,"biscuit","mama",LocalDate.of(
+                2021,11,21)));
+        repo.save(new Relationship(3L,"macaron","mea",LocalDate.of(
+                2021,11,21)));
     }
 
     @AfterEach
@@ -131,7 +136,8 @@ class MainControllerTest {
 
         MainController cont= new MainController(contU,contR,contP);
 
-        assertTrue(cont.addRelationship(new Relationship("blah","meh")));
+        assertTrue(cont.addRelationship(new Relationship(6L,"blah","meh",
+                LocalDate.of(2020,11,21))));
         assertEquals(contR.getSize(),4);
         assertEquals(contU.getSize(),10);
         assertEquals(contP.getSize(),2);
@@ -237,8 +243,10 @@ class MainControllerTest {
 
         MainController cont= new MainController(contU,contR,contP);
 
-        cont.addRelationship(new Relationship("mama","noua"));
-        cont.addRelationship(new Relationship("mama","belea"));
+        cont.addRelationship(new Relationship(4L,"mama","noua",
+                LocalDate.of(2020,11,21)));
+        cont.addRelationship(new Relationship(5L,"mama","belea",
+                LocalDate.of(2020,11,21)));
 
         assertTrue(cont.removeByUserId(1L));
         assertEquals(contR.getSize(),1);
@@ -304,8 +312,10 @@ class MainControllerTest {
 
         MainController cont= new MainController(contU,contR,contP);
 
-        cont.addRelationship(new Relationship(5L,"mama","noua"));
-        cont.addRelationship(new Relationship(6L,"mama","belea"));
+        cont.addRelationship(new Relationship(5L,"mama","noua",
+                LocalDate.of(2020,11,21)));
+        cont.addRelationship(new Relationship(6L,"mama","belea",
+                LocalDate.of(2020,11,21)));
 
         assertTrue(cont.removeByRelationshipId(5L));
         assertEquals(contR.getSize(),4);
@@ -349,8 +359,10 @@ class MainControllerTest {
 
         MainController cont= new MainController(contU,contR,contP);
 
-        cont.addRelationship(new Relationship("mama","noua"));
-        cont.addRelationship(new Relationship("mama","belea"));
+        cont.addRelationship(new Relationship(12L,"mama","noua",
+        LocalDate.of(2020,11,21)));
+        cont.addRelationship(new Relationship(22L,"mama","belea",
+                LocalDate.of(2020,11,21)));
 
         assertTrue(cont.removeUserByUsername("mama"));
         assertEquals(contR.getSize(),1);
@@ -443,8 +455,10 @@ class MainControllerTest {
 
         MainController cont= new MainController(contU,contR,contP);
 
-        cont.addRelationship(new Relationship(5L,"mama","noua"));
-        cont.addRelationship(new Relationship(6L,"mama","belea"));
+        cont.addRelationship(new Relationship(5L,"mama","noua",
+                LocalDate.of(2020,11,21)));
+        cont.addRelationship(new Relationship(6L,"mama","belea",
+                LocalDate.of(2020,11,21)));
 
         assertTrue(cont.removeRelationshipByUsernames("belea","mama"));
         assertEquals(contR.getSize(),4);
@@ -680,7 +694,8 @@ class MainControllerTest {
         List<Relationship> list=cont.getAllRelationships();
         assertEquals(list.size(),3);
 
-        Relationship rel= new Relationship(1L,"mama","mea");
+        Relationship rel= new Relationship(1L,"mama","mea",
+                LocalDate.of(2021,11,21));
         assertEquals(list.get(0),rel);
     }
 
