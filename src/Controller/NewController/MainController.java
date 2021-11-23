@@ -22,6 +22,7 @@ public class MainController {
     RelationshipController contR;
     PersoneController contP;
     MessageController contM;
+    RequestsController contRQ;
 
     public MainController(UserController contU, RelationshipController contR, PersoneController contP) {
         this.contU = contU;
@@ -44,6 +45,14 @@ public class MainController {
         this.contP = contP;
         this.contM = contM;
 
+    }
+
+    public MainController(UserController contU, RelationshipController contR, PersoneController contP, MessageController contM, RequestsController contRQ) {
+        this.contU = contU;
+        this.contR = contR;
+        this.contP = contP;
+        this.contM = contM;
+        this.contRQ = contRQ;
     }
 
     /**
@@ -470,4 +479,37 @@ public class MainController {
         return true;
     }
 
+    public List<Relationship> getAllRequests(){
+        return contRQ.getAll();
+    }
+
+    //lista de usernami care au trimis cereri de prietenie
+    public List<String> getFriendshipsRequests(String username){
+
+        List<String> list=new ArrayList<>();
+        for(Relationship r: contRQ.getAll())
+            if(r.getFirstUserName().equals(username) && r.getStatus().equals("pending"))
+                list.add(r.getSecondUserName());
+
+        return list;
+    }
+
+    public void UpdateStatusRequest(String status,String username){
+        Relationship rel=getRequestByUsername(username);
+        if(status.equals("accepted")){
+            Relationship rel1=new Relationship(rel.getId(),rel.getFirstUserName(),rel.getSecondUserName(),rel.getDtf());
+            addRelationship(rel1);
+        }
+        rel.setStatus(status);
+        contRQ.UpdateStatus(rel.getId(),rel);
+        //apeleaza pentru update
+
+    }
+
+    public Relationship getRequestByUsername(String username){
+        for(Relationship r: contRQ.getAll())
+            if(r.getSecondUserName().equals(username))
+                return r;
+            return null;
+    }
 }

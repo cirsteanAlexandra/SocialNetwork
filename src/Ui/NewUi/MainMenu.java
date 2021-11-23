@@ -51,6 +51,7 @@ public class MainMenu {
 
         options.put(10,"-get friends by username");
         options.put(11,"-get friends by username and month");
+        options.put(12,"-ceva get pus numa asa");
 
 
         return options;
@@ -111,6 +112,12 @@ public class MainMenu {
                         break;
                     case 11:
                         getFriendsByUsernameAndMonth();
+                        break;
+                    case 12:
+                        //System.out.println(cont.getAllRequests());
+                        //System.out.println(cont.getFriendshipsRequests("allex"));
+                        //List<String> stringList=cont.getFriendshipsRequests("allex");
+                        //cont.UpdateStatusRequest("accepted","ab");
                         break;
 
                     case 404:

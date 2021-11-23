@@ -13,6 +13,7 @@ public class Relationship extends Entity<Long>{
     private String userName2;
 
     private LocalDate dtf;
+    private String status;
 
 
     public Relationship(String firstUserName, String secondUserName) {
@@ -30,10 +31,16 @@ public class Relationship extends Entity<Long>{
         super.setId(id);
     }
 
+
+
     public Relationship(String firstUserName, String secondUserName,LocalDate dtf){
         initialize2(firstUserName,secondUserName,dtf);
     }
 
+    public Relationship(Long id,String firstUserName, String secondUserName,LocalDate dtf,String status){
+        initialize3(firstUserName,secondUserName,dtf,status);
+        super.setId(id);
+    }
 
     /**
      * Initializez the fields of the class
@@ -49,6 +56,13 @@ public class Relationship extends Entity<Long>{
         this.userName1 = firstUserName;
         this.userName2 = secondUserName;
         this.dtf=dtf;
+    }
+
+    private void initialize3(String firstUserName, String secondUserName,LocalDate dtf,String status){
+        this.userName1 = firstUserName;
+        this.userName2 = secondUserName;
+        this.dtf=dtf;
+        this.status=status;
     }
 
 
@@ -102,6 +116,9 @@ public class Relationship extends Entity<Long>{
         this.dtf = dtf;
     }
 
+    public String getStatus() { return status;}
+
+    public void setStatus(String status) { this.status = status;}
 
     @Override
     public boolean equals(Object o) {
@@ -129,7 +146,7 @@ public class Relationship extends Entity<Long>{
 
         if (getId()!=null )
 
-        if (getId()!=null)
+        if (getId()!=null && getStatus()==null)
 
             return "Relationship{" +
                 "id= "+ super.getId().toString() + " between "
@@ -139,6 +156,18 @@ public class Relationship extends Entity<Long>{
                 ' '+ "started at " + ' '+
                  dtf +
                 '}';
+
+        if (getId()!=null && getStatus()!=null)
+            return "Relationship{" +
+                    "id= "+ super.getId().toString() + " between "
+                    +'\''+ userName1 + '\'' + " and " +
+                    '\'' + userName2 + '\'' +
+                    ' '+ "started at " + ' '+
+                    dtf + " status: " + status+
+                    '}';
+
+
+
         return "Relationship{" + " between "
                 +'\''+ userName1 + '\'' + " and " +
                 '\'' + userName2 + '\''+
