@@ -490,15 +490,15 @@ public class MainController {
 
         List<String> list=new ArrayList<>();
         for(Relationship r: contRQ.getAll())
-            if(r.getFirstUserName().equals(username) && r.getStatus().equals("pending"))
-                list.add(r.getSecondUserName());
+            if(r.getSecondUserName().equals(username) && r.getStatus().equals("pending"))
+                list.add(r.getFirstUserName());
 
         return list;
     }
 
-    public void UpdateStatusRequest(String status,String username){
-        Relationship rel=getRequestByUsername(username);
-        if(status.equals("accepted")){
+    public void UpdateStatusRequest(String status,String receiver,String sender){
+        Relationship rel=getRequestByUsername(receiver,sender);
+        if(status.equals("accept")){
             Relationship rel1=new Relationship(rel.getId(),rel.getFirstUserName(),rel.getSecondUserName(),rel.getDtf());
             addRelationship(rel1);
         }
@@ -508,10 +508,22 @@ public class MainController {
 
     }
 
-    public Relationship getRequestByUsername(String username){
+    public Relationship getRequestByUsername(String receiver,String sender){
         for(Relationship r: contRQ.getAll())
-            if(r.getSecondUserName().equals(username))
+            if(r.getSecondUserName().equals(sender) && r.getFirstUserName().equals(receiver))
                 return r;
             return null;
+    }
+
+    public boolean AddRequest(Relationship rel){
+        for(Relationship r: contRQ.getAll())
+            if(r.getFirstUserName().equals(rel.getFirstUserName())
+            && r.getSecondUserName().equals(rel.getSecondUserName())
+            && r.getDtf().equals(rel.getDtf())
+            && r.getStatus().equals(rel.getStatus()))
+                throw new RelationshipRepoException("There is a request to this user :( .");
+
+            contRQ.add(rel);
+            return true;
     }
 }

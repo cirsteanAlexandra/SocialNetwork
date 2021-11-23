@@ -42,6 +42,11 @@ public class Relationship extends Entity<Long>{
         super.setId(id);
     }
 
+    public Relationship(String firstUserName, String secondUserName,LocalDate dtf,String status){
+        initialize3(firstUserName,secondUserName,dtf,status);
+
+    }
+
     /**
      * Initializez the fields of the class
      * @param firstUserName

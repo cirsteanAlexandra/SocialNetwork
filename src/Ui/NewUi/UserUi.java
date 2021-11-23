@@ -6,9 +6,11 @@ import Controller.Validator.Strategy;
 import Controller.Validator.Validator;
 import Domain.Message;
 import Domain.Persone;
+import Domain.Relationship;
 import Domain.User;
 import Utils.Exceptions.Exception;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -42,10 +44,11 @@ public class UserUi {
         am scris un comentariu
         */
         options.put(1,"- to see friends list");
-        options.put(2,"- to see all friend requests");
-        options.put(3,"- to accept a friend request");
-        options.put(4,"- to reject a friend request");
-        options.put(5,"- to exit");
+        options.put(2,"- to send a friend request");
+        options.put(3,"- to see all friend requests");
+        options.put(4,"- to accept a friend request");
+        options.put(5,"- to reject a friend request");
+        options.put(6,"- to exit");
         return options;
     }
 
@@ -53,7 +56,7 @@ public class UserUi {
     private Map<Integer,String> generateConversationListOptions(){
         Map<Integer,String> options= new HashMap();
         /*
-        am scris un comentariu
+        am scris un comentariu ador!!!
         */
         options.put(1,"- to see the history of a conversation");
         options.put(2,"- to sent a message");
@@ -132,7 +135,19 @@ public class UserUi {
                     case 1:
                         seeFriendsList();
                         break;
+                    case 2:
+                        SendFriendRequest();
+                        break;
+                    case 3:
+                        GetRequestsForUser();
+                        break;
+                    case 4:
+                        AcceptFriendsRequest();
+                        break;
                     case 5:
+                        CancelFriendsRequest();
+                        break;
+                    case 6:
                         done=true;
                         break;
 
@@ -266,4 +281,52 @@ public class UserUi {
             System.out.println(e.getDescription());
         }
     }
+
+    public void GetRequestsForUser(){
+
+        List<String> list=cont.getFriendshipsRequests(user.getUsername());
+        if(list.isEmpty())
+            System.out.println("There are no friend requests for this user :( .");
+        else {
+            for (String s : list) {
+                System.out.println(s);
+            }
+        }
+    }
+
+    public void AcceptFriendsRequest(){
+
+        Scanner scan=new Scanner(System.in);
+        System.out.println("Add username to accept: ");
+        String username= scan.nextLine();
+        cont.UpdateStatusRequest("accept",username,user.getUsername());
+
+    }
+
+    public void CancelFriendsRequest(){
+
+        Scanner scan=new Scanner(System.in);
+        System.out.println("Add username to cancel: ");
+        String username= scan.nextLine();
+        cont.UpdateStatusRequest("cancel",username,user.getUsername());
+
+
+    }
+
+
+    public void SendFriendRequest(){
+        Scanner scan=new Scanner(System.in);
+        System.out.println("Add username to add friend: ");
+        String username= scan.nextLine();
+        Relationship rel=new Relationship(user.getUsername(),username, LocalDate.now(),"pending");
+        try {
+            cont.AddRequest(rel);
+
+            System.out.println("Request sent successfully ! <3");
+        }
+        catch (Exception e){
+            System.out.println(e.getDescription());
+        }
+    }
+
 }

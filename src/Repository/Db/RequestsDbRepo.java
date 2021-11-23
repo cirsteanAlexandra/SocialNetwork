@@ -95,7 +95,12 @@ public class RequestsDbRepo extends DbRepoId<Long, Relationship> implements Repo
 
     @Override
     protected List<Long> getAllIdStatement(ResultSet ps) throws SQLException {
-        return null;
+        List<Long> listId=new ArrayList<>();
+        while (ps.next()) {
+            Long id = ps.getLong("id_r");
+            listId.add(id);
+        }
+        return listId;
     }
 
     @Override
