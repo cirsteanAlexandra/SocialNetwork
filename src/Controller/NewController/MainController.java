@@ -485,7 +485,7 @@ public class MainController {
         return contRQ.getAll();
     }
 
-    //lista de usernami care au trimis cereri de prietenie
+    //lista de usernames care au trimis cereri de prietenie
     public List<String> getFriendshipsRequests(String username){
 
         List<String> list=new ArrayList<>();
@@ -516,14 +516,26 @@ public class MainController {
     }
 
     public boolean AddRequest(Relationship rel){
-        for(Relationship r: contRQ.getAll())
-            if(r.getFirstUserName().equals(rel.getFirstUserName())
-            && r.getSecondUserName().equals(rel.getSecondUserName())
-            && r.getDtf().equals(rel.getDtf())
-            && r.getStatus().equals(rel.getStatus()))
-                throw new RelationshipRepoException("There is a request to this user :( .");
+        for(Relationship r: contRQ.getAll()) {
+            if (r.getFirstUserName().equals(rel.getFirstUserName())
+                    && r.getSecondUserName().equals(rel.getSecondUserName())) {
+                if (r.getStatus().equals(rel.getStatus()))
+                    throw new RelationshipRepoException("There is a request to this user :( .");
+                if (r.getStatus().equals("accept"))
+                    throw new RelationshipRepoException("The request was already accepted. :)");
+            }
+            if (r.getFirstUserName().equals(rel.getSecondUserName())
+                    && r.getSecondUserName().equals(rel.getFirstUserName())) {
+                if (r.getStatus().equals(rel.getStatus()))
+                    throw new RelationshipRepoException("There is a request to this user :( .");
+                if (r.getStatus().equals("accept"))
+                    throw new RelationshipRepoException("The request was already accepted. :)");
+            }
+        }
 
-            contRQ.add(rel);
+
+
+        contRQ.add(rel);
             return true;
     }
 }

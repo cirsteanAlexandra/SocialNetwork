@@ -142,10 +142,21 @@ public class UserUi {
                         GetRequestsForUser();
                         break;
                     case 4:
-                        AcceptFriendsRequest();
+                        try {
+                            AcceptFriendsRequest();
+                        }
+                        catch (Exception e) {
+                            System.out.println(e.getDescription());
+                        }
+
                         break;
                     case 5:
+                        try {
                         CancelFriendsRequest();
+                        }
+                        catch (Exception e) {
+                            System.out.println(e.getDescription());
+                        }
                         break;
                     case 6:
                         done=true;
@@ -299,6 +310,14 @@ public class UserUi {
         Scanner scan=new Scanner(System.in);
         System.out.println("Add username to accept: ");
         String username= scan.nextLine();
+        int ok=0;
+        List<String> list=cont.getFriendshipsRequests(user.getUsername());
+        for(String s: list)
+            if(s.equals(username))
+                ok=1;
+        if(ok==0)
+            throw new Exception("this user does not exist in the request list :(");
+
         cont.UpdateStatusRequest("accept",username,user.getUsername());
 
     }
@@ -308,6 +327,14 @@ public class UserUi {
         Scanner scan=new Scanner(System.in);
         System.out.println("Add username to cancel: ");
         String username= scan.nextLine();
+        int ok=0;
+        List<String> list=cont.getFriendshipsRequests(user.getUsername());
+        for(String s: list)
+            if(s.equals(username))
+                ok=1;
+        if(ok==0)
+            throw new Exception("this user does not exist in the request list :(");
+
         cont.UpdateStatusRequest("cancel",username,user.getUsername());
 
 
