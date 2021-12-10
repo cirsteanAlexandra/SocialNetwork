@@ -2,6 +2,7 @@ package Repository.Db;
 
 import Domain.Relationship;
 import Repository.Repository;
+import Utils.Exceptions.EntityRepoException;
 import Utils.Exceptions.RelationshipRepoException;
 import Utils.Generator;
 import org.postgresql.util.PSQLException;
@@ -41,6 +42,30 @@ public class RequestsDbRepo extends DbRepoId<Long, Relationship> implements Repo
         if(get(id)==null) throw new RelationshipRepoException("There is no relationship with that id");
         sql= "update public.\"Requests\" set id_r=?,first_username=?,second_username=?, the_date=? , status=? where id_r=?";
         return super.update(id, entity);
+    }
+
+    /**
+     * Deletes all the data from the repository
+     * @throws EntityRepoException if the connection to the repository fails or there ar other
+     * problems on processing the data
+     */
+    @Override
+    protected void deleteAll() {
+        sql= "delete from public.\"Requests\"";
+        super.deleteAll();
+    }
+
+    /**
+     * Retrieves the corespondent relationship with that id
+     * @param id the id of the relationship to be found
+     * @return the relationship that has that id or null if there is no relationship with that id
+     * @throws EntityRepoException if the connection to the repository fails or there ar other
+     * problems on retrieving the data
+     */
+    @Override
+    public Relationship get(Long id) {
+        sql= "select * from public.\"Requests\" where id_r="+id.toString();
+        return super.get(id);
     }
 
     @Override

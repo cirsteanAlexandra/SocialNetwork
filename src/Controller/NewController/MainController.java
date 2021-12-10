@@ -91,7 +91,7 @@ public class MainController {
      * @return true if the user has been deleted with success, false otherwise
      * @throws EntityRepoException if there are errors during the removing process
      */
-    public boolean removeByUserId(Long id) {
+    public boolean removeUserById(Long id) {
         User user= contU.getById(id);
         if(user==null) throw new UserRepoException("There isnt an user with that if");
         contR.deleteAllRelationsByUsername(user.getUsername());
@@ -106,7 +106,7 @@ public class MainController {
      * @return true if the relationship has been deleted with success, false otherwise
      * @throws EntityRepoException if there are errors during the removing process
      */
-    public boolean removeByRelationshipId(Long id) {
+    public boolean removeRelationshipById(Long id) {
         contR.removeById(id);
         return true;
     }
@@ -532,9 +532,6 @@ public class MainController {
                     throw new RelationshipRepoException("The request was already accepted. :)");
             }
         }
-
-
-
         contRQ.add(rel);
             return true;
     }

@@ -16,9 +16,9 @@ import Utils.Exceptions.UserRepoException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import tests.Connections;
 
 import java.time.LocalDate;
-
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -28,11 +28,11 @@ class MainControllerTest {
 
     @BeforeEach
     void setUp() {
-        PersoneDbRepo repoP=new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
+        PersoneDbRepo repoP=new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
         repoP.save(new Persone(1L,"wewe","weew"));
         repoP.save(new Persone(2L,"weew","erui"));
 
-        UserRepo repoU=new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
+        UserRepo repoU=new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
         repoU.save(new User(1L,"mama",new Persone(1L,"wewe","weew")));
         repoU.save(new User(2L,"mea",new Persone(1L,"wewe","weew")));
         repoU.save(new User(3L,"biscuit",new Persone(1L,"wewe","weew")));
@@ -45,7 +45,7 @@ class MainControllerTest {
         repoU.save(new User(10L,"acadea",new Persone(1L,"wewe","weew")));
 
 
-        RelationshipDbRepo repo=new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
+        RelationshipDbRepo repo=new RelationshipDbRepo(Connections.URL,Connections.Username,Connections.Password);
         repo.save(new Relationship(1L,"mama","mea",LocalDate.of(
                 2021,11,21
         )));
@@ -59,13 +59,13 @@ class MainControllerTest {
 
     @AfterEach
     void tearDown() {
-        RelationshipDbRepo repo=new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
+        RelationshipDbRepo repo=new RelationshipDbRepo(Connections.URL,Connections.Username,Connections.Password);
         repo.restoreToDefault();
 
-        UserDbRepo repoU=new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
+        UserDbRepo repoU=new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
         repoU.restoreToDefault();
 
-        PersoneDbRepo repoP=new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
+        PersoneDbRepo repoP=new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
         repoP.restoreToDefault();
     }
@@ -73,9 +73,9 @@ class MainControllerTest {
     @Test
     void addUserUnchangedPersone() {
 
-        UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
+        UserRepo repoU= new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        PersoneDbRepo repoP= new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        RelationshipRepo repoR= new RelationshipDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
         UserController contU=new UserController(repoU);
         RelationshipController contR=new RelationshipController((RelationshipDbRepo) repoR);
@@ -90,9 +90,9 @@ class MainControllerTest {
 
     @Test
     void addUserChangedPersone() {
-        UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
+        UserRepo repoU= new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        PersoneDbRepo repoP= new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        RelationshipRepo repoR= new RelationshipDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
 
         UserController contU=new UserController(repoU);
@@ -109,9 +109,9 @@ class MainControllerTest {
     @Test
     void addExistingUser() {
 
-        UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
+        UserRepo repoU= new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        PersoneDbRepo repoP= new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        RelationshipRepo repoR= new RelationshipDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
 
 
@@ -137,9 +137,9 @@ class MainControllerTest {
     @Test
     void addRelationship() {
 
-        UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
+        UserRepo repoU= new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        PersoneDbRepo repoP= new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        RelationshipRepo repoR= new RelationshipDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
 
         UserController contU=new UserController(repoU);
@@ -161,9 +161,9 @@ class MainControllerTest {
     @Test
     void addRelationshipInexistingFirstUser() {
 
-        UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
+        UserRepo repoU= new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        PersoneDbRepo repoP= new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        RelationshipRepo repoR= new RelationshipDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
 
 
@@ -185,9 +185,9 @@ class MainControllerTest {
 
     @Test
     void addRelationshipInexistingSecondUser() {
-        UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
+        UserRepo repoU= new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        PersoneDbRepo repoP= new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        RelationshipRepo repoR= new RelationshipDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
 
 
@@ -209,9 +209,9 @@ class MainControllerTest {
 
     @Test
     void addExistingRelationship() {
-        UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
+        UserRepo repoU= new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        PersoneDbRepo repoP= new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        RelationshipRepo repoR= new RelationshipDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
 
 
@@ -234,9 +234,9 @@ class MainControllerTest {
     @Test
     void addExistingInvertRelationship() {
 
-        UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
+        UserRepo repoU= new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        PersoneDbRepo repoP= new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        RelationshipRepo repoR= new RelationshipDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
 
         UserController contU=new UserController(repoU);
@@ -258,9 +258,9 @@ class MainControllerTest {
     @Test
     void removeByUserId() {
 
-        UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
+        UserRepo repoU= new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        PersoneDbRepo repoP= new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        RelationshipRepo repoR= new RelationshipDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
 
         UserController contU=new UserController(repoU);
@@ -277,7 +277,7 @@ class MainControllerTest {
 
 
 
-        assertTrue(cont.removeByUserId(1L));
+        assertTrue(cont.removeUserById(1L));
         assertEquals(contR.getSize(),1);
         assertEquals(contU.getSize(),9);
         assertEquals(contP.getSize(),2);
@@ -285,9 +285,9 @@ class MainControllerTest {
 
     @Test
     void removeByUserIdRemovePersone() {
-        UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
+        UserRepo repoU= new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        PersoneDbRepo repoP= new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        RelationshipRepo repoR= new RelationshipDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
 
         UserController contU=new UserController(repoU);
@@ -298,7 +298,7 @@ class MainControllerTest {
 
         int lenght=contU.getSize();
         for(Long i=1L;i<=lenght;i++){
-            cont.removeByUserId(i);
+            cont.removeUserById(i);
         }
 
         assertEquals(contR.getSize(),0);
@@ -309,9 +309,9 @@ class MainControllerTest {
     @Test
     void removeByInexistedUserId() {
 
-        UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
+        UserRepo repoU= new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        PersoneDbRepo repoP= new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        RelationshipRepo repoR= new RelationshipDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
 
         UserController contU=new UserController(repoU);
@@ -320,7 +320,7 @@ class MainControllerTest {
 
         MainController cont= new MainController(contU,contR,contP);
         try{
-            assertTrue(cont.removeByUserId(15L));
+            assertTrue(cont.removeUserById(15L));
             assertTrue(false);
         }catch(Exception e){
             assertTrue(true);
@@ -335,9 +335,9 @@ class MainControllerTest {
     @Test
     void removeByRelationshipId() {
 
-        UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
+        UserRepo repoU= new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        PersoneDbRepo repoP= new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        RelationshipRepo repoR= new RelationshipDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
 
         UserController contU=new UserController(repoU);
@@ -354,7 +354,7 @@ class MainControllerTest {
 
 
 
-        assertTrue(cont.removeByRelationshipId(5L));
+        assertTrue(cont.removeRelationshipById(5L));
         assertEquals(contR.getSize(),4);
         assertEquals(contU.getSize(),10);
         assertEquals(contP.getSize(),2);
@@ -363,9 +363,9 @@ class MainControllerTest {
     @Test
     void removeByInexistedRelationshipdId() {
 
-        UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
+        UserRepo repoU= new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        PersoneDbRepo repoP= new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        RelationshipRepo repoR= new RelationshipDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
 
 
@@ -375,7 +375,7 @@ class MainControllerTest {
 
         MainController cont= new MainController(contU,contR,contP);
         try{
-            assertTrue(cont.removeByRelationshipId(15L));
+            assertTrue(cont.removeRelationshipById(15L));
             assertTrue(false);
         }catch(Exception e){
             assertTrue(true);
@@ -390,9 +390,9 @@ class MainControllerTest {
     @Test
     void removeUserByUsername() {
 
-        UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
+        UserRepo repoU= new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        PersoneDbRepo repoP= new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        RelationshipRepo repoR= new RelationshipDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
 
         UserController contU=new UserController(repoU);
@@ -418,9 +418,9 @@ class MainControllerTest {
     @Test
     void removeUserByUsernameRemovePersone() {
 
-        UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
+        UserRepo repoU= new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        PersoneDbRepo repoP= new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        RelationshipRepo repoR= new RelationshipDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
 
         UserController contU=new UserController(repoU);
@@ -443,9 +443,9 @@ class MainControllerTest {
     @Test
     void removeInexistingUserByUsername() {
 
-        UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
+        UserRepo repoU= new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        PersoneDbRepo repoP= new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        RelationshipRepo repoR= new RelationshipDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
 
 
@@ -471,9 +471,9 @@ class MainControllerTest {
     @Test
     void removeX2User() {
 
-        UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
+        UserRepo repoU= new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        PersoneDbRepo repoP= new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        RelationshipRepo repoR= new RelationshipDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
 
         UserController contU=new UserController(repoU);
@@ -482,7 +482,7 @@ class MainControllerTest {
 
         MainController cont= new MainController(contU,contR,contP);
         try{
-            assertTrue(cont.removeByUserId(1L));
+            assertTrue(cont.removeUserById(1L));
             assertTrue(cont.removeUserByUsername("mama"));
             assertTrue(false);
         }catch(Exception e){
@@ -498,9 +498,9 @@ class MainControllerTest {
     @Test
     void removeRelationshipByUsernames() {
 
-        UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
+        UserRepo repoU= new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        PersoneDbRepo repoP= new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        RelationshipRepo repoR= new RelationshipDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
 
         UserController contU=new UserController(repoU);
@@ -525,9 +525,9 @@ class MainControllerTest {
     @Test
     void removeInexistedRelationshipByUsernamesd() {
 
-        UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
+        UserRepo repoU= new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        PersoneDbRepo repoP= new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        RelationshipRepo repoR= new RelationshipDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
 
         UserController contU=new UserController(repoU);
@@ -551,9 +551,9 @@ class MainControllerTest {
     @Test
     void removeX2Relationship() {
 
-        UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
+        UserRepo repoU= new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        PersoneDbRepo repoP= new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        RelationshipRepo repoR= new RelationshipDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
 
         UserController contU=new UserController(repoU);
@@ -562,7 +562,7 @@ class MainControllerTest {
 
         MainController cont= new MainController(contU,contR,contP);
         try{
-            cont.removeByRelationshipId(1L);
+            cont.removeRelationshipById(1L);
             assertTrue(cont.removeRelationshipByUsernames("mama","mea"));
             assertTrue(false);
         }catch(Exception e){
@@ -577,9 +577,9 @@ class MainControllerTest {
 
     @Test
     void getUserById() {
-        UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
+        UserRepo repoU= new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        PersoneDbRepo repoP= new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        RelationshipRepo repoR= new RelationshipDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
 
         UserController contU=new UserController(repoU);
@@ -594,9 +594,9 @@ class MainControllerTest {
 
     @Test
     void getInexistedUserById() {
-        UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
+        UserRepo repoU= new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        PersoneDbRepo repoP= new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        RelationshipRepo repoR= new RelationshipDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
 
 
@@ -617,9 +617,9 @@ class MainControllerTest {
     @Test
     void getRelationshipById() {
 
-        UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
+        UserRepo repoU= new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        PersoneDbRepo repoP= new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        RelationshipRepo repoR= new RelationshipDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
 
         UserController contU=new UserController(repoU);
@@ -635,9 +635,9 @@ class MainControllerTest {
     @Test
     void getInexistedRelationshipById() {
 
-        UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
+        UserRepo repoU= new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        PersoneDbRepo repoP= new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        RelationshipRepo repoR= new RelationshipDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
 
         UserController contU=new UserController(repoU);
@@ -657,9 +657,9 @@ class MainControllerTest {
     @Test
     void getUserByOther() {
 
-        UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
+        UserRepo repoU= new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        PersoneDbRepo repoP= new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        RelationshipRepo repoR= new RelationshipDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
 
         UserController contU=new UserController(repoU);
@@ -673,9 +673,9 @@ class MainControllerTest {
 
     @Test
     void getInexistedUserByOther() {
-        UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
+        UserRepo repoU= new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        PersoneDbRepo repoP= new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        RelationshipRepo repoR= new RelationshipDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
 
         UserController contU=new UserController(repoU);
@@ -694,9 +694,9 @@ class MainControllerTest {
 
     @Test
     void getRelationshipByOther() {
-        UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
+        UserRepo repoU= new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        PersoneDbRepo repoP= new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        RelationshipRepo repoR= new RelationshipDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
 
         UserController contU=new UserController(repoU);
@@ -712,9 +712,9 @@ class MainControllerTest {
     @Test
     void getInexistedRelationshipByOther() {
 
-        UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
+        UserRepo repoU= new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        PersoneDbRepo repoP= new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        RelationshipRepo repoR= new RelationshipDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
 
         UserController contU=new UserController(repoU);
@@ -734,9 +734,9 @@ class MainControllerTest {
     @Test
     void getAllUsers() {
 
-        UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
+        UserRepo repoU= new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        PersoneDbRepo repoP= new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        RelationshipRepo repoR= new RelationshipDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
 
         UserController contU=new UserController(repoU);
@@ -756,9 +756,9 @@ class MainControllerTest {
 
     @Test
     void getAllRelationships() {
-        UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
+        UserRepo repoU= new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        PersoneDbRepo repoP= new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        RelationshipRepo repoR= new RelationshipDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
 
         UserController contU=new UserController(repoU);
@@ -780,9 +780,9 @@ class MainControllerTest {
     @Test
     void getUserSize() {
 
-        UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
+        UserRepo repoU= new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        PersoneDbRepo repoP= new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        RelationshipRepo repoR= new RelationshipDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
 
         UserController contU=new UserController(repoU);
@@ -797,9 +797,9 @@ class MainControllerTest {
     @Test
     void getRelationshipSize() {
 
-        UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
-        RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","852456");
+        UserRepo repoU= new UserDbRepo(Connections.URL, Connections.Username,Connections.Password);
+        PersoneDbRepo repoP= new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        RelationshipRepo repoR= new RelationshipDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
         UserController contU=new UserController(repoU);
         RelationshipController contR=new RelationshipController((RelationshipDbRepo) repoR);

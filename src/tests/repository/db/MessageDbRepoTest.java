@@ -12,6 +12,7 @@ import Utils.Exceptions.Exception;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import tests.Connections;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -23,37 +24,37 @@ class MessageDbRepoTest {
 
     @BeforeEach
     void setUp() {
-        PersoneDbRepo repoP=new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+        PersoneDbRepo repoP=new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
         repoP.save(new Persone(1L,"wewe","weew"));
         repoP.save(new Persone(2L,"weew","erui"));
 
-        UserRepo repo=new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+        UserRepo repo=new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
         repo.save(new User(1L,"a",new Persone(1L,"wewe","weew")));
         repo.save(new User(2L,"biscuit",new Persone(1L,"wewe","weew")));
         repo.save(new User(3L,"macaron",new Persone(1L,"wewe","weew")));
         repo.save(new User(4L,"bucalea",new Persone(1L,"wewe","weew")));
         repo.save(new User(5L,"haplea",new Persone(1L,"wewe","weew")));
 
-        MessageRepo repoM=new MessageDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+        MessageRepo repoM=new MessageDbRepo(Connections.URL,Connections.Username,Connections.Password);
         repoM.save(new Message(1L,new User(1L,"a",new Persone(1L,"wewe","weew")),"Morning", Arrays.asList(new User(2L,"biscuit",new Persone(1L,"wewe","weew")),new User(3L,"macaron",new Persone(1L,"wewe","weew"))), LocalDateTime.now()));
     }
 
     @AfterEach
     void tearDown() {
-        MessageDbRepo repoM=new MessageDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+        MessageDbRepo repoM=new MessageDbRepo(Connections.URL,Connections.Username,Connections.Password);
         repoM.restoreToDefault();
 
-        UserDbRepo repo=new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+        UserDbRepo repo=new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
         repo.restoreToDefault();
 
-        PersoneDbRepo repoP=new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+        PersoneDbRepo repoP=new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
         repoP.restoreToDefault();
 
     }
 
     @Test
     void saveSimple() {
-        MessageRepo repoM=new MessageDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+        MessageRepo repoM=new MessageDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
         User user1= new User(1L,"a",new Persone(1L,"wewe","weew"));
         User user2= new User(2L,"biscuit",new Persone(1L,"wewe","weew"));
@@ -63,7 +64,7 @@ class MessageDbRepoTest {
 
     @Test
     void saveToAll() {
-        MessageRepo repoM=new MessageDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+        MessageRepo repoM=new MessageDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
         User user1=new User(1L,"a",new Persone(1L,"wewe","weew"));
         User user2=new User(2L,"biscuit",new Persone(1L,"wewe","weew"));
@@ -78,7 +79,7 @@ class MessageDbRepoTest {
 
     @Test
     void saveWithReplay() {
-        MessageRepo repoM=new MessageDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+        MessageRepo repoM=new MessageDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
         User user1=new User(1L,"a",new Persone(1L,"wewe","weew"));
         User user2=new User(2L,"biscuit",new Persone(1L,"wewe","weew"));
@@ -94,7 +95,7 @@ class MessageDbRepoTest {
 
     @Test
     void saveWithIdSimple(){
-        MessageRepo repoM=new MessageDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+        MessageRepo repoM=new MessageDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
         User user1= new User(1L,"a",new Persone(1L,"wewe","weew"));
         User user2= new User(2L,"biscuit",new Persone(1L,"wewe","weew"));
@@ -104,7 +105,7 @@ class MessageDbRepoTest {
 
     @Test
     void saveWithIdAll(){
-        MessageRepo repoM=new MessageDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+        MessageRepo repoM=new MessageDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
         User user1=new User(1L,"a",new Persone(1L,"wewe","weew"));
         User user2=new User(2L,"biscuit",new Persone(1L,"wewe","weew"));
@@ -118,7 +119,7 @@ class MessageDbRepoTest {
 
     @Test
     void saveExistingId(){
-        MessageRepo repoM=new MessageDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+        MessageRepo repoM=new MessageDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
         User user1= new User(1L,"a",new Persone(1L,"wewe","weew"));
         User user2= new User(2L,"biscuit",new Persone(1L,"wewe","weew"));
@@ -135,7 +136,7 @@ class MessageDbRepoTest {
 
     @Test
     void getSimple() {
-        MessageRepo repoM=new MessageDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+        MessageRepo repoM=new MessageDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
         User user1= new User(1L,"a",new Persone(1L,"wewe","weew"));
         User user2= new User(2L,"biscuit",new Persone(1L,"wewe","weew"));
@@ -147,7 +148,7 @@ class MessageDbRepoTest {
 
     @Test
     void getMultiple() {
-        MessageRepo repoM=new MessageDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+        MessageRepo repoM=new MessageDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
         User user1= new User(1L,"a",new Persone(1L,"wewe","weew"));
         User user2= new User(2L,"biscuit",new Persone(1L,"wewe","weew"));
@@ -161,7 +162,7 @@ class MessageDbRepoTest {
 
     @Test
     void getInexistentId() {
-        MessageRepo repoM=new MessageDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+        MessageRepo repoM=new MessageDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
         User user1= new User(1L,"a",new Persone(1L,"wewe","weew"));
         User user2= new User(2L,"biscuit",new Persone(1L,"wewe","weew"));
@@ -175,7 +176,7 @@ class MessageDbRepoTest {
 
     @Test
     void updateMessageAllSingleIdMEss() {
-        MessageRepo repoM=new MessageDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+        MessageRepo repoM=new MessageDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
         User user1= new User(1L,"a",new Persone(1L,"wewe","weew"));
         User user2= new User(2L,"biscuit",new Persone(1L,"wewe","weew"));
@@ -192,7 +193,7 @@ class MessageDbRepoTest {
 
     @Test
     void updateSingleMessage() {
-        MessageRepo repoM=new MessageDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+        MessageRepo repoM=new MessageDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
         User user1= new User(1L,"a",new Persone(1L,"wewe","weew"));
         User user2= new User(2L,"biscuit",new Persone(1L,"wewe","weew"));
@@ -209,7 +210,7 @@ class MessageDbRepoTest {
 
     @Test
     void deleteSingleMessage() {
-        MessageRepo repoM=new MessageDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+        MessageRepo repoM=new MessageDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
         User user1= new User(1L,"a",new Persone(1L,"wewe","weew"));
         User user2= new User(2L,"biscuit",new Persone(1L,"wewe","weew"));
@@ -221,7 +222,7 @@ class MessageDbRepoTest {
 
     @Test
     void deleteMessageAll() {
-        MessageRepo repoM=new MessageDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+        MessageRepo repoM=new MessageDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
         User user1= new User(1L,"a",new Persone(1L,"wewe","weew"));
         User user2= new User(2L,"biscuit",new Persone(1L,"wewe","weew"));
@@ -236,7 +237,7 @@ class MessageDbRepoTest {
 
     @Test
     void deleteInexistent() {
-        MessageRepo repoM=new MessageDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+        MessageRepo repoM=new MessageDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
         User user1= new User(1L,"a",new Persone(1L,"wewe","weew"));
         User user2= new User(2L,"biscuit",new Persone(1L,"wewe","weew"));
@@ -253,7 +254,7 @@ class MessageDbRepoTest {
 
     @Test
     void getSize() {
-        MessageRepo repoM=new MessageDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+        MessageRepo repoM=new MessageDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
         User user1= new User(1L,"a",new Persone(1L,"wewe","weew"));
         User user2= new User(2L,"biscuit",new Persone(1L,"wewe","weew"));
@@ -277,7 +278,7 @@ class MessageDbRepoTest {
 
     @Test
     void getAll() {
-        MessageRepo repoM=new MessageDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+        MessageRepo repoM=new MessageDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
         User user1= new User(1L,"a",new Persone(1L,"wewe","weew"));
         User user2= new User(2L,"biscuit",new Persone(1L,"wewe","weew"));
@@ -304,7 +305,7 @@ class MessageDbRepoTest {
 
     @Test
     void getByOther() {
-        MessageRepo repoM=new MessageDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+        MessageRepo repoM=new MessageDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
         User user1= new User(1L,"a",new Persone(1L,"wewe","weew"));
         User user2= new User(2L,"biscuit",new Persone(1L,"wewe","weew"));
@@ -321,7 +322,7 @@ class MessageDbRepoTest {
 
     @Test
     void getByOtherInexistent() {
-        MessageRepo repoM=new MessageDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+        MessageRepo repoM=new MessageDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
         User user1= new User(1L,"a",new Persone(1L,"wewe","weew"));
         User user2= new User(2L,"biscuit",new Persone(1L,"wewe","weew"));
@@ -337,7 +338,7 @@ class MessageDbRepoTest {
 
     @Test
     void getBySR(){
-        MessageRepo repoM=new MessageDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+        MessageRepo repoM=new MessageDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
         User user1= new User(1L,"a",new Persone(1L,"wewe","weew"));
         User user2= new User(2L,"biscuit",new Persone(1L,"wewe","weew"));
@@ -355,7 +356,7 @@ class MessageDbRepoTest {
 
     @Test
     void getBySRNonexistent(){
-        MessageRepo repoM=new MessageDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+        MessageRepo repoM=new MessageDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
         User user1= new User(1L,"a",new Persone(1L,"wewe","weew"));
         User user2= new User(2L,"biscuit",new Persone(1L,"wewe","weew"));
@@ -370,7 +371,7 @@ class MessageDbRepoTest {
 
     @Test
     void getByDateTime() {
-        MessageRepo repoM=new MessageDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+        MessageRepo repoM=new MessageDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
         User user1= new User(1L,"a",new Persone(1L,"wewe","weew"));
         User user2= new User(2L,"biscuit",new Persone(1L,"wewe","weew"));
@@ -386,7 +387,7 @@ class MessageDbRepoTest {
 
     @Test
     void getByDateTimeNonexistent() {
-        MessageRepo repoM=new MessageDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+        MessageRepo repoM=new MessageDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
         User user1= new User(1L,"a",new Persone(1L,"wewe","weew"));
         User user2= new User(2L,"biscuit",new Persone(1L,"wewe","weew"));

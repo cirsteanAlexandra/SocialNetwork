@@ -1,15 +1,9 @@
 import Controller.NewController.*;
-
 import Repository.Db.*;
-
-import Repository.Db.MessageDbRepo;
-import Repository.Db.PersoneDbRepo;
-import Repository.Db.RelationshipDbRepo;
-import Repository.Db.UserDbRepo;
-import Repository.MessageRepo;
 import Repository.RelationshipRepo;
 import Repository.UserRepo;
 import Ui.NewUi.Login;
+import tests.Connections;
 
 public class Main {
 
@@ -17,11 +11,11 @@ public class Main {
 	// write your code here
 
 
-        UserRepo repoU= new UserDbRepo("jdbc:postgresql://localhost:5432/ReteaDeSocializare","postgres","hexagon");
-        PersoneDbRepo repoP= new PersoneDbRepo("jdbc:postgresql://localhost:5432/ReteaDeSocializare","postgres","hexagon");
-        RelationshipRepo repoR= new RelationshipDbRepo("jdbc:postgresql://localhost:5432/ReteaDeSocializare","postgres","hexagon");
-        RequestsDbRepo repoRQ=new RequestsDbRepo("jdbc:postgresql://localhost:5432/ReteaDeSocializare","postgres","hexagon");
-        MessageDbRepo repoM=new MessageDbRepo("jdbc:postgresql://localhost:5432/ReteaDeSocializare","postgres","hexagon");
+        UserRepo repoU= new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        PersoneDbRepo repoP= new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        RelationshipRepo repoR= new RelationshipDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        RequestsDbRepo repoRQ=new RequestsDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        MessageDbRepo repoM=new MessageDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
 
         UserController contU=new UserController(repoU);
