@@ -69,6 +69,13 @@ public class RequestsDbRepo extends DbRepoId<Long, Relationship> implements Repo
     }
 
     @Override
+    public boolean delete(Long id) {
+        if (get(id) == null) throw new RelationshipRepoException("There is no relationship with that id");
+        sql = "delete from public.\"Requests\" where id_r=?";
+        return super.delete(id);
+    }
+
+        @Override
     public List<Relationship> getAll() {
         sql="select * from public.\"Requests\"";
         return super.getAll();
@@ -149,9 +156,16 @@ public class RequestsDbRepo extends DbRepoId<Long, Relationship> implements Repo
         return relations;
     }
 
+    /**
+     * This function fills the request( prepared statement) with actual data for the sql
+     * command for deleting a relationship from repository using his id
+     * @param ps a PreparedStatement which will be used to fill the sql request for the db
+     * @param id the id of the relationship to be deleted from the repository
+     * @throws SQLException when there are problems with the prepared statements
+     */
     @Override
-    protected void setDeleteStatement(PreparedStatement ps, Long aLong) throws SQLException {
-
+    protected void setDeleteStatement(PreparedStatement ps, Long id) throws SQLException {
+        ps.setLong(1, id);
     }
 
     @Override

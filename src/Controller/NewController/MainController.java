@@ -95,6 +95,8 @@ public class MainController {
         User user= contU.getById(id);
         if(user==null) throw new UserRepoException("There isnt an user with that if");
         contR.deleteAllRelationsByUsername(user.getUsername());
+        contM.deleteAllMessagesByUsername(user.getUsername());
+        contRQ.deleteAllRelationsByUsername(user.getUsername());
         contU.removeById(id);
         removeSinglePersoneFromUsers(user.getPers());
         return true;
@@ -121,6 +123,8 @@ public class MainController {
         User user= contU.getByOther(username);
         if(user==null) throw new UserRepoException("There isnt an user with that username");
         contR.deleteAllRelationsByUsername(user.getUsername());
+        contM.deleteAllMessagesByUsername(user.getUsername());
+        contRQ.deleteAllRelationsByUsername(user.getUsername());
         contU.removeByOthers(username);
         removeSinglePersoneFromUsers(user.getPers());
         return true;

@@ -21,7 +21,6 @@ public class Main {
         UserController contU=new UserController(repoU);
         RelationshipController contR=new RelationshipController((RelationshipDbRepo) repoR);
         PersoneController contP=new PersoneController(repoP);
-
         RequestsController contRQ=new RequestsController(repoRQ);
         MessageController contM=new MessageController(repoM);
 

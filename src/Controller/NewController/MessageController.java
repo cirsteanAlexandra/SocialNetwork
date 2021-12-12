@@ -1,8 +1,10 @@
 package Controller.NewController;
 
 import Domain.Message;
+import Domain.User;
 import Repository.Db.MessageDbRepo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MessageController extends Controller<Long, Message>{
@@ -19,5 +21,23 @@ public class MessageController extends Controller<Long, Message>{
 
     public List<Message> getAll(){
         return repo.getAll();
+    }
+
+    public int deleteAllMessagesByUsername(String username){
+        List<Long> listId= new ArrayList<>();
+        for(Message mess: (List<Message>) repo.getAll()){
+            if(mess.getFrom().getUsername().equals(username)){
+                listId.add(mess.getId());
+            }
+            else {
+                for (User user: mess.getReceivers())
+                    if(user.getUsername().equals(username))
+                        listId.add(mess.getId());
+            }
+        }
+        for(Long el: listId){
+            repo.delete(el);
+        }
+        return listId.size();
     }
 }

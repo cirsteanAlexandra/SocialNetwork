@@ -31,8 +31,8 @@ class RequestsDbRepoTest {
         repo.save(new User(3L,"macaron",new Persone(1L,"wewe","weew")));
 
         RequestsDbRepo repoQ=new RequestsDbRepo(Connections.URL,Connections.Username,Connections.Password);
-        repoQ.save(new Relationship(1L,"a","biscuit"));
-        repoQ.save(new Relationship(2L,"a","macaron"));
+        repoQ.save(new Relationship(1L,"a","biscuit",LocalDate.of(2021,12,11),"pending"));
+        repoQ.save(new Relationship(2L,"a","macaron",LocalDate.of(2021,12,11),"pending"));
     }
 
     @AfterEach
@@ -80,8 +80,7 @@ class RequestsDbRepoTest {
         try {
             Relationship rel = new Relationship(1L,"a", "biscuit", LocalDate.now(), "accept");
             repoQ.update(1L,rel);
-            System.out.println("aici ajuns");
-            assertEquals(repoQ.getAll().get(0),rel);
+            assertEquals(repoQ.get(1L),rel);
             assertTrue(true);
         }catch(Exception e){
             System.out.println(e.getMessage());
@@ -103,5 +102,48 @@ class RequestsDbRepoTest {
 
     @Test
     void getAll() {
+        RequestsDbRepo repoQ=new RequestsDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        assertEquals(repoQ.getAll().size(),2);
+    }
+
+    @Test
+    void get(){
+        RequestsDbRepo repoQ=new RequestsDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        assertEquals(repoQ.get(1L),new Relationship(1L,"a","biscuit",LocalDate.of(2021,12,11),"pending"));
+    }
+
+    @Test
+    void getInexisted(){
+        RequestsDbRepo repoQ=new RequestsDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        assertEquals(repoQ.get(3L),null);
+    }
+
+    @Test
+    void delete(){
+        RequestsDbRepo repoQ=new RequestsDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        assertTrue(repoQ.delete(1L));
+        assertEquals(repoQ.get(3L),null);
+    }
+
+    @Test
+    void deleteNull(){
+        RequestsDbRepo repoQ=new RequestsDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        try {
+            assertTrue(repoQ.delete(null));
+            assertTrue(false);
+        }catch(Exception e){
+            assertTrue(true);
+        }
+    }
+
+    @Test
+    void deleteInexisting(){
+        RequestsDbRepo repoQ=new RequestsDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        try {
+            assertTrue(repoQ.delete(null));
+            assertTrue(false);
+        }catch(Exception e){
+            assertTrue(true);
+        }
     }
 }

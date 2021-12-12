@@ -42,7 +42,6 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
              ps.executeUpdate();
              return true;
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new EntityRepoException(e.getMessage());
         }
     }
@@ -81,9 +80,6 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
             ps.executeUpdate();
             return true;
         } catch (SQLException e) {
-
-            e.printStackTrace();
-
             throw new EntityRepoException(e.getMessage());
         }
     }
@@ -103,6 +99,7 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
             ps.executeUpdate();
             return true;
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new EntityRepoException(e.getMessage());
         }
     }

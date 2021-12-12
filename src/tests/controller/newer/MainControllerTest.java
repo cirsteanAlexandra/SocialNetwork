@@ -281,17 +281,20 @@ class MainControllerTest {
 
     @Test
     void removeByUserId() {
-
         UserRepo repoU= new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
         PersoneDbRepo repoP= new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
         RelationshipRepo repoR= new RelationshipDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        RequestsDbRepo repoRQ=new RequestsDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        MessageDbRepo repoM=new MessageDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
 
         UserController contU=new UserController(repoU);
         RelationshipController contR=new RelationshipController((RelationshipDbRepo) repoR);
         PersoneController contP=new PersoneController(repoP);
+        RequestsController contRQ=new RequestsController(repoRQ);
+        MessageController contM=new MessageController(repoM);
 
-        MainController cont= new MainController(contU,contR,contP);
+        MainController cont= new MainController(contU,contR,contP,contM,contRQ);
 
 
         cont.addRelationship(new Relationship(4L,"mama","noua",
@@ -312,13 +315,17 @@ class MainControllerTest {
         UserRepo repoU= new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
         PersoneDbRepo repoP= new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
         RelationshipRepo repoR= new RelationshipDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        RequestsDbRepo repoRQ=new RequestsDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        MessageDbRepo repoM=new MessageDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
 
         UserController contU=new UserController(repoU);
         RelationshipController contR=new RelationshipController((RelationshipDbRepo) repoR);
         PersoneController contP=new PersoneController(repoP);
+        RequestsController contRQ=new RequestsController(repoRQ);
+        MessageController contM=new MessageController(repoM);
 
-        MainController cont= new MainController(contU,contR,contP);
+        MainController cont= new MainController(contU,contR,contP,contM,contRQ);
 
         int lenght=contU.getSize();
         for(Long i=1L;i<=lenght;i++){
@@ -413,17 +420,20 @@ class MainControllerTest {
 
     @Test
     void removeUserByUsername() {
-
         UserRepo repoU= new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
         PersoneDbRepo repoP= new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
         RelationshipRepo repoR= new RelationshipDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        RequestsDbRepo repoRQ=new RequestsDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        MessageDbRepo repoM=new MessageDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
 
         UserController contU=new UserController(repoU);
         RelationshipController contR=new RelationshipController((RelationshipDbRepo) repoR);
         PersoneController contP=new PersoneController(repoP);
+        RequestsController contRQ=new RequestsController(repoRQ);
+        MessageController contM=new MessageController(repoM);
 
-        MainController cont= new MainController(contU,contR,contP);
+        MainController cont= new MainController(contU,contR,contP,contM,contRQ);
 
 
         cont.addRelationship(new Relationship(12L,"mama","noua",
@@ -445,13 +455,17 @@ class MainControllerTest {
         UserRepo repoU= new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
         PersoneDbRepo repoP= new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
         RelationshipRepo repoR= new RelationshipDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        RequestsDbRepo repoRQ=new RequestsDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        MessageDbRepo repoM=new MessageDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
 
         UserController contU=new UserController(repoU);
         RelationshipController contR=new RelationshipController((RelationshipDbRepo) repoR);
         PersoneController contP=new PersoneController(repoP);
+        RequestsController contRQ=new RequestsController(repoRQ);
+        MessageController contM=new MessageController(repoM);
 
-        MainController cont= new MainController(contU,contR,contP);
+        MainController cont= new MainController(contU,contR,contP,contM,contRQ);
 
         cont.removeUserByUsername("mama");cont.removeUserByUsername("mea");
         cont.removeUserByUsername("biscuit");cont.removeUserByUsername("macaron");
@@ -494,17 +508,20 @@ class MainControllerTest {
 
     @Test
     void removeX2User() {
-
         UserRepo repoU= new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
         PersoneDbRepo repoP= new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
         RelationshipRepo repoR= new RelationshipDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        RequestsDbRepo repoRQ=new RequestsDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        MessageDbRepo repoM=new MessageDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
 
         UserController contU=new UserController(repoU);
         RelationshipController contR=new RelationshipController((RelationshipDbRepo) repoR);
         PersoneController contP=new PersoneController(repoP);
+        RequestsController contRQ=new RequestsController(repoRQ);
+        MessageController contM=new MessageController(repoM);
 
-        MainController cont= new MainController(contU,contR,contP);
+        MainController cont= new MainController(contU,contR,contP,contM,contRQ);
         try{
             assertTrue(cont.removeUserById(1L));
             assertTrue(cont.removeUserByUsername("mama"));
