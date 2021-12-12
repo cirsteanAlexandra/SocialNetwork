@@ -48,7 +48,8 @@ public class UserUi {
         options.put(3,"- to see all friend requests");
         options.put(4,"- to accept a friend request");
         options.put(5,"- to reject a friend request");
-        options.put(6,"- to exit");
+        options.put(6,"- show all requests");
+        options.put(7,"- to exit");
         return options;
     }
 
@@ -158,7 +159,10 @@ public class UserUi {
                             System.out.println(e.getDescription());
                         }
                         break;
+
                     case 6:
+                        System.out.println(cont.RequestsForAUser(user.getUsername()));
+                    case 7:
                         done=true;
                         break;
 

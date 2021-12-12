@@ -6,6 +6,7 @@ import Domain.Relationship;
 import Domain.User;
 import Utils.Exceptions.Exception;
 import Utils.Exceptions.*;
+import org.junit.runner.Request;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -538,4 +539,18 @@ public class MainController {
         contRQ.add(rel);
             return true;
     }
+
+    public List<String>RequestsForAUser(String userName){
+        List<String> stringList=new ArrayList<>();
+        String data=null;
+        for(Relationship r: contRQ.getAll()){
+            data=null;
+            if(r.getSecondUserName().equals(userName)) {// cereri trimise utilizatorului
+                data =r.getFirstUserName() + " " + r.getDtf() + " " + r.getStatus();
+                stringList.add(data);
+            }
+        }
+        return stringList;
+    }
+
 }

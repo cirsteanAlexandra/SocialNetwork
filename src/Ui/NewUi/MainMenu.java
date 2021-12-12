@@ -45,7 +45,7 @@ public class MainMenu {
         options.put(9,"-get friends by username");
         options.put(10,"-get friends by username and month");
         options.put(11,"- to exit");
-        options.put(12,"-ceva get pus numa asa");
+
 
 
 
@@ -107,15 +107,6 @@ public class MainMenu {
                     case 11:
                         done = true;
                         break;
-
-                    case 12:
-                        //System.out.println(cont.getAllRequests());
-                        //System.out.println(cont.getFriendshipsRequests("allex"));
-                        //List<String> stringList=cont.getFriendshipsRequests("allex");
-                        //cont.UpdateStatusRequest("accepted","ab");
-                        break;
-
-
                     case 404:
                         setCurrentMode();
                     default:
