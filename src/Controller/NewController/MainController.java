@@ -499,7 +499,7 @@ public class MainController {
     public void UpdateStatusRequest(String status,String receiver,String sender){
         Relationship rel=getRequestByUsername(receiver,sender);
         if(status.equals("accept")){
-            Relationship rel1=new Relationship(rel.getId(),rel.getFirstUserName(),rel.getSecondUserName(),rel.getDtf());
+            Relationship rel1=new Relationship(rel.getFirstUserName(),rel.getSecondUserName(),rel.getDtf());
             addRelationship(rel1);
         }
         rel.setStatus(status);
@@ -533,6 +533,6 @@ public class MainController {
             }
         }
         contRQ.add(rel);
-            return true;
+        return true;
     }
 }
