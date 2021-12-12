@@ -2,6 +2,7 @@ package Repository.Db;
 
 import Domain.Relationship;
 import Repository.Repository;
+import Utils.Exceptions.EntityRepoException;
 import Utils.Exceptions.RelationshipRepoException;
 import Utils.Generator;
 import org.postgresql.util.PSQLException;
@@ -43,7 +44,38 @@ public class RequestsDbRepo extends DbRepoId<Long, Relationship> implements Repo
         return super.update(id, entity);
     }
 
+    /**
+     * Deletes all the data from the repository
+     * @throws EntityRepoException if the connection to the repository fails or there ar other
+     * problems on processing the data
+     */
     @Override
+    protected void deleteAll() {
+        sql= "delete from public.\"Requests\"";
+        super.deleteAll();
+    }
+
+    /**
+     * Retrieves the corespondent relationship with that id
+     * @param id the id of the relationship to be found
+     * @return the relationship that has that id or null if there is no relationship with that id
+     * @throws EntityRepoException if the connection to the repository fails or there ar other
+     * problems on retrieving the data
+     */
+    @Override
+    public Relationship get(Long id) {
+        sql= "select * from public.\"Requests\" where id_r="+id.toString();
+        return super.get(id);
+    }
+
+    @Override
+    public boolean delete(Long id) {
+        if (get(id) == null) throw new RelationshipRepoException("There is no relationship with that id");
+        sql = "delete from public.\"Requests\" where id_r=?";
+        return super.delete(id);
+    }
+
+        @Override
     public List<Relationship> getAll() {
         sql="select * from public.\"Requests\"";
         return super.getAll();
@@ -124,9 +156,16 @@ public class RequestsDbRepo extends DbRepoId<Long, Relationship> implements Repo
         return relations;
     }
 
+    /**
+     * This function fills the request( prepared statement) with actual data for the sql
+     * command for deleting a relationship from repository using his id
+     * @param ps a PreparedStatement which will be used to fill the sql request for the db
+     * @param id the id of the relationship to be deleted from the repository
+     * @throws SQLException when there are problems with the prepared statements
+     */
     @Override
-    protected void setDeleteStatement(PreparedStatement ps, Long aLong) throws SQLException {
-
+    protected void setDeleteStatement(PreparedStatement ps, Long id) throws SQLException {
+        ps.setLong(1, id);
     }
 
     @Override

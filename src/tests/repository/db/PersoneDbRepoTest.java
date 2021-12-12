@@ -6,6 +6,7 @@ import Utils.Exceptions.EntityRepoException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import tests.Connections;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class PersoneDbRepoTest {
     @BeforeEach
     void setUp(){
-        PersoneDbRepo repo=new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+        PersoneDbRepo repo=new PersoneDbRepo(Connections.URL, Connections.Username,Connections.Password);
 
 
         repo.save(new Persone(1L,"wewe","weew"));
@@ -25,7 +26,7 @@ class PersoneDbRepoTest {
 
     @AfterEach
     void tearDown(){
-        PersoneDbRepo repo=new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+        PersoneDbRepo repo=new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
 
         repo.restoreToDefault();
@@ -33,7 +34,7 @@ class PersoneDbRepoTest {
 
     @Test
     void save() {
-        PersoneDbRepo repo = new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+        PersoneDbRepo repo = new PersoneDbRepo(Connections.URL, Connections.Username, Connections.Password);
 
 
         try {
@@ -48,7 +49,7 @@ class PersoneDbRepoTest {
 
     @Test
     void saveWithNoID() {
-        PersoneDbRepo repo = new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+        PersoneDbRepo repo = new PersoneDbRepo(Connections.URL, Connections.Username, Connections.Password);
 
 
         try {
@@ -64,7 +65,7 @@ class PersoneDbRepoTest {
     @Test
     void saveExistentId(){
 
-        PersoneDbRepo repo = new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+        PersoneDbRepo repo = new PersoneDbRepo(Connections.URL, Connections.Username, Connections.Password);
 
 
         try{
@@ -79,7 +80,7 @@ class PersoneDbRepoTest {
     @Test
     void get() {
 
-        PersoneDbRepo repo = new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+        PersoneDbRepo repo = new PersoneDbRepo(Connections.URL, Connections.Username, Connections.Password);
 
 
         Persone pers= repo.get(1L);
@@ -89,7 +90,7 @@ class PersoneDbRepoTest {
     @Test
     void getNull() {
 
-        PersoneDbRepo repo = new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+        PersoneDbRepo repo = new PersoneDbRepo(Connections.URL, Connections.Username, Connections.Password);
 
 
         Persone pers= repo.get(10L);
@@ -99,7 +100,7 @@ class PersoneDbRepoTest {
     @Test
     void update() {
 
-        PersoneDbRepo repo = new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+        PersoneDbRepo repo = new PersoneDbRepo(Connections.URL, Connections.Username, Connections.Password);
         try{
             assertTrue(
                     repo.update(1L,new Persone(5L,"weew","erui")));
@@ -115,7 +116,7 @@ class PersoneDbRepoTest {
     @Test
     void updateInexistent() {
 
-        PersoneDbRepo repo = new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+        PersoneDbRepo repo = new PersoneDbRepo(Connections.URL, Connections.Username, Connections.Password);
 
         try{
             assertTrue(repo.update(7L,new Persone(2L,"weew","erui")));
@@ -129,7 +130,7 @@ class PersoneDbRepoTest {
 
     @Test
     void delete() {
-        PersoneDbRepo repo = new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+        PersoneDbRepo repo = new PersoneDbRepo(Connections.URL, Connections.Username, Connections.Password);
 
         try{
             assertTrue(
@@ -143,7 +144,7 @@ class PersoneDbRepoTest {
     @Test
     void deleteInexistent() {
 
-        PersoneDbRepo repo = new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+        PersoneDbRepo repo = new PersoneDbRepo(Connections.URL, Connections.Username, Connections.Password);
 
         try{
             assertTrue(
@@ -156,7 +157,7 @@ class PersoneDbRepoTest {
 
     @Test
     void getAll() {
-        PersoneDbRepo repo = new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+        PersoneDbRepo repo = new PersoneDbRepo(Connections.URL, Connections.Username, Connections.Password);
 
         List<Persone> list=repo.getAll();
         List<Persone> comparableList= Arrays.asList(new Persone(1L,"wewe","weew"),
@@ -168,7 +169,7 @@ class PersoneDbRepoTest {
 
     @Test
     void getByOther() {
-        PersoneDbRepo repo = new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+        PersoneDbRepo repo = new PersoneDbRepo(Connections.URL, Connections.Username, Connections.Password);
 
         try{
             assertEquals(repo.getByOther("mama","mea"),new Persone(3L,"mama","mea"));
@@ -180,7 +181,7 @@ class PersoneDbRepoTest {
     @Test
     void getByOtherInexistent() {
 
-        PersoneDbRepo repo = new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+        PersoneDbRepo repo = new PersoneDbRepo(Connections.URL, Connections.Username, Connections.Password);
 
         try{
             assertEquals(repo.getByOther("hjer","hjwek"),null);

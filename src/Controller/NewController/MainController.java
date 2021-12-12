@@ -92,10 +92,12 @@ public class MainController {
      * @return true if the user has been deleted with success, false otherwise
      * @throws EntityRepoException if there are errors during the removing process
      */
-    public boolean removeByUserId(Long id) {
+    public boolean removeUserById(Long id) {
         User user= contU.getById(id);
         if(user==null) throw new UserRepoException("There isnt an user with that if");
         contR.deleteAllRelationsByUsername(user.getUsername());
+        contM.deleteAllMessagesByUsername(user.getUsername());
+        contRQ.deleteAllRelationsByUsername(user.getUsername());
         contU.removeById(id);
         removeSinglePersoneFromUsers(user.getPers());
         return true;
@@ -107,7 +109,7 @@ public class MainController {
      * @return true if the relationship has been deleted with success, false otherwise
      * @throws EntityRepoException if there are errors during the removing process
      */
-    public boolean removeByRelationshipId(Long id) {
+    public boolean removeRelationshipById(Long id) {
         contR.removeById(id);
         return true;
     }
@@ -122,6 +124,8 @@ public class MainController {
         User user= contU.getByOther(username);
         if(user==null) throw new UserRepoException("There isnt an user with that username");
         contR.deleteAllRelationsByUsername(user.getUsername());
+        contM.deleteAllMessagesByUsername(user.getUsername());
+        contRQ.deleteAllRelationsByUsername(user.getUsername());
         contU.removeByOthers(username);
         removeSinglePersoneFromUsers(user.getPers());
         return true;
@@ -500,7 +504,7 @@ public class MainController {
     public void UpdateStatusRequest(String status,String receiver,String sender){
         Relationship rel=getRequestByUsername(receiver,sender);
         if(status.equals("accept")){
-            Relationship rel1=new Relationship(rel.getId(),rel.getFirstUserName(),rel.getSecondUserName(),rel.getDtf());
+            Relationship rel1=new Relationship(rel.getFirstUserName(),rel.getSecondUserName(),rel.getDtf());
             addRelationship(rel1);
         }
         rel.setStatus(status);
@@ -533,11 +537,8 @@ public class MainController {
                     throw new RelationshipRepoException("The request was already accepted. :)");
             }
         }
-
-
-
         contRQ.add(rel);
-            return true;
+        return true;
     }
 
     public List<String>RequestsForAUser(String userName){

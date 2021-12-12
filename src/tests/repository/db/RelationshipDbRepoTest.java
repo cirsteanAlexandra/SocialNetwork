@@ -11,9 +11,9 @@ import Utils.Exceptions.EntityRepoException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import tests.Connections;
 
 import java.time.LocalDate;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -23,11 +23,11 @@ class RelationshipDbRepoTest {
     @BeforeEach
     void setUp(){
 
-        PersoneDbRepo repoP=new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+        PersoneDbRepo repoP=new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
         repoP.save(new Persone(1L,"wewe","weew"));
         repoP.save(new Persone(2L,"weew","erui"));
 
-        UserRepo repoU=new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+        UserRepo repoU=new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
         repoU.save(new User(1L,"mama",new Persone(1L,"wewe","weew")));
         repoU.save(new User(2L,"mea",new Persone(1L,"wewe","weew")));
@@ -40,7 +40,7 @@ class RelationshipDbRepoTest {
         repoU.save(new User(9L,"vespuci",new Persone(1L,"wewe","weew")));
         repoU.save(new User(10L,"acadea",new Persone(1L,"wewe","weew")));
 
-        RelationshipDbRepo repo=new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+        RelationshipDbRepo repo=new RelationshipDbRepo(Connections.URL,Connections.Username,Connections.Password);
         repo.save(new Relationship(1L,"mama","mea",
                 LocalDate.of(2020,10,10)));
         repo.save(new Relationship(2L,"biscuit","mama",
@@ -52,13 +52,13 @@ class RelationshipDbRepoTest {
 
     @AfterEach
     void tearDown(){
-        RelationshipDbRepo repo=new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+        RelationshipDbRepo repo=new RelationshipDbRepo(Connections.URL,Connections.Username,Connections.Password);
         repo.restoreToDefault();
 
-        UserDbRepo repoU=new UserDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+        UserDbRepo repoU=new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
         repoU.restoreToDefault();
 
-        PersoneDbRepo repoP=new PersoneDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare","postgres","hexagon");
+        PersoneDbRepo repoP=new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
         repoP.restoreToDefault();
 
@@ -67,7 +67,7 @@ class RelationshipDbRepoTest {
     @Test
     void save() {
 
-        RelationshipDbRepo repo = new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+        RelationshipDbRepo repo = new RelationshipDbRepo(Connections.URL, Connections.Username, Connections.Password);
         try {
             assertTrue(
                     repo.save(new Relationship(4L, "belea", "noua",
@@ -83,7 +83,7 @@ class RelationshipDbRepoTest {
 
     @Test
     void saveWithNoID() {
-        RelationshipDbRepo repo = new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+        RelationshipDbRepo repo = new RelationshipDbRepo(Connections.URL, Connections.Username, Connections.Password);
 
 
         try {
@@ -99,7 +99,7 @@ class RelationshipDbRepoTest {
     @Test
     void saveExistentId(){
 
-        RelationshipDbRepo repo = new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+        RelationshipDbRepo repo = new RelationshipDbRepo(Connections.URL, Connections.Username, Connections.Password);
         try{
             assertTrue(repo.save(new Relationship(1L,"acadeaua","weew", LocalDate.of(
                     2020,12,12
@@ -115,7 +115,7 @@ class RelationshipDbRepoTest {
     @Test
     void saveExistentUsernames(){
 
-        RelationshipDbRepo repo = new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+        RelationshipDbRepo repo = new RelationshipDbRepo(Connections.URL, Connections.Username, Connections.Password);
         try{
             assertTrue(
                     repo.save(new Relationship(5L,"mama","mea",
@@ -131,7 +131,7 @@ class RelationshipDbRepoTest {
     @Test
     void get() {
 
-        RelationshipDbRepo repo = new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+        RelationshipDbRepo repo = new RelationshipDbRepo(Connections.URL, Connections.Username, Connections.Password);
 
         Relationship rel= repo.get(1L);
         assertEquals(new Relationship(1L,"mama","mea"),rel);
@@ -140,14 +140,14 @@ class RelationshipDbRepoTest {
     @Test
     void getNull() {
 
-        RelationshipDbRepo repo = new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+        RelationshipDbRepo repo = new RelationshipDbRepo(Connections.URL, Connections.Username, Connections.Password);
         Relationship rel= repo.get(10L);
         assertNull(rel);
     }
 
     @Test
     void update() {
-        RelationshipDbRepo repo = new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+        RelationshipDbRepo repo = new RelationshipDbRepo(Connections.URL, Connections.Username, Connections.Password);
 
         try{
             assertTrue(
@@ -164,7 +164,7 @@ class RelationshipDbRepoTest {
     @Test
     void updateInexistent() {
 
-        RelationshipDbRepo repo = new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+        RelationshipDbRepo repo = new RelationshipDbRepo(Connections.URL, Connections.Username, Connections.Password);
 
         try{
             assertTrue(repo.update(7L,new Relationship(5L,"acadea","erui")));
@@ -179,7 +179,7 @@ class RelationshipDbRepoTest {
     @Test
     void delete() {
 
-        RelationshipDbRepo repo = new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+        RelationshipDbRepo repo = new RelationshipDbRepo(Connections.URL, Connections.Username, Connections.Password);
 
         try{
             assertTrue(
@@ -192,7 +192,7 @@ class RelationshipDbRepoTest {
     @Test
     void deleteInexistent() {
 
-        RelationshipDbRepo repo = new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+        RelationshipDbRepo repo = new RelationshipDbRepo(Connections.URL, Connections.Username, Connections.Password);
 
         try{
             assertTrue(
@@ -206,7 +206,7 @@ class RelationshipDbRepoTest {
     @Test
     void getAll() {
 
-        RelationshipDbRepo repo = new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+        RelationshipDbRepo repo = new RelationshipDbRepo(Connections.URL, Connections.Username, Connections.Password);
 
         List<Relationship> list=repo.getAll();
         List<Relationship> comparableList= Arrays.asList(new Relationship(1L,"mama","mea"),
@@ -219,7 +219,7 @@ class RelationshipDbRepoTest {
     @Test
     void getByOther() {
 
-        RelationshipDbRepo repo = new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+        RelationshipDbRepo repo = new RelationshipDbRepo(Connections.URL, Connections.Username, Connections.Password);
 
         try{
             assertEquals(repo.getByOther("biscuit","mama"),new Relationship(2L,"biscuit","mama"));
@@ -231,7 +231,7 @@ class RelationshipDbRepoTest {
     @Test
     void getByOtherInexistent() {
 
-        RelationshipDbRepo repo = new RelationshipDbRepo("jdbc:postgresql://localhost:5432/TestReteaDeSocializare", "postgres", "hexagon");
+        RelationshipDbRepo repo = new RelationshipDbRepo(Connections.URL, Connections.Username, Connections.Password);
 
         try{
             assertEquals(repo.getByOther("hjer","mea"),null);

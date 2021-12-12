@@ -45,10 +45,6 @@ public class MainMenu {
         options.put(9,"-get friends by username");
         options.put(10,"-get friends by username and month");
         options.put(11,"- to exit");
-
-
-
-
         return options;
     }
 
@@ -258,7 +254,7 @@ public class MainMenu {
         try{
             AbstractValidator vali=ContextValidator.createValidator(Strategy.USER);
             vali.checkId(id);
-            cont.removeByRelationshipId(id);
+            cont.removeRelationshipById(id);
             System.out.println("Relationship removed with succes");
         }
         catch(Exception e){
@@ -298,7 +294,7 @@ public class MainMenu {
         try{
             AbstractValidator vali=ContextValidator.createValidator(Strategy.USER);
             vali.checkId(id);
-            cont.removeByUserId(id);
+            cont.removeUserById(id);
             System.out.println("User removed with succes");
         }
         catch(Exception e){
