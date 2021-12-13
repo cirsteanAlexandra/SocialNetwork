@@ -4,9 +4,11 @@ import com.example.Domain.Message;
 import com.example.Domain.Persone;
 import com.example.Domain.Relationship;
 import com.example.Domain.User;
-import com.example.Utils.Exceptions.*;
-import com.example.Utils.Exceptions.*;
+
 import com.example.Utils.Exceptions.Exception;
+import com.example.Utils.Exceptions.*;
+
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -540,17 +542,20 @@ public class MainController {
         return true;
     }
 
-    public List<String>RequestsForAUser(String userName){
-        List<String> stringList=new ArrayList<>();
+
+
+    public List<Relationship>RequestsForAUser(String userName){
+        List<Relationship> listRequests=new ArrayList<>();
         String data=null;
         for(Relationship r: contRQ.getAll()){
             data=null;
-            if(r.getSecondUserName().equals(userName)) {// cereri trimise utilizatorului
+            if(r.getSecondUserName().equals(userName) && r.getStatus().equals("pending")) {// cereri trimise utilizatorului
                 data =r.getFirstUserName() + " " + r.getDtf() + " " + r.getStatus();
-                stringList.add(data);
+                listRequests.add(r);
             }
         }
-        return stringList;
+        return listRequests;
+
     }
 
 }

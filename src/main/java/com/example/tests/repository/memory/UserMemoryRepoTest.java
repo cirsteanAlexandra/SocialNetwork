@@ -1,9 +1,10 @@
 package com.example.tests.repository.memory;
 
-import com.example.Domain.*;
+
 import com.example.Repository.Memory.MemoryRepo;
 import com.example.Repository.Memory.UserMemoryRepo;
 import org.junit.jupiter.api.Test;
+import com.example.Domain.*;
 
 import java.util.List;
 

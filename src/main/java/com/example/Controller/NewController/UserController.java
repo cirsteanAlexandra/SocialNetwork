@@ -1,6 +1,9 @@
 package com.example.Controller.NewController;
 
 
+
+import com.example.Domain.Persone;
+
 import com.example.Domain.User;
 import com.example.Repository.UserRepo;
 
