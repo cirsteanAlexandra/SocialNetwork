@@ -43,7 +43,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.GUIController.LoginController">
    <children>
       <Label layoutX="241.0" layoutY="39.0" prefHeight="51.0" prefWidth="117.0" text="LOGIN" textAlignment="CENTER" textOverrun="WORD_ELLIPSIS" wrapText="true">
@@ -94,5 +93,6 @@
             </AnchorPane>
          </children>
       </VBox>
+      <Button layoutX="248.0" layoutY="325.0" mnemonicParsing="false" onAction="#handleTest" prefHeight="51.0" prefWidth="70.0" text="Test Tabel" />
    </children>
 </AnchorPane>

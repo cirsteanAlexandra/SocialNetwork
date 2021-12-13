@@ -46,12 +46,34 @@ public class LoginController {
         catch(NullPointerException e){
             MessageAlert.showErrorMessage(null, "The text field must contain an username!");
         }
-
     }
 
     public void handleRegisterAction(ActionEvent ev){
         //MessageAlert.showMessage(null, Alert.AlertType.INFORMATION,"Feature not yet implemented","The register is not yet available!");
         showRegistrationLayout();
+    }
+    public void handleTest(ActionEvent ev){
+        showTestTableLayout();
+    }
+
+    public void showTestTableLayout(){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(new File(Algoritm.getFullPath("requests_table_view.fxml")).toURI().toURL());
+            AnchorPane loginLayout = fxmlLoader.load();
+            String Username = textUsername.getText();
+            Stage registerStage = new Stage();
+            RequestsTableController requestController = fxmlLoader.getController();
+            requestController.setRequestsController(cont,registerStage,cont.getUserByOther(Username));
+            Scene scene = new Scene(loginLayout);
+            registerStage.initModality(Modality.WINDOW_MODAL);
+            registerStage.setTitle("Requests");
+            registerStage.setScene(scene);
+            registerStage.show();
+        }catch(IOException | InterruptedException | Exception e){
+            e.printStackTrace();
+            MessageAlert.showErrorMessage(null, e.getMessage()+"\n"+e.getCause());
+        }
     }
 
     public void showRegistrationLayout(){

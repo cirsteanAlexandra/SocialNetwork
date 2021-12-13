@@ -540,17 +540,17 @@ public class MainController {
         return true;
     }
 
-    public List<String>RequestsForAUser(String userName){
-        List<String> stringList=new ArrayList<>();
+    public List<Relationship>RequestsForAUser(String userName){
+        List<Relationship> listRequests=new ArrayList<>();
         String data=null;
         for(Relationship r: contRQ.getAll()){
             data=null;
-            if(r.getSecondUserName().equals(userName)) {// cereri trimise utilizatorului
+            if(r.getSecondUserName().equals(userName) && r.getStatus().equals("pending")) {// cereri trimise utilizatorului
                 data =r.getFirstUserName() + " " + r.getDtf() + " " + r.getStatus();
-                stringList.add(data);
+                listRequests.add(r);
             }
         }
-        return stringList;
+        return listRequests;
     }
 
 }

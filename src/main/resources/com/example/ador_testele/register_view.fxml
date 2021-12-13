@@ -10,8 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.GUIController.RegisterController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <GridPane layoutX="102.0" layoutY="70.0" prefHeight="154.0" prefWidth="394.0">
         <columnConstraints>
@@ -39,21 +38,21 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <TextField fx:id="textFirstName" GridPane.columnIndex="1" />
-            <TextField fx:id="textLastName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="textUsername" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField GridPane.columnIndex="1" />
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>
       <HBox layoutX="93.0" layoutY="251.0" prefHeight="100.0" prefWidth="424.0">
          <children>
             <AnchorPane prefHeight="100.0" prefWidth="432.0">
                <children>
-                  <Button layoutX="14.0" layoutY="22.0" mnemonicParsing="false" onAction="#handleRegister" prefHeight="55.0" prefWidth="140.0" text="Register">
+                  <Button layoutX="42.0" layoutY="22.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="140.0" text="Register">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Button>
-                  <Button layoutX="270.0" layoutY="22.0" mnemonicParsing="false" onAction="#handleCancel" prefHeight="55.0" prefWidth="140.0" text="Cancel">
+                  <Button layoutX="270.0" layoutY="22.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="140.0" text="Cancel">
                      <font>
                         <Font size="24.0" />
                      </font>
