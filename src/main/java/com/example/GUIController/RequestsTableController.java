@@ -5,6 +5,7 @@ import com.example.Domain.Relationship;
 import com.example.Domain.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -45,11 +46,24 @@ public class RequestsTableController {
     }
 
     public void initModel(){
-        //System.out.println(cont.RequestsForAUser(user.getUsername()));
+        System.out.println(cont.RequestsForAUser(user.getUsername()));
         List<Relationship> requests=cont.RequestsForAUser(user.getUsername());
         model.setAll(requests.stream()
                 .map(x-> new PrintedRelationship(x.getFirstUserName(),x.getDtf()))
                 .collect(Collectors.toList()));
 
+    }
+
+    public void handleAccept(ActionEvent actionEvent) {
+
+        String username= tableView.getSelectionModel().getSelectedItem().getFrom();
+        cont.UpdateStatusRequest("accept",username,user.getUsername());
+        initModel();
+    }
+
+    public void handleReject(ActionEvent actionEvent) {
+        String username= tableView.getSelectionModel().getSelectedItem().getFrom();
+        cont.UpdateStatusRequest("cancel",username,user.getUsername());
+        initModel();
     }
 }

@@ -55,5 +55,8 @@ public class RelationshipController extends Controller<Long, Relationship> {
         return graph.theMostSociableCommunity((RelationshipDbRepo) repo);
     }
 
+    public void removeRByUsername(String username){
+
+    }
 
 }
