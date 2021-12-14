@@ -6,18 +6,22 @@ import com.example.Domain.Relationship;
 import com.example.Domain.User;
 import com.example.Utils.Exceptions.Exception;
 import com.example.Utils.Exceptions.*;
+import com.example.Utils.Observer.Observable;
+import com.example.Utils.Observer.Observer;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class MainController {
+public class MainController implements Observable {
     UserController contU;
     RelationshipController contR;
     PersoneController contP;
     MessageController contM;
     RequestsController contRQ;
+
+    List<Observer> listObserver;
 
     public MainController(UserController contU, RelationshipController contR, PersoneController contP) {
         this.contU = contU;
@@ -48,6 +52,7 @@ public class MainController {
         this.contP = contP;
         this.contM = contM;
         this.contRQ = contRQ;
+        listObserver=new ArrayList<>();
     }
 
     /**
@@ -508,6 +513,7 @@ public class MainController {
         }
         rel.setStatus(status);
         contRQ.UpdateStatus(rel.getId(),rel);
+        notifyObservers();
         //apeleaza pentru update
 
     }
@@ -520,6 +526,7 @@ public class MainController {
     }
 
     public boolean AddRequest(Relationship rel){
+
         for(Relationship r: contRQ.getAll()) {
             if (r.getFirstUserName().equals(rel.getFirstUserName())
                     && r.getSecondUserName().equals(rel.getSecondUserName())) {
@@ -536,7 +543,11 @@ public class MainController {
                     throw new RelationshipRepoException("The request was already accepted. :)");
             }
         }
+
+        Relationship r=contR.getByOther(rel.getFirstUserName(), rel.getSecondUserName());
+        if(r!=null)throw new RelationshipRepoException("The request was already accepted. :)");
         contRQ.add(rel);
+        notifyObservers();
         return true;
     }
 
@@ -553,4 +564,18 @@ public class MainController {
         return listRequests;
     }
 
+    @Override
+    public void addObserver(Observer o) {
+        listObserver.add(o);
+    }
+
+    @Override
+    public void removeObserver(Observer o) {
+        listObserver.remove(o);
+    }
+
+    @Override
+    public void notifyObservers() {
+        listObserver.forEach(o-> o.update());
+    }
 }
