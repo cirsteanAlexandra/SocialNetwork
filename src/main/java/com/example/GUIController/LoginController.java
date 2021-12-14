@@ -55,6 +55,7 @@ public class LoginController {
             e.printStackTrace();
             MessageAlert.showErrorMessage(null, "The text field must contain an username!");
         }
+        textUsername.setText(null);
     }
 
     private void showUserLayout()  {
@@ -86,6 +87,7 @@ public class LoginController {
 
     public void handleRegisterAction(ActionEvent ev){
         //MessageAlert.showMessage(null, Alert.AlertType.INFORMATION,"Feature not yet implemented","The register is not yet available!");
+        textUsername.setText(null);
         showRegistrationLayout();
     }
 
@@ -120,6 +122,7 @@ public class LoginController {
 
     public void handleTest(ActionEvent ev){
         showTestTableLayout();
+        textUsername.setText(null);
     }
 
     public void showTestTableLayout(){

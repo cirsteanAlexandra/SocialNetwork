@@ -31,7 +31,6 @@
                            <children>
                               <Label layoutY="155.0" text="Username:" />
                               <TextField fx:id="username" layoutX="59.0" layoutY="151.0" />
-                              <Button layoutX="58.0" layoutY="216.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="95.0" text="Find" />
                            </children>
                         </AnchorPane>
                      </items>
@@ -40,9 +39,11 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
-                  <Button layoutX="30.0" layoutY="31.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="95.0" text="Accept"  onAction="#handleAccept"/>
-                  <Button layoutX="255.0" layoutY="31.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="95.0" text="Reject" onAction="#handleReject" />
-                  <Button layoutX="464.0" layoutY="31.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="95.0" text="Cancel" />
+
+                  <Button layoutX="30.0" layoutY="31.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="95.0" text="Accept"  onAction="#handleAcceptAction"/>
+                  <Button layoutX="255.0" layoutY="31.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="95.0" text="Reject" onAction="#handleRejectAction" />
+                  <Button layoutX="464.0" layoutY="31.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="95.0" text="Cancel" onAction="#handleCancelAction" />
+
                </children>
             </AnchorPane>
         </items>

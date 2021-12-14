@@ -4,6 +4,8 @@ import com.example.Controller.NewController.MainController;
 import com.example.Domain.Persone;
 import com.example.Domain.Relationship;
 import com.example.Domain.User;
+import com.example.Utils.Observer.Observable;
+import com.example.Utils.Observer.Observer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,7 +24,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class FriendsTableController {
+public class FriendsTableController implements Observer {
     User user;
     private MainController cont;
     Stage registerStage;
@@ -31,6 +33,7 @@ public class FriendsTableController {
         this.cont = cont;
         this.registerStage = stage;
         this.user = user;
+        cont.addObserver(this);
         initModel();
     }
 
@@ -71,9 +74,6 @@ public class FriendsTableController {
         String userName= user.getUsername();
         String userName2= cont.getUsernameByFirstName(firstName);
         cont.removeRelationshipByUsernames(userName,userName2);
-        initModel();
-
-
     }
 
 
@@ -93,5 +93,10 @@ public class FriendsTableController {
                 .collect(Collectors.toList()));
         initModel();
 
+    }
+
+    @Override
+    public void update() {
+        initModel();
     }
 }
