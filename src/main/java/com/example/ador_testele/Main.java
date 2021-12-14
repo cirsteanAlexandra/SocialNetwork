@@ -6,11 +6,14 @@ import com.example.Repository.RelationshipRepo;
 import com.example.Repository.UserRepo;
 import com.example.Ui.NewUi.Login;
 
+
+
 import java.io.IOException;
 
 public class Main {
 
     public static void main(String[] args) throws IOException {
+
 	// write your code here
 
 
@@ -32,6 +35,6 @@ public class Main {
         Login ui= new Login(cont);
         ui.mainMenu();
 
-        //HelloApplication.main(args);
+
     }
 }

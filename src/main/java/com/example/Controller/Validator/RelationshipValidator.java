@@ -1,8 +1,9 @@
 package com.example.Controller.Validator;
 
 import com.example.Domain.Relationship;
-import com.example.Utils.Exceptions.Exception;
 import com.example.Utils.Exceptions.RelationshipException;
+import com.example.Utils.Exceptions.*;
+import com.example.Utils.Exceptions.Exception;
 
 public class RelationshipValidator extends AbstractValidator<Relationship>{
     public RelationshipValidator() {

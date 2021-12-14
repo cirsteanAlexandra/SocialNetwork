@@ -8,7 +8,9 @@ import com.example.Controller.Validator.Validator;
 import com.example.Domain.Persone;
 import com.example.Domain.Relationship;
 import com.example.Domain.User;
+
 import com.example.Utils.Exceptions.Exception;
+
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
@@ -16,6 +18,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+
+import com.example.Utils.Exceptions.*;
+import com.example.Utils.Exceptions.Exception;
+
 
 public class MainMenu {
     String currentMode=new String();

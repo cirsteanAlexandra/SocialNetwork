@@ -6,6 +6,9 @@ import com.example.Domain.User;
 import com.example.Repository.Memory.UserMemoryRepo;
 import org.junit.jupiter.api.Test;
 
+import com.example.Utils.Exceptions.*;
+import com.example.Utils.Exceptions.Exception;
+
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

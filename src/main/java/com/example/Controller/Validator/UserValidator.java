@@ -1,9 +1,11 @@
 package com.example.Controller.Validator;
 
 import com.example.Domain.User;
-import com.example.Utils.Exceptions.Exception;
+
 import com.example.Utils.Exceptions.PersoneException;
 import com.example.Utils.Exceptions.UserException;
+import com.example.Utils.Exceptions.*;
+import com.example.Utils.Exceptions.Exception;
 
 public class UserValidator extends AbstractValidator<User>{
 

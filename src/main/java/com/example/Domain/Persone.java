@@ -4,7 +4,6 @@ import java.util.Objects;
 
 
 
-
 public class Persone extends Entity<Long> {
 
     String firstName; //prenume

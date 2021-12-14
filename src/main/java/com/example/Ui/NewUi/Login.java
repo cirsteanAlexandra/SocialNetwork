@@ -1,10 +1,14 @@
 package com.example.Ui.NewUi;
+
 import com.example.Controller.NewController.MainController;
 import com.example.Controller.Validator.ContextValidator;
 import com.example.Controller.Validator.Strategy;
 import com.example.Controller.Validator.Validator;
 import com.example.Domain.Persone;
 import com.example.Domain.User;
+
+import com.example.Utils.Exceptions.*;
+
 import com.example.Utils.Exceptions.Exception;
 
 import java.util.HashMap;
@@ -94,7 +98,9 @@ public class Login {
             user=new User(username,new Persone(firstName,lastName));
             Validator vali= ContextValidator.createValidator(Strategy.USER);
             vali.validate(user);
+
             //System.out.println(user);
+
             cont.addUser(user);
             System.out.println("User created succesfully");
         }

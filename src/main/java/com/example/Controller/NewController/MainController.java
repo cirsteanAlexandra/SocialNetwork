@@ -4,10 +4,12 @@ import com.example.Domain.Message;
 import com.example.Domain.Persone;
 import com.example.Domain.Relationship;
 import com.example.Domain.User;
+
 import com.example.Utils.Exceptions.Exception;
 import com.example.Utils.Exceptions.*;
 import com.example.Utils.Observer.Observable;
 import com.example.Utils.Observer.Observer;
+
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -551,6 +553,8 @@ public class MainController implements Observable {
         return true;
     }
 
+
+
     public List<Relationship>RequestsForAUser(String userName){
         List<Relationship> listRequests=new ArrayList<>();
         String data=null;
@@ -562,6 +566,7 @@ public class MainController implements Observable {
             }
         }
         return listRequests;
+
     }
 
     @Override

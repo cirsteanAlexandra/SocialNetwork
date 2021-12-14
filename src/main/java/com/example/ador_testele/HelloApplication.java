@@ -1,11 +1,13 @@
 package com.example.ador_testele;
 
+
 import com.example.Controller.NewController.*;
 import com.example.Repository.Db.*;
 import com.example.Repository.RelationshipRepo;
 import com.example.Repository.UserRepo;
 import com.example.Utils.Algoritms.Algoritm;
 import com.example.GUIController.*;
+
 
 
 import javafx.application.Application;
@@ -19,6 +21,7 @@ import java.io.IOException;
 
 public class HelloApplication extends Application {
     @Override
+
     public void start(Stage stage) throws IOException, InterruptedException {
         UserRepo repoU= new UserDbRepo(ConnectionsMain.URL,ConnectionsMain.Username,ConnectionsMain.Password);
         PersoneDbRepo repoP= new PersoneDbRepo(ConnectionsMain.URL,ConnectionsMain.Username,ConnectionsMain.Password);
@@ -44,11 +47,15 @@ public class HelloApplication extends Application {
 
         Scene scene = new Scene(loginLayout);
         stage.setTitle("Login");
+
         stage.setScene(scene);
         stage.show();
     }
 
     public static void main(String[] args) {
+
+
+
         launch();
     }
 }
