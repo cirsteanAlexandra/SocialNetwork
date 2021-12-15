@@ -29,11 +29,6 @@ public class LoginController {
     @FXML
     private TextField textUsername;
 
-
-
-    @FXML
-    private Label LabelUsername;
-
     public void handleLoginAction(ActionEvent ev){
         //MessageAlert.showMessage(null, Alert.AlertType.INFORMATION,"Feature not yet implemented","The menu for admin is not yet available!");
         try {

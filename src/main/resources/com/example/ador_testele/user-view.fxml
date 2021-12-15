@@ -8,7 +8,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="381.0" prefWidth="322.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.GUIController.UserGuiController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="438.0" prefWidth="322.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.GUIController.UserGuiController">
    <children>
       <Button layoutX="32.0" layoutY="136.0" mnemonicParsing="false" onAction="#handleTestFriends" prefHeight="25.0" prefWidth="68.0" text="Friends" />
       <Button layoutX="229.0" layoutY="136.0" mnemonicParsing="false" onAction="#handleTest" prefHeight="25.0" prefWidth="68.0" text="Requests" />
@@ -26,15 +26,16 @@
          </image>
       </ImageView>
       <Button layoutX="47.0" layoutY="185.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="75.0" text="Search" />
-      <TextField layoutX="121.0" layoutY="185.0" prefHeight="25.0" prefWidth="132.0" />
-      <TableView layoutX="18.0" layoutY="224.0" prefHeight="91.0" prefWidth="261.0">
+      <TextField fx:id="SearchField" layoutX="121.0" layoutY="185.0" prefHeight="25.0" prefWidth="132.0" />
+      <TableView fx:id="tableView" layoutX="18.0" layoutY="224.0" prefHeight="144.0" prefWidth="261.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="FirstName" />
-          <TableColumn prefWidth="75.0" text="LastName" />
+          <TableColumn fx:id="FirstName" prefWidth="75.0" text="FirstName" />
+          <TableColumn fx:id="LastName" prefWidth="75.0" text="LastName" />
+          <TableColumn fx:id="Username" prefWidth="75.0" text="Username" />
         </columns>
       </TableView>
-      <Button layoutX="33.0" layoutY="328.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" text="AddFriend" />
-      <Button layoutX="143.0" layoutY="328.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" text="SeeProfile" />
+      <Button layoutX="33.0" layoutY="378.0" mnemonicParsing="false" onAction="#handleAddFriend" prefHeight="25.0" prefWidth="87.0" text="AddFriend" />
+      <Button layoutX="143.0" layoutY="378.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" text="SeeProfile" />
   
    </children>
 </AnchorPane>

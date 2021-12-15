@@ -64,9 +64,11 @@ public class FriendsTableController implements Observer {
     public void initModel() {
 
         Set<Persone> persones = cont.getFriendsByUsername(user.getUsername()).keySet();
+
         model.setAll(persones.stream()
                 .map(x -> new PrintedPersones(x.getFirstName(), x.getLastName()))
                 .collect(Collectors.toList()));
+
     }
 
     public void handleDeleteFriend(ActionEvent ev) {

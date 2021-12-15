@@ -52,7 +52,7 @@ public class RequestsTableController implements Observer {
     }
 
     public void initModel(){
-        System.out.println(cont.RequestsForAUser(user.getUsername()));
+       // System.out.println(cont.RequestsForAUser(user.getUsername()));
         List<Relationship> requests=cont.RequestsForAUser(user.getUsername());
         model.setAll(requests.stream()
                 .map(x-> new PrintedRelationship(x.getFirstUserName(),x.getDtf()))
