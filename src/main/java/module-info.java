@@ -17,7 +17,8 @@ module com.example.ador_testele {
     opens com.example.GUIController to javafx.fxml;
     opens com.example.Domain to javafx.base;
 
+
     exports com.example.ador_testele;
     exports com.example.GUIController;
-
+    exports com.example.Domain;
 }

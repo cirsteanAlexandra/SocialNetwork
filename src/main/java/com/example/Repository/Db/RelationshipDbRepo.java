@@ -13,7 +13,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RelationshipDbRepo extends DbRepoId<Long, Relationship> implements RelationshipRepo {
+public class RelationshipDbRepo<Messages> extends DbRepoId<Long, Relationship> implements RelationshipRepo {
     public RelationshipDbRepo(String url, String username, String password) {
         super(url, username, password);
     }
@@ -314,5 +314,9 @@ public class RelationshipDbRepo extends DbRepoId<Long, Relationship> implements 
         ps.setString(2,other[1]);
     }
 
+    public void deleteRelationshipByUsername(String username){
+        sql= "delete from public.\"Relationship\" where first_username =? or second_username=? ";
+
+    }
 
 }

@@ -37,23 +37,82 @@ public class LoginController {
                 MessageAlert.showErrorMessage(null, "The text field must contain an username!");
             else {
                 User user = cont.getUserByUsername(Username);
-                MessageAlert.showMessage(null, Alert.AlertType.INFORMATION, "Feature not yet implemented", "The menu for user is not yet available!");
+                showUserLayout();
+               //MessageAlert.showMessage(null, Alert.AlertType.INFORMATION, "Feature not yet implemented", "The menu for user is not yet available!");
             }
         }
         catch(Exception e){
             MessageAlert.showErrorMessage(null, e.getDescription());
         }
         catch(NullPointerException e){
+            e.printStackTrace();
             MessageAlert.showErrorMessage(null, "The text field must contain an username!");
         }
         textUsername.setText(null);
     }
+
+    private void showUserLayout()  {
+
+        try {
+
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(new File(Algoritm.getFullPath("user-view.fxml")).toURI().toURL());
+            AnchorPane loginLayout = fxmlLoader.load();
+            String Username =textUsername.getText();
+            UserGuiController requestController = fxmlLoader.getController();
+            requestController.setUserGuiController(cont,cont.getUserByUsername(Username));
+            Stage registerStage = new Stage();
+            Scene scene = new Scene(loginLayout);
+            registerStage.initModality(Modality.WINDOW_MODAL);
+            registerStage.setTitle(Username);
+            registerStage.setScene(scene);
+            registerStage.show();
+        }
+        catch (IOException | InterruptedException | Exception e){
+            e.printStackTrace();
+            MessageAlert.showErrorMessage(null, e.getMessage()+"\n"+e.getCause());
+        }
+
+    }
+
+
+
 
     public void handleRegisterAction(ActionEvent ev){
         //MessageAlert.showMessage(null, Alert.AlertType.INFORMATION,"Feature not yet implemented","The register is not yet available!");
         textUsername.setText(null);
         showRegistrationLayout();
     }
+
+    public void handleFriendsAction(ActionEvent ev)  {
+        showFriendsTable();
+    }
+
+    private void showFriendsTable()  {
+
+
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(new File(Algoritm.getFullPath("friends_table_view.fxml")).toURI().toURL());
+            AnchorPane loginLayout = fxmlLoader.load();
+            String Username =textUsername.getText();
+            Stage registerStage = new Stage();
+            FriendsTableController requestController = fxmlLoader.getController();
+
+            requestController.setFriendsController(cont,registerStage,cont.getUserByOther(Username));
+            Scene scene = new Scene(loginLayout);
+            registerStage.initModality(Modality.WINDOW_MODAL);
+            registerStage.setTitle("Requests");
+            registerStage.setScene(scene);
+            registerStage.show();
+        }catch(IOException | InterruptedException | Exception e){
+            e.printStackTrace();
+            MessageAlert.showErrorMessage(null, e.getMessage()+"\n"+e.getCause());
+        }
+
+
+    }
+
     public void handleTest(ActionEvent ev){
         showTestTableLayout();
         textUsername.setText(null);
@@ -79,6 +138,8 @@ public class LoginController {
         }
     }
 
+
+
     public void showRegistrationLayout(){
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
@@ -98,4 +159,24 @@ public class LoginController {
         }
     }
 
+    public void handleTestFriends(ActionEvent actionEvent) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(new File(Algoritm.getFullPath("friends_table_view.fxml")).toURI().toURL());
+            AnchorPane loginLayout = fxmlLoader.load();
+            String Username = textUsername.getText();
+            Stage registerStage = new Stage();
+            FriendsTableController requestController = fxmlLoader.getController();
+            requestController.setFriendsController(cont,registerStage,cont.getUserByOther(Username));
+            Scene scene = new Scene(loginLayout);
+            registerStage.initModality(Modality.WINDOW_MODAL);
+            registerStage.setTitle("Friends");
+            registerStage.setScene(scene);
+            registerStage.show();
+        }catch(IOException | InterruptedException | Exception e){
+            e.printStackTrace();
+            MessageAlert.showErrorMessage(null, e.getMessage()+"\n"+e.getCause());
+        }
+
+    }
 }

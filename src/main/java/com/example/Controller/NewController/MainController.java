@@ -165,6 +165,7 @@ public class MainController implements Observable {
      */
     public boolean removeRelationshipByUsernames(String username1,String username2) {
         contR.removeByOthers(username1,username2);
+        notifyObservers();
         return true;
     }
 
@@ -347,7 +348,8 @@ public class MainController implements Observable {
      * for each username add in a list the specific user
      * @param usernameList a list of usernames
      * @return a list of user with the given usernames
-     */public List<User> ListUserByUsernameAndMonth(List<String> usernameList,int month,String username){
+     */
+    public List<User> ListUserByUsernameAndMonth(List<String> usernameList,int month,String username){
         List<User> userList=new ArrayList<>();
         for(String i : usernameList)
             if(Month(month,i,username)==true)
@@ -569,6 +571,19 @@ public class MainController implements Observable {
 
     }
 
+
+    public String getUsernameByFirstName(String firstName){
+
+
+        for( User u :getAllUsers())
+            if(u.getPers().getFirstName().equals(firstName))
+                return u.getUsername();
+        return null;
+    }
+
+
+
+
     @Override
     public void addObserver(Observer o) {
         listObserver.add(o);
@@ -583,4 +598,5 @@ public class MainController implements Observable {
     public void notifyObservers() {
         listObserver.forEach(o-> o.update());
     }
+
 }
