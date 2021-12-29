@@ -110,7 +110,26 @@ public class UserGuiController  {
             e.printStackTrace();
             MessageAlert.showErrorMessage(null, e.getMessage()+"\n"+e.getCause());
         }
+    }
 
+    public void handleMessage(ActionEvent actionEvent) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(new File(Algoritm.getFullPath("message_view.fxml")).toURI().toURL());
+            AnchorPane loginLayout = fxmlLoader.load();
+            String Username = textUsername.getText();
+            Stage messStage = new Stage();
+            MessageGUIController messageController = fxmlLoader.getController();
+            messageController.setMessageGUIController(cont,messStage,cont.getUserByOther(Username));
+            Scene scene = new Scene(loginLayout);
+            messStage.initModality(Modality.WINDOW_MODAL);
+            messStage.setTitle("Conversation");
+            messStage.setScene(scene);
+            messStage.show();
+        }catch(IOException | InterruptedException | Exception e){
+            e.printStackTrace();
+            MessageAlert.showErrorMessage(null, e.getMessage()+"\n"+e.getCause());
+        }
     }
 
     @FXML

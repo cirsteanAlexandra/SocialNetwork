@@ -80,7 +80,6 @@
                                     <Font size="19.0" />
                                  </font>
                               </Button>
-
                               <Button layoutX="276.0" layoutY="17.0" mnemonicParsing="false" onAction="#handleRegisterAction" prefHeight="51.0" prefWidth="125.0" text="Register">
                                  <font>
                                     <Font size="19.0" />
@@ -94,6 +93,5 @@
             </AnchorPane>
          </children>
       </VBox>
-
    </children>
 </AnchorPane>
