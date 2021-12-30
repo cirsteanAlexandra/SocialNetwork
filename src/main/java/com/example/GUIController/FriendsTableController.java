@@ -76,6 +76,7 @@ public class FriendsTableController implements Observer {
         String userName= user.getUsername();
         String userName2= cont.getUsernameByFirstName(firstName);
         cont.removeRelationshipByUsernames(userName,userName2);
+
     }
 
 

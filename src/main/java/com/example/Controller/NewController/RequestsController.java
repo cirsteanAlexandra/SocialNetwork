@@ -33,4 +33,18 @@ public class RequestsController  extends Controller<Long, Relationship>{
         return listId.size();
     }
 
+    public void deleteRequestFromSenderToReceiver(String username,String username2){
+        List<Long> listId= new ArrayList<>();
+        Long id = null;
+        for(Relationship rel: (List<Relationship>) repo.getAll()){
+            if(rel.getFirstUserName().equals(username) && rel.getSecondUserName().equals(username2)){
+                id=rel.getId();
+            }
+        }
+
+        repo.delete(id);
+
+
+    }
+
 }

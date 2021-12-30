@@ -579,10 +579,20 @@ public class MainController implements Observable {
             if(u.getPers().getFirstName().equals(firstName))
                 return u.getUsername();
         return null;
+
     }
 
+    public void removeRequestBySenderAndReceiver(String username, String username1){
+       contRQ.deleteRequestFromSenderToReceiver(username,username1);
+        notifyObservers();
+    }
 
-
+    public String getStatusRequest(String username, String username1){
+        for(Relationship r:getAllRequests())
+            if(r.getFirstUserName().equals(username)&&r.getSecondUserName().equals(username1))
+                return r.getStatus();
+        return null;
+    }
 
     @Override
     public void addObserver(Observer o) {
