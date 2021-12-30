@@ -40,9 +40,11 @@ public class RegisterController {
             cont.addUser(user);
             MessageAlert.showMessage(null, Alert.AlertType.INFORMATION,"Registration","The User has been added succefully!");
         }catch(Exception e){
+
             MessageAlert.showErrorMessage(null, e.getDescription());
         }
         catch(NullPointerException e){
+            //e.printStackTrace();
             MessageAlert.showErrorMessage(null, "The text field must contain an username!");
         }
         finally {

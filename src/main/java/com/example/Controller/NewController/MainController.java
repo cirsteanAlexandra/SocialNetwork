@@ -536,15 +536,11 @@ public class MainController implements Observable {
                     && r.getSecondUserName().equals(rel.getSecondUserName())) {
                 if (r.getStatus().equals(rel.getStatus()))
                     throw new RelationshipRepoException("There is a request to this user :( .");
-                if (r.getStatus().equals("accept"))
-                    throw new RelationshipRepoException("The request was already accepted. :)");
             }
             if (r.getFirstUserName().equals(rel.getSecondUserName())
                     && r.getSecondUserName().equals(rel.getFirstUserName())) {
                 if (r.getStatus().equals(rel.getStatus()))
                     throw new RelationshipRepoException("There is a request to this user :( .");
-                if (r.getStatus().equals("accept"))
-                    throw new RelationshipRepoException("The request was already accepted. :)");
             }
         }
 

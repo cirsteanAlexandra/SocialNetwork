@@ -6,7 +6,6 @@ import com.example.Domain.Relationship;
 import com.example.Domain.User;
 import com.example.Utils.Algoritms.Algoritm;
 import com.example.Utils.Exceptions.Exception;
-import com.example.Utils.Observer.Observer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,12 +20,13 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
 import java.util.Set;
 import java.util.function.Predicate;
+
 import java.util.stream.Collectors;
 
 public class UserGuiController  {
@@ -114,7 +114,26 @@ public class UserGuiController  {
             e.printStackTrace();
             MessageAlert.showErrorMessage(null, e.getMessage()+"\n"+e.getCause());
         }
+    }
 
+    public void handleMessage(ActionEvent actionEvent) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(new File(Algoritm.getFullPath("message_view.fxml")).toURI().toURL());
+            AnchorPane loginLayout = fxmlLoader.load();
+            String Username = textUsername.getText();
+            Stage messStage = new Stage();
+            MessageGUIController messageController = fxmlLoader.getController();
+            messageController.setMessageGUIController(cont,messStage,cont.getUserByOther(Username));
+            Scene scene = new Scene(loginLayout);
+            messStage.initModality(Modality.WINDOW_MODAL);
+            messStage.setTitle("Conversation");
+            messStage.setScene(scene);
+            messStage.show();
+        }catch(IOException | InterruptedException | Exception e){
+            e.printStackTrace();
+            MessageAlert.showErrorMessage(null, e.getMessage()+"\n"+e.getCause());
+        }
     }
 
     @FXML
@@ -160,7 +179,7 @@ public class UserGuiController  {
 
              Relationship rel = new Relationship(user.getUsername(), username, LocalDate.now(), "pending");
             cont.AddRequest(rel);
-           // MessageAlert.showMessage(null,null,null, "cerere trimisa cu succes");
+            MessageAlert.showMessage(null, Alert.AlertType.INFORMATION,"Add", "cerere trimisa cu succes");
         }
         catch (Exception e)
         {

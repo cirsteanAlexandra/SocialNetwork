@@ -1,2 +1,7 @@
+<<<<<<< HEAD
 C:\Users\Alexandra\Desktop\LastTry\out\production\resources\com\example\ador_testele\profile.fxml
 C:\Users\Alexandra\Desktop\LastTry\src\main\resources\com\example\ador_testele\profile.fxml
+=======
+C:\Users\codri\IdeaProjects\ProjectReteaDeSocializare\out\production\resources\com\example\ador_testele\message_view.fxml
+C:\Users\codri\IdeaProjects\ProjectReteaDeSocializare\src\main\resources\com\example\ador_testele\message_view.fxml
+>>>>>>> c848c5275f2c4c519a104a9459a5d1c42b2b3a7e
