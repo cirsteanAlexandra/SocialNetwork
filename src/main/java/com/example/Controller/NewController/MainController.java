@@ -572,7 +572,7 @@ public class MainController implements Observable {
 
 
         for( User u :getAllUsers())
-            if(u.getPers().getFirstName().equals(firstName))
+            if(u.getPers().getLastName().equals(firstName))
                 return u.getUsername();
         return null;
 
@@ -588,6 +588,23 @@ public class MainController implements Observable {
             if(r.getFirstUserName().equals(username)&&r.getSecondUserName().equals(username1))
                 return r.getStatus();
         return null;
+    }
+
+    public boolean GetTheSender(String username){
+        for(Relationship r:getAllRequests())
+            if(r.getFirstUserName().equals(username))
+                return true;
+        return false;
+    }
+
+    public boolean existedFriendship(String username, String username1){
+        for(Relationship r:getAllRelationships())
+            if(r.getFirstUserName().equals(username)&&r.getSecondUserName().equals(username1)
+            ||
+             r.getFirstUserName().equals(username1)&&r.getSecondUserName().equals(username))
+
+                return true;
+        return false;
     }
 
     @Override

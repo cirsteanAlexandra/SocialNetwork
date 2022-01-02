@@ -47,20 +47,16 @@
          <children>
             <AnchorPane prefHeight="100.0" prefWidth="432.0">
                <children>
-<<<<<<< HEAD
+
                   <Button layoutX="42.0" layoutY="22.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="140.0" text="Register" onAction="#handleRegister">
-=======
-                  <Button layoutX="42.0" layoutY="22.0" mnemonicParsing="false" onAction="#handleRegister" prefHeight="55.0" prefWidth="140.0" text="Register">
->>>>>>> c848c5275f2c4c519a104a9459a5d1c42b2b3a7e
+
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Button>
-<<<<<<< HEAD
-                  <Button layoutX="270.0" layoutY="22.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="140.0" text="Cancel" onAction="#handleCancel">
-=======
+
                   <Button layoutX="270.0" layoutY="22.0" mnemonicParsing="false" onAction="#handleCancel" prefHeight="55.0" prefWidth="140.0" text="Cancel">
->>>>>>> c848c5275f2c4c519a104a9459a5d1c42b2b3a7e
+
                      <font>
                         <Font size="24.0" />
                      </font>
