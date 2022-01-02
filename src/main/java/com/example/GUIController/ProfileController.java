@@ -27,32 +27,7 @@ public class ProfileController implements Observer {
     this.user=user;
     this.user2=user2;
     cont.addObserver(this);
-        String username= user2.getUsername();
-        String status=cont.getStatusRequest(user.getUsername(), username);
-        String status1=cont.getStatusRequest(username,user.getUsername());
-        if(status!=null )
-        {
-            if(status.equals("accept"))
-                add.setText("Friend");
-            if(status.equals("reject"))
-                add.setText("Add Friend");
-            if(status.equals("pending"))
-                add.setText("requested");
-        }
-        if(status==null)
-            //add.setText("Add Friend");
-        {
-
-            if (status1 != null) {
-                if (status1.equals("accept"))
-                    add.setText("Friend");
-                if (status1.equals("reject"))
-                    add.setText("Add Friend");
-                if (status1.equals("pending"))
-                    add.setText("reply");
-            }
-     else add.setText("Add Friend");
-        }
+       SetTextButtonAdd();
 }
 
     public void SetTextButtonAdd(){

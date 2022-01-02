@@ -51,7 +51,6 @@ public class MainMenu {
         options.put(9,"-get friends by username");
         options.put(10,"-get friends by username and month");
         options.put(11,"- to exit");
-        options.put(12,"testez stergerea de cerere");
         return options;
     }
 
@@ -109,9 +108,6 @@ public class MainMenu {
                         break;
                     case 11:
                         done = true;
-                        break;
-                    case 12:
-                        cont.removeRequestBySenderAndReceiver("allex","vlad01");
                         break;
                     case 404:
                         setCurrentMode();
