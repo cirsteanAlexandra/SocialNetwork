@@ -72,10 +72,20 @@ public class FriendsTableController implements Observer {
     }
 
     public void handleDeleteFriend(ActionEvent ev) {
-        String firstName=tableView.getSelectionModel().getSelectedItem().getFirst_Name();
+        String LastName=tableView.getSelectionModel().getSelectedItem().getLast_Name();
         String userName= user.getUsername();
-        String userName2= cont.getUsernameByFirstName(firstName);
-        cont.removeRelationshipByUsernames(userName,userName2);
+        String userName2= cont.getUsernameByFirstName(LastName);
+
+        if(cont.GetTheSender(userName)) {
+            cont.removeRelationshipByUsernames(userName, userName2);
+            cont.removeRequestBySenderAndReceiver(userName, userName2);
+        }
+        else
+        {
+            cont.removeRelationshipByUsernames(userName2, userName);
+            cont.removeRequestBySenderAndReceiver(userName2, userName);
+        }
+
     }
 
 

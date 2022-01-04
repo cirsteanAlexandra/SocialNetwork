@@ -26,7 +26,7 @@
          </image>
       </ImageView>
       <Button layoutX="47.0" layoutY="185.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="75.0" text="Search" />
-      <TextField fx:id="SearchField" layoutX="121.0" layoutY="185.0" prefHeight="25.0" prefWidth="132.0" />
+      <TextField fx:id="SearchField" layoutX="121.0" layoutY="185.0" onAction="#handleFilter" prefHeight="25.0" prefWidth="132.0" />
       <TableView fx:id="tableView" layoutX="18.0" layoutY="224.0" prefHeight="144.0" prefWidth="261.0">
         <columns>
           <TableColumn fx:id="FirstName" prefWidth="75.0" text="FirstName" />
@@ -34,8 +34,7 @@
           <TableColumn fx:id="Username" prefWidth="75.0" text="Username" />
         </columns>
       </TableView>
-      <Button layoutX="33.0" layoutY="378.0" mnemonicParsing="false" onAction="#handleAddFriend" prefHeight="25.0" prefWidth="87.0" text="AddFriend" />
-      <Button layoutX="143.0" layoutY="378.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" text="SeeProfile" />
+      <Button layoutX="105.0" layoutY="383.0" mnemonicParsing="false" onAction="#handleSeeProfile" prefHeight="25.0" prefWidth="87.0" text="SeeProfile" />
   
    </children>
 </AnchorPane>

@@ -23,6 +23,10 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import java.util.Set;
+import java.util.function.Predicate;
+
 import java.util.stream.Collectors;
 
 public class UserGuiController  {
@@ -137,7 +141,7 @@ public class UserGuiController  {
         FirstName.setCellValueFactory(new PropertyValueFactory<PrintedAllPersones, String>("First_Name"));
         LastName.setCellValueFactory(new PropertyValueFactory<PrintedAllPersones, String>("Last_Name"));
         Username.setCellValueFactory(new PropertyValueFactory<PrintedAllPersones,String>("username"));
-        tableView.setItems(model);
+       tableView.setItems(model);
     }
 
     public void initModel() {
@@ -146,9 +150,24 @@ public class UserGuiController  {
         for(User u: cont.getAllUsers())
             persones.add(u.getPers());
 
+        SearchField.textProperty().addListener(o -> handleFilter());
+
         model.setAll(cont.getAllUsers().stream()
               .map(x -> new PrintedAllPersones(x.getPers().getFirstName(),x.getPers().getLastName(), x.getUsername()))
             .collect(Collectors.toList()));
+
+    }
+
+
+
+    public void handleFilter() {
+        Predicate<PrintedAllPersones>p1=
+                n->n.getFirst_Name().startsWith(SearchField.getText());
+
+        model.setAll(cont.getAllUsers().stream()
+                .map(x -> new PrintedAllPersones(x.getPers().getFirstName(),x.getPers().getLastName(), x.getUsername()))
+                        .filter(p1)
+                .collect(Collectors.toList()));
 
     }
 
@@ -178,4 +197,29 @@ public class UserGuiController  {
     }
 
 
+    public void handleSeeProfile(ActionEvent actionEvent) {
+
+        try {
+
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(new File(Algoritm.getFullPath("profile.fxml")).toURI().toURL());
+            AnchorPane loginLayout = fxmlLoader.load();
+            String Username=tableView.getSelectionModel().getSelectedItem().getUsername();
+            String Username2 = textUsername.getText();
+            ProfileController profileController=fxmlLoader.getController();
+            profileController.setProfileController(cont,cont.getUserByUsername(Username2),cont.getUserByUsername(Username));
+            Stage registerStage = new Stage();
+            Scene scene = new Scene(loginLayout);
+            registerStage.initModality(Modality.WINDOW_MODAL);
+            registerStage.setTitle(Username);
+            registerStage.setScene(scene);
+            registerStage.show();
+        }
+        catch (IOException | InterruptedException | Exception e){
+            e.printStackTrace();
+            MessageAlert.showErrorMessage(null, e.getMessage()+"\n"+e.getCause());
+        }
+
+
+    }
 }

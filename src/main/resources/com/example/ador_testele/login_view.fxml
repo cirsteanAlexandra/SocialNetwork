@@ -68,7 +68,8 @@
                               <Font size="24.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="textUsername" prefWidth="230.0" GridPane.columnIndex="1" />
+                        <TextField fx:id="textUsername" prefWidth="230.0" GridPane.columnIndex="1"
+                        />
                      </children>
                   </GridPane>
                   <HBox layoutX="16.0" layoutY="103.0" prefHeight="83.0" prefWidth="436.0">
