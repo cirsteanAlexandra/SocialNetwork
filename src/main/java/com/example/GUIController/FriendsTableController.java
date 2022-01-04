@@ -79,11 +79,13 @@ public class FriendsTableController implements Observer {
         if(cont.GetTheSender(userName)) {
             cont.removeRelationshipByUsernames(userName, userName2);
             cont.removeRequestBySenderAndReceiver(userName, userName2);
+            //notify();
         }
         else
         {
             cont.removeRelationshipByUsernames(userName2, userName);
             cont.removeRequestBySenderAndReceiver(userName2, userName);
+           // notify();
         }
 
     }
