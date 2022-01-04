@@ -7,12 +7,14 @@ import com.example.Utils.Exceptions.Exception;
 import com.example.Utils.Observer.Observer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.text.Text;
 
 import java.awt.*;
 import java.time.LocalDate;
 
 public class ProfileController implements Observer {
     public javafx.scene.control.Button add;
+    public javafx.scene.control.TextField a,b,c;
 
 
     private MainController cont;
@@ -22,10 +24,23 @@ public class ProfileController implements Observer {
     @FXML
     public Button AddFriendButton;
 
+    /*@FXML
+    private TextField b;
+    @FXML
+    private TextField c;
+    @FXML
+    private TextField a;
+    @FXML
+    public TextField ceva;*/
+
     public void setProfileController(MainController cont, User user,User user2){
     this.cont=cont;
     this.user=user;
     this.user2=user2;
+
+    a.setText(user2.getUsername());
+    b.setText(user2.getPers().getFirstName());
+    c.setText((user2.getPers().getLastName()));
     cont.addObserver(this);
        SetTextButtonAdd();
 }
@@ -34,19 +49,18 @@ public class ProfileController implements Observer {
         String username= user2.getUsername();
         String status=cont.getStatusRequest(user.getUsername(), username);
         String status1=cont.getStatusRequest(username,user.getUsername());
-        if(status!=null )
+        if(status!=null ) // in tabela de request  exista o cerere A a trimis la B
         {
-            if(status.equals("accept"))
+            if(status.equals("accept")) // daca e acceptata
                 add.setText("Friend");
             if(status.equals("reject"))
                 add.setText("Add Friend");
             if(status.equals("pending"))
                 add.setText("requested");
         }
-        if(status==null)
-        //add.setText("Add Friend");
+        if(status==null) // A nu a trimis la B
         {
-            if (status1 != null) {
+            if (status1 != null) { // dar B a trimis la A
                 if (status1.equals("accept"))
                     add.setText("Friend");
                 if (status1.equals("reject"))
@@ -65,7 +79,8 @@ public class ProfileController implements Observer {
 
                 Relationship rel = new Relationship(user.getUsername(), username, LocalDate.now(), "pending");
                 cont.AddRequest(rel);
-                add.setText("Requested");
+               // add.setText("Requested");
+                SetTextButtonAdd();
 
             } catch (Exception e) {
 
