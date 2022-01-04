@@ -473,6 +473,7 @@ public class MainController implements Observable {
         User sender=getUserByUsername(message.getFrom().getUsername());
         User receiver=getUserByUsername(message.getReceivers().get(0).getUsername());
         contM.add(new Message(message.getId(),sender, message.getMessage(), Arrays.asList(receiver), LocalDateTime.now(),message.getReply()));
+        notifyObservers();
         return true;
     }
 
@@ -491,6 +492,7 @@ public class MainController implements Observable {
         }
         if(!contM.add(new Message(message.getId(),sender, message.getMessage(), receivers, LocalDateTime.now(),message.getReply())))
             throw new MessageException("The message cannot be sent");
+        notifyObservers();
         return true;
     }
 
