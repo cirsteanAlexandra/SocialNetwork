@@ -106,6 +106,8 @@ public class UserDbRepo extends DbRepoId<Long, User> implements UserRepo {
         sql="select * from public.\"Users\"";
         return super.getAll();
     }
+    
+
 
     /**
      * Gives a list with all the ids store din repository

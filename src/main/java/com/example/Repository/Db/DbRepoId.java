@@ -1,6 +1,8 @@
 package com.example.Repository.Db;
 
 import com.example.Domain.Entity;
+import com.example.Repository.PagingRepo.Page;
+import com.example.Repository.PagingRepo.Pageble;
 import com.example.Repository.Repository;
 import com.example.Utils.Exceptions.EntityRepoException;
 
@@ -13,6 +15,7 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
     protected String username;
     protected String password;
     protected String sql;
+    protected Pageble pageble;
 
     /**
      * Basic constructor of a Db Repository
@@ -159,8 +162,19 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
             throw new EntityRepoException(e.getMessage());
 
         }
+    }
 
+    public Page<E> getAll(Pageble pageble){
+        List<E> list ;
+        try (Connection connection = DriverManager.getConnection(url, username, password);
+             PreparedStatement ps = connection.prepareStatement(sql);
+             ResultSet resultSet = ps.executeQuery()) {
+            list=getAllStatement(resultSet);
+            return new Page<E>(pageble,list.stream());
+        } catch (SQLException e) {
+            throw new EntityRepoException(e.getMessage());
         }
+    }
 
 
     /**
