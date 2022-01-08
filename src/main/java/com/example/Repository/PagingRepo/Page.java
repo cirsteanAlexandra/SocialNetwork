@@ -25,6 +25,13 @@ public class Page<E> implements PageCore<E>  {
     }
 
     @Override
+    public PagebleCore getPreviousPage() {
+        if(this.currentPage.getPageNumber()>0)
+            return new Pageble(this.currentPage.getPageNumber()-1,this.currentPage.getPageSize());
+        return currentPage;
+    }
+
+    @Override
     public Stream<E> getPageContent() {
         return elements;
     }

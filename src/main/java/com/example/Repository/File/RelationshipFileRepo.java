@@ -83,7 +83,6 @@ public class RelationshipFileRepo extends FileRepo<Long,Relationship> implements
         if(getByUserNames(entity.getFirstUserName(), entity.getSecondUserName())!=null)return false;
         return saveToRepo(entity);
     }
-
     /**
      *Generates an id for an entity
      * @return and id that there isnt in repository

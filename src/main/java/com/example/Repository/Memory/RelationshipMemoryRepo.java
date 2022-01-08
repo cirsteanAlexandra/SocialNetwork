@@ -18,7 +18,6 @@ public class RelationshipMemoryRepo extends MemoryRepo<Long, Relationship> imple
         if(getByUserNames(entity.getFirstUserName(), entity.getSecondUserName())!=null)return false;
         return saveToRepo(entity);
     }
-
     /**
      *Generates an id for an entity
      * @return and id that there isnt in repository

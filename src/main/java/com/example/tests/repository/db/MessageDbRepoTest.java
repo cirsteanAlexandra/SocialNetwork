@@ -29,6 +29,7 @@ class MessageDbRepoTest {
         PersoneDbRepo repoP=new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
         repoP.save(new Persone(1L,"wewe","weew"));
         repoP.save(new Persone(2L,"weew","erui"));
+        repoP.closeConnection();
 
         UserRepo repo=new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
         repo.save(new User(1L,"a",new Persone(1L,"wewe","weew")));
@@ -36,32 +37,36 @@ class MessageDbRepoTest {
         repo.save(new User(3L,"macaron",new Persone(1L,"wewe","weew")));
         repo.save(new User(4L,"bucalea",new Persone(1L,"wewe","weew")));
         repo.save(new User(5L,"haplea",new Persone(1L,"wewe","weew")));
+        repo.closeConnection();
 
         MessageRepo repoM=new MessageDbRepo(Connections.URL,Connections.Username,Connections.Password);
         repoM.save(new Message(1L,new User(1L,"a",new Persone(1L,"wewe","weew")),"Morning", Arrays.asList(new User(2L,"biscuit",new Persone(1L,"wewe","weew")),new User(3L,"macaron",new Persone(1L,"wewe","weew"))), LocalDateTime.now()));
+        repoM.closeConnection();
     }
 
     @AfterEach
     void tearDown() {
         MessageDbRepo repoM=new MessageDbRepo(Connections.URL,Connections.Username,Connections.Password);
         repoM.restoreToDefault();
+        repoM.closeConnection();
 
         UserDbRepo repo=new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
         repo.restoreToDefault();
+        repo.closeConnection();
 
         PersoneDbRepo repoP=new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
         repoP.restoreToDefault();
-
+        repoP.closeConnection();
     }
 
     @Test
     void saveSimple() {
         MessageRepo repoM=new MessageDbRepo(Connections.URL,Connections.Username,Connections.Password);
-
         User user1= new User(1L,"a",new Persone(1L,"wewe","weew"));
         User user2= new User(2L,"biscuit",new Persone(1L,"wewe","weew"));
         Message message= new Message(user1, "hello",Arrays.asList(user2),LocalDateTime.of(2019,11,2,12,53));
         assertTrue(repoM.save(message));
+        repoM.closeConnection();
     }
 
     @Test
@@ -77,6 +82,7 @@ class MessageDbRepoTest {
         Message message= new Message(user1, "hai la scoala",Arrays.asList(user2,user3,user4,user5),LocalDateTime.of(2019,11,2,12,53));
 
         assertTrue(repoM.save(message));
+        repoM.closeConnection();
     }
 
     @Test
@@ -93,6 +99,7 @@ class MessageDbRepoTest {
         Message message2= new Message(user2, "nu pot ca mi-e somn",Arrays.asList(user1),LocalDateTime.of(2019,11,2,12,53),message1);
         repoM.save(message1);
         assertTrue(repoM.save(message2));
+        repoM.closeConnection();
     }
 
     @Test
@@ -103,6 +110,7 @@ class MessageDbRepoTest {
         User user2= new User(2L,"biscuit",new Persone(1L,"wewe","weew"));
         Message message= new Message(2L,user1, "hello",Arrays.asList(user2),LocalDateTime.of(2019,11,2,12,53));
         assertTrue(repoM.save(message));
+        repoM.closeConnection();
     }
 
     @Test
@@ -117,6 +125,7 @@ class MessageDbRepoTest {
 
         Message message= new Message(2L,user1, "hai la scoala",Arrays.asList(user2,user3,user4,user5),LocalDateTime.of(2019,11,2,12,53));
         assertTrue(repoM.save(message));
+        repoM.closeConnection();
     }
 
     @Test
@@ -134,6 +143,7 @@ class MessageDbRepoTest {
         }catch(Exception e){
             assertTrue(true);
         }
+        repoM.closeConnection();
     }
 
     @Test
@@ -146,6 +156,7 @@ class MessageDbRepoTest {
         Message message2= new Message(3L,user2, "hello",Arrays.asList(user1),LocalDateTime.of(2019,11,2,12,53));
         repoM.save(message1);
         assertEquals(repoM.get(2L),message1);
+        repoM.closeConnection();
     }
 
     @Test
@@ -160,6 +171,7 @@ class MessageDbRepoTest {
         Message message2= new Message(2L,user1, "hello",Arrays.asList(user2),LocalDateTime.of(2019,11,2,12,53));
         repoM.save(message1);
         assertEquals(repoM.get(2L),message2);
+        repoM.closeConnection();
     }
 
     @Test
@@ -174,6 +186,7 @@ class MessageDbRepoTest {
         Message message2= new Message(2L,user1, "hello",Arrays.asList(user2),LocalDateTime.of(2019,11,2,12,53));
         repoM.save(message1);
         assertEquals(repoM.get(-7L),null);
+        repoM.closeConnection();
     }
 
     @Test
@@ -191,6 +204,7 @@ class MessageDbRepoTest {
         assertTrue(repoM.update(2L,message2));
         assertNotEquals(repoM.get(2L),message1);
         assertEquals(repoM.get(2L),message2);
+        repoM.closeConnection();
     }
 
     @Test
@@ -208,6 +222,7 @@ class MessageDbRepoTest {
         assertTrue(repoM.update(2L,message2));
         assertNotEquals(repoM.get(2L),message1);
         assertEquals(repoM.get(2L),message2);
+        repoM.closeConnection();
     }
 
     @Test
@@ -220,6 +235,7 @@ class MessageDbRepoTest {
         repoM.save(message);
         assertTrue(repoM.delete(2L));
         assertEquals(repoM.get(2L),null);
+        repoM.closeConnection();
     }
 
     @Test
@@ -235,6 +251,7 @@ class MessageDbRepoTest {
         assertTrue(repoM.delete(2L));
         assertEquals(repoM.get(2L),null);
         assertEquals(repoM.getSize(),4);
+        repoM.closeConnection();
     }
 
     @Test
@@ -252,6 +269,7 @@ class MessageDbRepoTest {
             assertTrue(true);
         }
         assertEquals(repoM.get(2L),message);
+        repoM.closeConnection();
     }
 
     @Test
@@ -276,6 +294,7 @@ class MessageDbRepoTest {
         repoM.save(new Message(user5, "hhhaaa yeeaahhh",Arrays.asList(user1),LocalDateTime.now()));
 
         assertEquals(repoM.getSize(),15);
+        repoM.closeConnection();
     }
 
     @Test
@@ -303,6 +322,7 @@ class MessageDbRepoTest {
         assertEquals(list.size(),15);
         assertEquals(list.get(2).getMessage(),"hello");
         assertEquals(list.get(3).getMessage(),"hello");
+        repoM.closeConnection();
     }
 
     @Test
@@ -320,6 +340,7 @@ class MessageDbRepoTest {
 
         assertEquals(repoM.getByOther("a","biscuit").getFrom().getUsername(),message1.getFrom().getUsername());
         assertEquals(repoM.getByOther("a","biscuit").getMessage(),message3.getMessage());
+        repoM.closeConnection();
     }
 
     @Test
@@ -336,6 +357,7 @@ class MessageDbRepoTest {
         repoM.save(message3);
 
         assertEquals(repoM.getByOther("b","biscuit"),null);
+        repoM.closeConnection();
     }
 
     @Test
@@ -354,6 +376,7 @@ class MessageDbRepoTest {
         assertEquals(repoM.getBySR("a","biscuit").get(0).getMessage(),"Morning");
         assertEquals(repoM.getBySR("a","biscuit").get(1).getMessage(),"hello");
         assertEquals(repoM.getBySR("a","biscuit").get(2).getMessage(),"asl pls");
+        repoM.closeConnection();
     }
 
     @Test
@@ -369,6 +392,7 @@ class MessageDbRepoTest {
         repoM.save(message2);
         repoM.save(message3);
         assertTrue(repoM.getBySR("b","biscuit").isEmpty());
+        repoM.closeConnection();
     }
 
     @Test
@@ -385,6 +409,7 @@ class MessageDbRepoTest {
         repoM.save(message3);
 
         assertEquals(repoM.getByDateTime(LocalDateTime.of(2019,11,2,12,53)).size(),2);
+        repoM.closeConnection();
     }
 
     @Test
@@ -401,5 +426,6 @@ class MessageDbRepoTest {
         repoM.save(message3);
 
         assertEquals(repoM.getByDateTime(LocalDateTime.of(2019,11,2,12,52)).size(),0);
+        repoM.closeConnection();
     }
 }

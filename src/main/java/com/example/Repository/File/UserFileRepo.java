@@ -143,7 +143,6 @@ public class UserFileRepo extends FileRepo<Long,User> implements UserRepo {
         if(getByUserName(entity.getUsername())!=null)return false;
         return saveToRepo(entity);
     }
-
     /**
      *Generates an id for an entity
      * @return and id that there isnt in repository

@@ -7,5 +7,8 @@ public interface PageCore<E>{
 
     PagebleCore getNextPage();
 
+    PagebleCore getPreviousPage();
+
     Stream<E> getPageContent();
+
 }

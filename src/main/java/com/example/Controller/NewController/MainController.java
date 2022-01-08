@@ -37,9 +37,6 @@ public class MainController implements Observable {
      * @param contR controller for relationships
      * @param contP controller for persons
      */
-
-
-
     public MainController(UserController contU, RelationshipController contR,PersoneController contP,MessageController contM) {
         this.contU = contU;
         this.contR = contR;
@@ -229,6 +226,7 @@ public class MainController implements Observable {
         if(rel==null) throw new RelationshipRepoException("There isnt a relationship with that usernames");
         return rel;
     }
+
     /**
      * Retrieves a list with all the users from the repository
      * @return a list with all the users from the repository
@@ -329,8 +327,6 @@ public class MainController implements Observable {
         return null;
     }
 
-
-
     /**
      * for each username add in a list the specific user
      * @param usernameList a list of usernames
@@ -398,7 +394,6 @@ public class MainController implements Observable {
     }
 
     /**
-
      * Retrieves a list with all the relationships from the repository
      * @return a list with all the relationships from the repository
      * @throws EntityException if there are errors during the retrieving process
@@ -571,8 +566,6 @@ public class MainController implements Observable {
 
 
     public String getUsernameByFirstName(String firstName){
-
-
         for( User u :getAllUsers())
             if(u.getPers().getLastName().equals(firstName))
                 return u.getUsername();
@@ -621,7 +614,16 @@ public class MainController implements Observable {
 
     @Override
     public void notifyObservers() {
-        listObserver.forEach(o-> o.update());
+        if(listObserver!=null)listObserver.forEach(o-> o.update());
     }
+
+    public void closeConnections(){
+        if(contR!=null)contR.closeConnection();
+        if(contU!=null)contU.closeConnection();
+        if(contRQ!=null)contRQ.closeConnection();
+        if(contM!=null)contM.openConnection();
+        if(contP!=null)contP.closeConnection();
+    }
+
 
 }
