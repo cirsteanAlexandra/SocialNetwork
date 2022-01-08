@@ -4,6 +4,8 @@ import com.example.Domain.Message;
 import com.example.Domain.Persone;
 import com.example.Domain.User;
 import com.example.Repository.MessageRepo;
+import com.example.Repository.PagingRepo.Page;
+import com.example.Repository.PagingRepo.Pageble;
 import com.example.Utils.Exceptions.EntityRepoException;
 import com.example.Utils.Exceptions.MessageRepoException;
 import com.example.Utils.Generator;
@@ -90,6 +92,13 @@ public class MessageDbRepo extends DbRepoId<Long,Message> implements MessageRepo
     public List<Message> getAll() {
         sql="select * from public.\"Messages\"";
         return super.getAll();
+    }
+
+    @Override
+    public Page<Message> getAll(Pageble pageble) {
+        sql="select * from ( select * ,ROW_NUMBER() over (order by id_mess ASC) as rowss from public.\"Messages\")as Foo where rowss>=? and rowss<? ";
+        return super.getAll(pageble);
+        //return super.getAll();
     }
 
     @Override

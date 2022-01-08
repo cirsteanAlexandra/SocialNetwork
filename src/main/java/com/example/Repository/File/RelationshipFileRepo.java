@@ -1,6 +1,8 @@
 package com.example.Repository.File;
 
 import com.example.Domain.Relationship;
+import com.example.Repository.PagingRepo.Page;
+import com.example.Repository.PagingRepo.Pageble;
 import com.example.Repository.RelationshipRepo;
 import com.example.Utils.Exceptions.EntityRepoException;
 import com.example.Utils.Generator;
@@ -115,5 +117,10 @@ public class RelationshipFileRepo extends FileRepo<Long,Relationship> implements
                 relation=rel;
         }
         return relation;
+    }
+
+    @Override
+    public Page<Relationship> getUsersFriends(String username, Pageble pageble) {
+        return null;
     }
 }

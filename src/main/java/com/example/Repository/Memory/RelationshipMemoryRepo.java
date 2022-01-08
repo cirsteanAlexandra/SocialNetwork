@@ -1,6 +1,8 @@
 package com.example.Repository.Memory;
 
 import com.example.Domain.Relationship;
+import com.example.Repository.PagingRepo.Page;
+import com.example.Repository.PagingRepo.Pageble;
 import com.example.Repository.RelationshipRepo;
 import com.example.Utils.Generator;
 
@@ -52,6 +54,10 @@ public class RelationshipMemoryRepo extends MemoryRepo<Long, Relationship> imple
         return relation;
     }
 
+    @Override
+    public Page<Relationship> getUsersFriends(String username, Pageble pageble) {
+        return null;
+    }
 
 
 }
