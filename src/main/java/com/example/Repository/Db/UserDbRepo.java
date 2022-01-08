@@ -2,6 +2,8 @@ package com.example.Repository.Db;
 
 import com.example.Domain.Persone;
 import com.example.Domain.User;
+import com.example.Repository.PagingRepo.Page;
+import com.example.Repository.PagingRepo.Pageble;
 import com.example.Repository.UserRepo;
 import com.example.Utils.Exceptions.EntityRepoException;
 import com.example.Utils.Exceptions.UserRepoException;
@@ -106,6 +108,14 @@ public class UserDbRepo extends DbRepoId<Long, User> implements UserRepo {
         sql="select * from public.\"Users\"";
         return super.getAll();
     }
+
+    @Override
+    public Page<User> getAll(Pageble pageble) {
+        sql="select * from ( select * ,ROW_NUMBER() over (order by id_user ASC) as rowss from public.\"Users\")as Foo where rowss>=? and rowss<? ";
+        return super.getAll(pageble);
+        //return super.getAll();
+    }
+
 
     /**
      * Gives a list with all the ids store din repository

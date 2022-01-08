@@ -1,10 +1,13 @@
 package com.example.Repository.Db;
 
 import com.example.Domain.Entity;
+import com.example.Repository.PagingRepo.Page;
+import com.example.Repository.PagingRepo.Pageble;
 import com.example.Repository.Repository;
 import com.example.Utils.Exceptions.EntityRepoException;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,E> {
@@ -13,6 +16,8 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
     protected String username;
     protected String password;
     protected String sql;
+    protected Page page;
+    Connection connection;
 
     /**
      * Basic constructor of a Db Repository
@@ -24,6 +29,25 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
         this.url = url;
         this.username = username;
         this.password = password;
+        page=new Page(new Pageble(0,10), new ArrayList().stream());
+        openConnection();
+    }
+
+    public void openConnection(){
+        try {
+            connection = DriverManager.getConnection(url, username, password);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new EntityRepoException(e.getMessage());
+        }
+    }
+
+    public void closeConnection(){
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            throw new EntityRepoException(e.getMessage());
+        }
     }
 
     /**
@@ -36,8 +60,9 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
     @Override
     public boolean save(E entity) {
         //System.out.println(entity.toString());
-        try (Connection connection = DriverManager.getConnection(url, username, password);
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+        try {
+             if(connection.isClosed()) openConnection();
+             PreparedStatement ps = connection.prepareStatement(sql);
              setSaveStatement(ps,entity);
              ps.executeUpdate();
              return true;
@@ -55,9 +80,10 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
      */
     @Override
     public E get(Id id) {
-        try (Connection connection = DriverManager.getConnection(url, username, password);
+        try {
+             if(connection.isClosed()) openConnection();
              PreparedStatement ps = connection.prepareStatement(sql);
-             ResultSet resultSet = ps.executeQuery()) {
+             ResultSet resultSet = ps.executeQuery();
              return getGetStatement(resultSet);
         } catch (SQLException e) {
             throw new EntityRepoException(e.getMessage());
@@ -74,8 +100,9 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
      */
     @Override
     public boolean update(Id id, E entity) {
-        try (Connection connection = DriverManager.getConnection(url, username, password);
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+        try {
+            if(connection.isClosed()) openConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
             setUpdateStatement(ps,id,entity);
             ps.executeUpdate();
             return true;
@@ -93,13 +120,13 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
      */
     @Override
     public boolean delete(Id id) {
-        try (Connection connection = DriverManager.getConnection(url, username, password);
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+        try{
+            if(connection.isClosed()) openConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
             setDeleteStatement(ps,id);
             ps.executeUpdate();
             return true;
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new EntityRepoException(e.getMessage());
         }
     }
@@ -110,8 +137,9 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
      * problems on processing the data
      */
     protected void deleteAll(){
-        try (Connection connection = DriverManager.getConnection(url, username, password);
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+        try{
+            if(connection.isClosed()) openConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new EntityRepoException(e.getMessage());
@@ -126,20 +154,17 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
      */
     @Override
     public int getSize() {
-
         int size;
-
-        try (Connection connection = DriverManager.getConnection(url, username, password);
-             PreparedStatement ps = connection.prepareStatement(sql);
-             ResultSet resultSet = ps.executeQuery()) {
+        try{
+            if(connection.isClosed()) openConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet resultSet = ps.executeQuery();
             size=getSizeStatement(resultSet);
             return size;
         } catch (SQLException e) {
             throw new EntityRepoException(e.getMessage());
         }
-
     }
-
 
     /**
      * Gives a list with all the entities stored in repository
@@ -150,17 +175,52 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
     @Override
     public List<E> getAll() {
         List<E> list ;
-        try (Connection connection = DriverManager.getConnection(url, username, password);
+        try{
+             if(connection.isClosed()) openConnection();
              PreparedStatement ps = connection.prepareStatement(sql);
-             ResultSet resultSet = ps.executeQuery()) {
+             ResultSet resultSet = ps.executeQuery();
              list=getAllStatement(resultSet);
              return list;
         } catch (SQLException e) {
             throw new EntityRepoException(e.getMessage());
 
         }
-
+    }
+    @Override
+    public Page<E> getAll(Pageble pageble){
+        List<E> list ;
+        try{
+            if(connection.isClosed()) openConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
+            setGetAllPageStatement(ps, pageble);
+            ResultSet resultSet = ps.executeQuery();
+            list=getAllStatement(resultSet);
+            return new Page<E>(pageble,list.stream());
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new EntityRepoException(e.getMessage());
         }
+    }
+    @Override
+    public Page<E> getCurrentPage(){
+       if(page.getPageContent().toList().isEmpty())
+           page=getAll((Pageble) page.getCurrentPage());
+       return page;
+    }
+
+    @Override
+    public Page<E> getNextPage(){
+        page=new Page((Pageble) page.getNextPage(), new ArrayList().stream());
+        page=getAll((Pageble) page.getCurrentPage());
+        return page;
+    }
+
+    @Override
+    public Page<E> getPreviousPage(){
+        page=new Page((Pageble) page.getPreviousPage(), new ArrayList().stream());
+        page=getAll((Pageble) page.getCurrentPage());
+        return page;
+    }
 
 
     /**
@@ -172,16 +232,15 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
     @Override
     public List<Id> getAllIds() {
         List<Id> list ;
-        try (Connection connection = DriverManager.getConnection(url, username, password);
+        try{
+             if(connection.isClosed()) openConnection();
              PreparedStatement ps = connection.prepareStatement(sql);
-             ResultSet resultSet = ps.executeQuery()) {
+             ResultSet resultSet = ps.executeQuery();
              list=getAllIdStatement(resultSet);
              return list;
         } catch (SQLException e) {
-
             throw new EntityRepoException(e.getMessage());
         }
-
     }
 
     /**
@@ -210,8 +269,9 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
      */
     @Override
     public E getByOther(String... other){
-        try (Connection connection = DriverManager.getConnection(url, username, password);
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+        try{
+            if(connection.isClosed()) openConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
             setGetOtherStatement(ps,other);
             ResultSet resultSet = ps.executeQuery();
             return getGetOtherStatement(resultSet);
@@ -247,6 +307,10 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
         return getGetStatement(ps);
     }
 
+    protected void setGetAllPageStatement(PreparedStatement ps, Pageble pageble) throws SQLException {
+        ps.setInt(1,pageble.getPageNumber()*pageble.getPageSize() +1);
+        ps.setInt(2,(pageble.getPageNumber()+1)*pageble.getPageSize() +1);
+    }
     /**
      * This function fills the request( prepared statement) with actual data for the sql
      * command for saving an entity to repository
@@ -310,5 +374,16 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
      * @throws SQLException when there are problems with the prepared statements
      */
     protected abstract void setGetOtherStatement(PreparedStatement ps, String... other)throws SQLException;
+
+    @Override
+    protected void finalize() throws Throwable
+    {
+        try { connection.close(); }
+        catch (SQLException e) {
+            //e.printStackTrace();
+        }
+        //System.out.println("deleted");
+        super.finalize();
+    }
 }
 

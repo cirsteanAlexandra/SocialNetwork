@@ -50,12 +50,10 @@ public class HelloApplication extends Application {
 
         stage.setScene(scene);
         stage.show();
+        cont.closeConnections();
     }
 
     public static void main(String[] args) {
-
-
-
         launch();
     }
 }

@@ -26,9 +26,9 @@ class RelationshipDbRepoTest {
         PersoneDbRepo repoP=new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
         repoP.save(new Persone(1L,"wewe","weew"));
         repoP.save(new Persone(2L,"weew","erui"));
-
+        repoP.closeConnection();
         UserRepo repoU=new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
-
+        repoU.closeConnection();
         repoU.save(new User(1L,"mama",new Persone(1L,"wewe","weew")));
         repoU.save(new User(2L,"mea",new Persone(1L,"wewe","weew")));
         repoU.save(new User(3L,"biscuit",new Persone(1L,"wewe","weew")));
@@ -47,6 +47,7 @@ class RelationshipDbRepoTest {
                 LocalDate.of(2020,10,10)));
         repo.save(new Relationship(3L,"macaron","mea",
                 LocalDate.of(2020,10,10)));
+        repo.closeConnection();
 
     }
 
@@ -54,14 +55,14 @@ class RelationshipDbRepoTest {
     void tearDown(){
         RelationshipDbRepo repo=new RelationshipDbRepo(Connections.URL,Connections.Username,Connections.Password);
         repo.restoreToDefault();
+        repo.closeConnection();
 
         UserDbRepo repoU=new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
         repoU.restoreToDefault();
-
+        repoU.closeConnection();
         PersoneDbRepo repoP=new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
-
         repoP.restoreToDefault();
-
+        repoP.closeConnection();
     }
 
     @Test
@@ -72,20 +73,17 @@ class RelationshipDbRepoTest {
             assertTrue(
                     repo.save(new Relationship(4L, "belea", "noua",
                             LocalDate.of(2021, 11, 21))));
-
             } catch (EntityRepoException e) {
                 System.out.println(e.getDescription());
                 assertTrue(false);
             }
             assertEquals(repo.getSize(), 4);
-
+        repo.closeConnection();
     }
 
     @Test
     void saveWithNoID() {
         RelationshipDbRepo repo = new RelationshipDbRepo(Connections.URL, Connections.Username, Connections.Password);
-
-
         try {
             assertTrue(
                     repo.save(new Relationship("blah", "meh")));
@@ -94,61 +92,56 @@ class RelationshipDbRepoTest {
             assertTrue(false);
         }
         assertEquals(repo.getSize(),4);
+        repo.closeConnection();
     }
 
     @Test
     void saveExistentId(){
-
         RelationshipDbRepo repo = new RelationshipDbRepo(Connections.URL, Connections.Username, Connections.Password);
         try{
             assertTrue(repo.save(new Relationship(1L,"acadeaua","weew", LocalDate.of(
                     2020,12,12
             ))));
-
-
         }catch(EntityRepoException e){
             assertTrue(true);
         }
         assertTrue(repo.getSize()==3);
+        repo.closeConnection();
     }
 
     @Test
     void saveExistentUsernames(){
-
         RelationshipDbRepo repo = new RelationshipDbRepo(Connections.URL, Connections.Username, Connections.Password);
         try{
             assertTrue(
                     repo.save(new Relationship(5L,"mama","mea",
                             LocalDate.of(2020,10,10))));
-
-
         }catch(Exception e){
             assertTrue(true);
         }
         assertEquals(repo.getSize(),3);
+        repo.closeConnection();
     }
 
     @Test
     void get() {
-
         RelationshipDbRepo repo = new RelationshipDbRepo(Connections.URL, Connections.Username, Connections.Password);
-
         Relationship rel= repo.get(1L);
         assertEquals(new Relationship(1L,"mama","mea"),rel);
+        repo.closeConnection();
     }
 
     @Test
     void getNull() {
-
         RelationshipDbRepo repo = new RelationshipDbRepo(Connections.URL, Connections.Username, Connections.Password);
         Relationship rel= repo.get(10L);
         assertNull(rel);
+        repo.closeConnection();
     }
 
     @Test
     void update() {
         RelationshipDbRepo repo = new RelationshipDbRepo(Connections.URL, Connections.Username, Connections.Password);
-
         try{
             assertTrue(
                     repo.update(1L,new Relationship(5L,"acadea","vespuci")));
@@ -159,13 +152,12 @@ class RelationshipDbRepoTest {
             assertTrue(false);
         }
         assertEquals(repo.getSize(),3);
+        repo.closeConnection();
     }
 
     @Test
     void updateInexistent() {
-
         RelationshipDbRepo repo = new RelationshipDbRepo(Connections.URL, Connections.Username, Connections.Password);
-
         try{
             assertTrue(repo.update(7L,new Relationship(5L,"acadea","erui")));
             assertTrue(false);
@@ -174,26 +166,24 @@ class RelationshipDbRepoTest {
             assertTrue(true);
         }
         assertEquals(repo.getSize(),3);
+        repo.closeConnection();
     }
 
     @Test
     void delete() {
-
         RelationshipDbRepo repo = new RelationshipDbRepo(Connections.URL, Connections.Username, Connections.Password);
-
         try{
             assertTrue(
                     repo.delete(1L));
         }catch(Exception e){
             assertTrue(false);
         }
+        repo.closeConnection();
     }
 
     @Test
     void deleteInexistent() {
-
         RelationshipDbRepo repo = new RelationshipDbRepo(Connections.URL, Connections.Username, Connections.Password);
-
         try{
             assertTrue(
                     repo.delete(5L));
@@ -201,49 +191,40 @@ class RelationshipDbRepoTest {
         }catch(Exception e){
             assertTrue(true);
         }
+        repo.closeConnection();
     }
 
     @Test
     void getAll() {
-
         RelationshipDbRepo repo = new RelationshipDbRepo(Connections.URL, Connections.Username, Connections.Password);
-
         List<Relationship> list=repo.getAll();
         List<Relationship> comparableList= Arrays.asList(new Relationship(1L,"mama","mea"),
                 new Relationship(2L,"biscuit","mama"),
                 new Relationship(3L,"macaron","mea"));
         assertEquals(list,comparableList);
+        repo.closeConnection();
     }
 
 
     @Test
     void getByOther() {
-
         RelationshipDbRepo repo = new RelationshipDbRepo(Connections.URL, Connections.Username, Connections.Password);
-
         try{
             assertEquals(repo.getByOther("biscuit","mama"),new Relationship(2L,"biscuit","mama"));
         }catch(Exception e){
             assertTrue(false);
         }
+        repo.closeConnection();
     }
 
     @Test
     void getByOtherInexistent() {
-
         RelationshipDbRepo repo = new RelationshipDbRepo(Connections.URL, Connections.Username, Connections.Password);
-
         try{
             assertEquals(repo.getByOther("hjer","mea"),null);
         }catch(Exception e){
             assertTrue(false);
         }
+        repo.closeConnection();
     }
-
-
-    @Test
-    void getFriendsListByUserName(){
-
-    }
-
 }

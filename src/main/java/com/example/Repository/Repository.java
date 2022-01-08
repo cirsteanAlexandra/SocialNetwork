@@ -2,6 +2,8 @@ package com.example.Repository;
 
 
 import com.example.Domain.Entity;
+import com.example.Repository.PagingRepo.Page;
+import com.example.Repository.PagingRepo.Pageble;
 
 import java.util.List;
 
@@ -47,6 +49,18 @@ public interface Repository<Id, E extends Entity<Id>> {
       * @return a list of entities
       */
      List<E> getAll();
+
+     Page<E> getAll(Pageble pageble);
+
+     Page<E> getCurrentPage();
+
+     Page<E> getNextPage();
+
+     Page<E> getPreviousPage();
+
+     void openConnection();
+
+     void closeConnection();
 
      /**
       * Gives a list with all the ids store din repository

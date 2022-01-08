@@ -1,5 +1,7 @@
 package com.example.Repository.Memory;
 import com.example.Domain.Entity;
+import com.example.Repository.PagingRepo.Page;
+import com.example.Repository.PagingRepo.Pageble;
 import com.example.Repository.Repository;
 
 import java.util.ArrayList;
@@ -101,6 +103,36 @@ public abstract class MemoryRepo<Id, E extends Entity<Id>> implements Repository
     @Override
     public List<E> getAll() {
         return list;
+    }
+
+    @Override
+    public Page<E> getAll(Pageble pageble) {
+        return null;
+    }
+
+    @Override
+    public Page<E> getCurrentPage() {
+        return null;
+    }
+
+    @Override
+    public Page<E> getNextPage() {
+        return null;
+    }
+
+    @Override
+    public Page<E> getPreviousPage() {
+        return null;
+    }
+
+    @Override
+    public void openConnection() {
+
+    }
+
+    @Override
+    public void closeConnection() {
+
     }
 
     /**

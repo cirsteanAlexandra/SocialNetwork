@@ -1,11 +1,12 @@
 package com.example.Repository.Db;
 
 import com.example.Domain.Relationship;
+import com.example.Repository.PagingRepo.Page;
+import com.example.Repository.PagingRepo.Pageble;
 import com.example.Repository.RelationshipRepo;
 import com.example.Utils.Exceptions.EntityRepoException;
 import com.example.Utils.Exceptions.RelationshipRepoException;
 import com.example.Utils.Generator;
-
 import org.postgresql.util.PSQLException;
 
 import java.sql.*;
@@ -318,5 +319,20 @@ public class RelationshipDbRepo<Messages> extends DbRepoId<Long, Relationship> i
         sql= "delete from public.\"Relationship\" where first_username =? or second_username=? ";
 
     }
+
+    @Override
+    public Page<Relationship> getAll(Pageble pageble) {
+        sql="select * from ( select * ,ROW_NUMBER() over (order by id_rel ASC) as rowss from public.\"Relationship\")as Foo where rowss>=? and rowss<? ";
+        return super.getAll(pageble);
+        //return super.getAll();
+    }
+
+    @Override
+    public Page<Relationship> getUsersFriends(String username,Pageble pageble) {
+        sql="select * from ( select * ,ROW_NUMBER() over (order by id_rel ASC) as rowss from public.\"Relationship\")as Foo where rowss>=? and rowss<? and (first_username="+ username +" or second_username="+username+")";
+        return super.getAll(pageble);
+        //return super.getAll();
+    }
+
 
 }
