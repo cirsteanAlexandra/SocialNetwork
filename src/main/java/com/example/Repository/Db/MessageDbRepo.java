@@ -100,6 +100,14 @@ public class MessageDbRepo extends DbRepoId<Long,Message> implements MessageRepo
         return super.getAll(pageble);
         //return super.getAll();
     }
+    /*
+    @Override
+    public Page<Message> getConversation(String username1, String username2,Pageble pageble) {
+        sql="select * from ( select * ,ROW_NUMBER() over (order by id_mess ASC) as rowss from public.\"Messages\")as Foo where rowss>=? and rowss<? ";
+        return super.getAll(pageble);
+        //return super.getAll();
+    }
+     */
 
     @Override
     public List<Long> getAllIds() {

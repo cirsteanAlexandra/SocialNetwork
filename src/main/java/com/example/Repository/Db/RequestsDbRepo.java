@@ -1,6 +1,8 @@
 package com.example.Repository.Db;
 
 import com.example.Domain.Relationship;
+import com.example.Repository.PagingRepo.Page;
+import com.example.Repository.PagingRepo.Pageble;
 import com.example.Repository.Repository;
 import com.example.Utils.Exceptions.EntityRepoException;
 import com.example.Utils.Exceptions.RelationshipRepoException;
@@ -79,6 +81,13 @@ public class RequestsDbRepo extends DbRepoId<Long, Relationship> implements Repo
     public List<Relationship> getAll() {
         sql="select * from public.\"Requests\"";
         return super.getAll();
+    }
+
+    @Override
+    public Page<Relationship> getAll(Pageble pageble) {
+        sql="select * from ( select * ,ROW_NUMBER() over (order by id_r ASC) as rowss from public.\"Requests\")as Foo where rowss>=? and rowss<? ";
+        return super.getAll(pageble);
+        //return super.getAll();
     }
 
     @Override
