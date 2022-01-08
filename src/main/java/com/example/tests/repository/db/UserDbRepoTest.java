@@ -4,16 +4,19 @@ import com.example.Domain.Persone;
 import com.example.Domain.User;
 import com.example.Repository.Db.PersoneDbRepo;
 import com.example.Repository.Db.UserDbRepo;
+import com.example.Repository.PagingRepo.Page;
+import com.example.Repository.PagingRepo.Pageble;
 import com.example.Repository.UserRepo;
 import com.example.Utils.Exceptions.EntityRepoException;
 import com.example.Utils.Exceptions.UserRepoException;
+import com.example.tests.Connections;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import com.example.tests.Connections;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -222,5 +225,36 @@ class UserDbRepoTest {
         }catch(Exception e){
             assertTrue(false);
         }
+    }
+
+    @Test
+    void getAllPage(){
+        UserDbRepo repo = new UserDbRepo(Connections.URL, Connections.Username, Connections.Password);
+        repo.save(new User(4L,"b",new Persone(1L,"wewe","weew")));
+        repo.save(new User(5L,"c",new Persone(1L,"wewe","weew")));
+        repo.save(new User(6L,"d",new Persone(1L,"wewe","weew")));
+        repo.save(new User(7L,"e",new Persone(1L,"wewe","weew")));
+        repo.save(new User(8L,"f",new Persone(1L,"wewe","weew")));
+        repo.save(new User(9L,"g",new Persone(1L,"wewe","weew")));
+        repo.save(new User(10L,"h",new Persone(1L,"wewe","weew")));
+        repo.save(new User(11L,"i",new Persone(1L,"wewe","weew")));
+        repo.save(new User(12L,"j",new Persone(1L,"wewe","weew")));
+        repo.save(new User(13L,"k",new Persone(1L,"wewe","weew")));
+        repo.save(new User(14L,"l",new Persone(1L,"wewe","weew")));
+        repo.save(new User(15L,"m",new Persone(1L,"wewe","weew")));
+
+        Pageble<User> pageble= new Pageble<>(0,5);
+        Page<User> pageUser= repo.getAll(pageble);
+        List<User> listUser=pageUser.getPageContent().collect(Collectors.toList());
+        assertEquals(listUser.size(),5);
+        assertEquals(listUser.get(0),new User(1L,"a",new Persone(1L,"","")));
+        assertEquals(listUser.get(4),new User(5L,"c",new Persone(1L,"","")));
+
+        pageble= (Pageble<User>) pageUser.getNextPage();
+        pageUser=repo.getAll(pageble);
+        listUser=pageUser.getPageContent().collect(Collectors.toList());
+        assertEquals(listUser.size(),5);
+        assertEquals(listUser.get(0),new User(6L,"d",new Persone(1L,"","")));
+        assertEquals(listUser.get(4),new User(10L,"h",new Persone(1L,"","")));
     }
 }

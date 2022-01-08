@@ -15,7 +15,7 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
     protected String username;
     protected String password;
     protected String sql;
-    protected Pageble pageble;
+    //protected Pageble pageble;
 
     /**
      * Basic constructor of a Db Repository
@@ -27,6 +27,7 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
         this.url = url;
         this.username = username;
         this.password = password;
+        //pageble=new Pageble(0,10);
     }
 
     /**
@@ -167,12 +168,14 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
     public Page<E> getAll(Pageble pageble){
         List<E> list ;
         try (Connection connection = DriverManager.getConnection(url, username, password);
-             PreparedStatement ps = connection.prepareStatement(sql);
-             ResultSet resultSet = ps.executeQuery()) {
+             PreparedStatement ps = connection.prepareStatement(sql);) {
+            setGetAllPageStatement(ps,pageble);
+            ResultSet resultSet = ps.executeQuery();
             list=getAllStatement(resultSet);
             return new Page<E>(pageble,list.stream());
         } catch (SQLException e) {
-            throw new EntityRepoException(e.getMessage());
+            e.printStackTrace();
+            throw new EntityRepoException(e.getStackTrace().toString());
         }
     }
 
@@ -261,6 +264,10 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
         return getGetStatement(ps);
     }
 
+    protected void setGetAllPageStatement(PreparedStatement ps, Pageble pageble) throws SQLException {
+        ps.setInt(1,pageble.getPageNumber()*pageble.getPageSize() +1);
+        ps.setInt(2,(pageble.getPageNumber()+1)*pageble.getPageSize() +1);
+    }
     /**
      * This function fills the request( prepared statement) with actual data for the sql
      * command for saving an entity to repository
