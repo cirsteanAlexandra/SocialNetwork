@@ -1,2 +1,2 @@
-C:\Users\Alexandra\Desktop\LastTry\out\production\resources\com\example\ador_testele\message_view.fxml
-C:\Users\Alexandra\Desktop\LastTry\src\main\resources\com\example\ador_testele\message_view.fxml
+C:\Users\Alexandra\Desktop\LastTry\out\production\resources\com\example\ador_testele\user-view.fxml
+C:\Users\Alexandra\Desktop\LastTry\src\main\resources\com\example\ador_testele\user-view.fxml

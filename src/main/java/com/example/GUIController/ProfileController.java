@@ -24,14 +24,7 @@ public class ProfileController implements Observer {
     @FXML
     public Button AddFriendButton;
 
-    /*@FXML
-    private TextField b;
-    @FXML
-    private TextField c;
-    @FXML
-    private TextField a;
-    @FXML
-    public TextField ceva;*/
+
 
     public void setProfileController(MainController cont, User user,User user2){
     this.cont=cont;

@@ -14,6 +14,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -30,6 +32,8 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class UserGuiController  {
+    public ImageView idImage;
+    public Image image;
     private MainController cont;
 
 
@@ -50,6 +54,8 @@ public class UserGuiController  {
     public void setUserGuiController(MainController cont,User user) {
         this.cont = cont;
         this.user=user;
+        //aici trebuie modificat
+        idImage.setImage(new Image("C:\\Users\\Alexandra\\Desktop\\LastTry\\src\\main\\resources\\com\\example\\ador_testele\\images\\search-icon.png"));
         textUsername.setText(user.getUsername());
         FirstNameUser.setText(user.getPers().getFirstName());
         LastNameUser.setText(user.getPers().getLastName());
