@@ -27,12 +27,15 @@ public class MessageController extends Controller<Long, Message>{
         List<Long> listId= new ArrayList<>();
         for(Message mess: (List<Message>) repo.getAll()){
             if(mess.getFrom().getUsername().equals(username)){
-                listId.add(mess.getId());
+                if(!listId.contains(mess.getId()))
+                    listId.add(mess.getId());
             }
             else {
                 for (User user: mess.getReceivers())
-                    if(user.getUsername().equals(username))
-                        listId.add(mess.getId());
+                    if(user.getUsername().equals(username)){
+                        if(!listId.contains(mess.getId()))
+                            listId.add(mess.getId());
+                    }
             }
         }
         for(Long el: listId){

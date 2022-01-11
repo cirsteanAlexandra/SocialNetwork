@@ -64,11 +64,9 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
              if(connection.isClosed()) openConnection();
              PreparedStatement ps = connection.prepareStatement(sql);
              setSaveStatement(ps,entity);
-            System.out.println(ps.toString());
              ps.executeUpdate();
              return true;
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new EntityRepoException(e.getMessage());
         }
     }
@@ -129,6 +127,7 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
             ps.executeUpdate();
             return true;
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new EntityRepoException(e.getMessage());
         }
     }
@@ -144,6 +143,7 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.executeUpdate();
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new EntityRepoException(e.getMessage());
         }
     }

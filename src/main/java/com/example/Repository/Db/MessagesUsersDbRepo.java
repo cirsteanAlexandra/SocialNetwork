@@ -23,12 +23,12 @@ public class MessagesUsersDbRepo extends DbRepoId<Long, Message>{
     @Override
     public boolean save(Message entity){
         if(entity.getReceivers().size()==1){
-            super.sql="insert into public.\"Messages_Users\" values ( ? ?)";
+            super.sql="insert into public.\"Messages_Users\" values ( ?, ?)";
         }
         else {
             super.sql="insert into public.\"Messages_Users\" values ";
             for (User el: entity.getReceivers())
-                super.sql+="(? ?),";
+                super.sql+="(?,?),";
             super.sql=super.sql.substring(0,super.sql.length()-1);//for removing the last ,
         }
         return super.save(entity);
