@@ -5,6 +5,22 @@ import java.util.Objects;
 
 public class User extends Entity<Long>{
     String username;
+    String password;
+
+    public User(String username, String password, Persone pers) {
+        this.username = username;
+        this.password = password;
+        this.pers = pers;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     Persone pers;
     List<String>friendsList;
 

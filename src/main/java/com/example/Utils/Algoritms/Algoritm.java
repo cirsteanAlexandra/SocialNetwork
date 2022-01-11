@@ -2,6 +2,9 @@ package com.example.Utils.Algoritms;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -34,4 +37,21 @@ public class Algoritm {
         }
         return true;
     }
+
+    public static String hashPassword(String pass) throws NoSuchAlgorithmException {
+
+        MessageDigest messageDigest= MessageDigest.getInstance("SHA-512");
+        byte[] hash = messageDigest.digest(pass.getBytes());
+        BigInteger no = new BigInteger(1, hash);
+        String hashText = no.toString(16);
+
+        while (hashText.length() < 32) {
+            hashText = "0" + hashText;
+        }
+
+        //System.out.println(hashText);
+        //System.out.println(hash1);
+        return hashText;
+    }
+
 }

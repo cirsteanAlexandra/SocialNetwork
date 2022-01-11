@@ -12,4 +12,5 @@ public interface UserRepo extends Repository<Long,User>{
      */
     User getByUserName(String username);
 
+    User getUserLogin(String username, String hash_pass);
 }

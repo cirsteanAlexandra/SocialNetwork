@@ -37,7 +37,6 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
         try {
             connection = DriverManager.getConnection(url, username, password);
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new EntityRepoException(e.getMessage());
         }
     }
@@ -127,7 +126,6 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
             ps.executeUpdate();
             return true;
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new EntityRepoException(e.getMessage());
         }
     }
@@ -143,7 +141,6 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new EntityRepoException(e.getMessage());
         }
     }
@@ -199,7 +196,6 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
             list=getAllStatement(resultSet);
             return new Page<E>(pageble,list.stream());
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new EntityRepoException(e.getMessage());
         }
     }
