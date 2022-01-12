@@ -1,0 +1,19 @@
+.split-pane-left{
+    -fx-background-color: linear-gradient(to bottom,#8447F5,#581FC0);
+    -fx-border-color: rgb(25,26,158);
+}
+
+.split-pane-right{
+    -fx-background-color: linear-gradient(to bottom,#4351F4,#121EA9);
+    -fx-border-color: rgb(25,26,158);
+}
+
+/*
+.split-pane:horizontal > .split-pane-divider {
+    -fx-background-color: transparent;
+}
+*/
+.button{
+    -fx-size: 20px;
+    -fx-base: rgb(191, 57, 229);
+}
