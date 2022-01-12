@@ -34,10 +34,10 @@ public abstract class AbstractValidator<E extends Entity> implements Validator<E
      * @return true if it is valid, false otherwise
      */
     public boolean checkPassword(String pass){
-        if(pass.equals("") || pass==null || pass.isEmpty()||pass.isBlank())
-            throw new EntityException("Password shoundn't be empty\n");
+        if( pass==null || pass.equals("") || pass.isEmpty()||pass.isBlank())
+            throw new EntityException("Password shoundn't be empty!\n");
         else if(pass.contains(" ") || pass.contains("\t") || pass.contains("\n"))
-            throw new EntityException("Password should not contain white spaces!");
+            throw new EntityException("Password should not contain white spaces!\n");
         return true;
     }
     /**

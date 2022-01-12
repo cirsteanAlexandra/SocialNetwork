@@ -37,7 +37,7 @@ public class UserDbRepo extends DbRepoId<Long, User> implements UserRepo {
             user1=get(entity.getId());
             if(user!=null || user1!=null)throw new UserRepoException("There is an user with the same username");
             else{
-                super.sql= "insert into public.\"Users\" values (?, ?, ?)";
+                super.sql= "insert into public.\"Users\" values (?, ?, ?, ?)";
                 return super.save(entity);
             }
     }
@@ -197,6 +197,10 @@ public class UserDbRepo extends DbRepoId<Long, User> implements UserRepo {
         ps.setLong(1, entity.getId());
         ps.setString(2, entity.getUsername());
         ps.setLong(3, entity.getPers().getId());
+        if(entity.getPassword()==null || entity.getPassword().isEmpty()){
+            ps.setString(4, "default");
+        }
+        else ps.setString(4,entity.getPassword());
     }
 
     /**

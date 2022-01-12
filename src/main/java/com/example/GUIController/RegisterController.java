@@ -27,14 +27,21 @@ public class RegisterController {
     private TextField textFirstName;
     @FXML
     private TextField textLastName;
+    @FXML
+    private TextField textPassword;
+    @FXML
+    private TextField textRetypePassword;
 
     public void handleRegister(ActionEvent ev){
         try{
             String Username = textUsername.getText();
             String fN = textFirstName.getText();
             String lN = textLastName.getText();
+            String pass= textPassword.getText();
+            String retype= textRetypePassword.getText();
+            if(!pass.equals(retype)) throw new Exception("The two passwords ar not matching!");
             User user;
-            user=new User(Username,new Persone(fN,lN));
+            user=new User(Username,pass,new Persone(fN,lN));
             Validator vali= ContextValidator.createValidator(Strategy.USER);
             vali.validate(user);
             cont.addUser(user);
@@ -44,7 +51,7 @@ public class RegisterController {
             MessageAlert.showErrorMessage(null, e.getDescription());
         }
         catch(NullPointerException e){
-            //e.printStackTrace();
+            e.printStackTrace();
             MessageAlert.showErrorMessage(null, "The text field must contain an username!");
         }
         finally {

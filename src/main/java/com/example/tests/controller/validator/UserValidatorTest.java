@@ -4,15 +4,9 @@ import com.example.Controller.Validator.UserValidator;
 import com.example.Controller.Validator.Validator;
 import com.example.Domain.Persone;
 import com.example.Domain.User;
-
+import com.example.Utils.Exceptions.Exception;
 import com.example.Utils.Exceptions.UserException;
 import org.junit.jupiter.api.Test;
-import com.example.Utils.Exceptions.*;
-import com.example.Utils.Exceptions.Exception;
-
-
-import org.junit.jupiter.api.Test;
-
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -21,11 +15,11 @@ class UserValidatorTest {
 
     @Test
     void validate() {
-        User user= new User(1L,"floricica",new Persone("cretulina","buzoiescu"));
+        User user= new User(1L,"bala","floricica",new Persone("cretulina","buzoiescu"));
         Validator<User> vali= new UserValidator();
         assertTrue(vali.validate(user));
 
-        User user1= new User(1L,"",new Persone("","buzoiescu"));
+        User user1= new User(1L,"bala","",new Persone("","buzoiescu"));
         try{
             vali.validate(user1);
         }
@@ -38,11 +32,11 @@ class UserValidatorTest {
 
     @Test
     void checkUserName() {
-        User user= new User(1L,"floricica1",new Persone("cretulina","buzoiescu"));
+        User user= new User(1L,"bala","floricica1",new Persone("cretulina","buzoiescu"));
         Validator<User> vali= new UserValidator();
         assertTrue(vali.validate(user));
 
-        User user1= new User(1L,"floricica1$",new Persone("cretulina","buzoiescu"));
+        User user1= new User(1L,"bala","floricica1$",new Persone("cretulina","buzoiescu"));
         try{
             vali.validate(user1);
         }
@@ -51,7 +45,7 @@ class UserValidatorTest {
             assertEquals(e.getDescription(),"Username shound contain english letters or/and digits\n");
         }
 
-        User user2= new User(1L,"",new Persone("cretulina","buzoiescu"));
+        User user2= new User(1L,"bala","",new Persone("cretulina","buzoiescu"));
         try{
             vali.validate(user2);
         }
@@ -71,7 +65,7 @@ class UserValidatorTest {
         }
         catch (UserException e){
             assertEquals(e.getCode(),2);
-            assertEquals(e.getDescription(),"Id should be a pozitive number\n");
+            assertEquals(e.getDescription(),"Id should be a pozitive number\nPassword shoundn't be empty!\n");
         }
     }
 }

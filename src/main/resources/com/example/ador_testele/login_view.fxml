@@ -54,21 +54,28 @@
          <children>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <GridPane layoutY="-40.0" prefHeight="69.0" prefWidth="468.0">
+                  <GridPane layoutY="-34.0" prefHeight="111.0" prefWidth="468.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="68.4" minHeight="10.0" prefHeight="61.200018310546874" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="59.599981689453124" minHeight="10.0" prefHeight="59.599981689453124" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
+                        <TextField fx:id="textPassword" accessibleRole="PASSWORD_FIELD" prefWidth="230.0" GridPane.columnIndex="1" />
+                        <TextField fx:id="textUsername" prefWidth="230.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Label prefHeight="18.0" prefWidth="202.0" text="Username :">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="textUsername" prefWidth="230.0" GridPane.columnIndex="1" />
+                        <Label prefHeight="21.0" prefWidth="201.0" text="Password:" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
                      </children>
                   </GridPane>
                   <HBox layoutX="16.0" layoutY="103.0" prefHeight="83.0" prefWidth="436.0">
@@ -89,23 +96,6 @@
                         </AnchorPane>
                      </children>
                   </HBox>
-                  <GridPane layoutY="2.0" prefHeight="69.0" prefWidth="468.0">
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                     <children>
-                        <Label prefHeight="18.0" prefWidth="202.0" text="Password:">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="textPassword" accessibleRole="PASSWORD_FIELD" prefWidth="230.0" GridPane.columnIndex="1" />
-                     </children>
-                  </GridPane>
                </children>
             </AnchorPane>
          </children>

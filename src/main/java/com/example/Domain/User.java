@@ -32,6 +32,12 @@ public class User extends Entity<Long>{
         initialize(username,pers);
         super.setId(id);
     }
+
+    public User(Long id,String pass,String username, Persone pers) {
+        this.password=pass;
+        initialize(username,pers);
+        super.setId(id);
+    }
     /**
      * Initializez the fields of the class
      * @param username

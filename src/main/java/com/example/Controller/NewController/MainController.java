@@ -69,10 +69,18 @@ public class MainController implements Observable {
                 if (pers == null) contP.add(user.getPers());
                 else user.getPers().setId(pers.getId());
             }
+
         }
         catch(Exception e){
         }
         finally{
+            if(user.getPassword()!=null && !user.getPassword().isEmpty()) {
+                try {
+                    user.setPassword(Algoritm.hashPassword(user.getPassword()));
+                } catch (NoSuchAlgorithmException e) {
+                    //e.printStackTrace();
+                }
+            }
             contU.add(user);
         }
         return true;
