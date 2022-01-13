@@ -157,6 +157,7 @@ public class RelationshipDbRepo<Messages> extends DbRepoId<Long, Relationship> i
      */
     @Override
     public Relationship getByOther(String... other) {
+
         return getByUserNames(other[0],other[1]);
     }
 

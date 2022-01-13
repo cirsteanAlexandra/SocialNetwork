@@ -5,9 +5,7 @@ import com.example.Controller.Validator.AbstractValidator;
 import com.example.Controller.Validator.ContextValidator;
 import com.example.Controller.Validator.Strategy;
 import com.example.Controller.Validator.Validator;
-import com.example.Domain.Persone;
-import com.example.Domain.Relationship;
-import com.example.Domain.User;
+import com.example.Domain.*;
 
 import com.example.Utils.Exceptions.Exception;
 
@@ -108,6 +106,13 @@ public class MainMenu {
                         break;
                     case 11:
                         done = true;
+                        break;
+                    case 12:
+                       testareEvent();
+                        break;
+                    case 13:
+
+                        testareUserEvent();
                         break;
                     case 404:
                         setCurrentMode();
@@ -411,6 +416,66 @@ public class MainMenu {
         //cauta in repo
         if(month<=0 || month>=13) throw new Exception("Invalid month!!!");
         System.out.println(cont.getFriendsByUsernameAndMonth(username,month));
+
+    }
+    public void testareEvent(){
+        System.out.println(cont.getAllEvents());
+        Event ev,ev1,ev2;
+        ev=new Event(4L,"untold","musical",LocalDate.now());
+        ev1=new Event(2L,"aaa","musical",LocalDate.now());
+        ev2=new Event(3L,"bbb","musical",LocalDate.now());
+        System.out.println("ajunge aici");
+        try {
+            cont.addEvent(ev1);
+           //
+            cont.addEvent(ev2);
+            //cont.addEvent(ev);
+        }
+        catch (EntityRepoException as){
+            System.out.println(as.getDescription());
+        }
+        System.out.println(cont.getAllEvents());
+        /*cont.removeEventId(2L);
+
+        System.out.println(cont.getAllEvents());
+        cont.removeEventId(10L);*/
+
+    }
+
+    public void testareUserEvent(){
+        List<UserEvent> list=cont.getAllUserEvent();
+        for(UserEvent u: list)
+        {
+          //  System.out.println(cont.getUserById(u.getId_user()).getPers().getLastName());
+            //System.out.println(u.getId_event());
+        }
+
+        UserEvent userEvent=new UserEvent(5908993355151158916L,1L);
+        cont.addUE(userEvent);
+       /* List<UserEvent> list1=cont.getAllUserEvent();
+        for(UserEvent u: list1)
+        {
+            System.out.println(cont.getUserById(u.getId_user()));
+            System.out.println(u.getId_event());
+        }
+
+        try {
+            UserEvent userEvent1=new UserEvent(590L,1L);
+            cont.addUE(userEvent1);
+        }
+        catch (EntityRepoException as){
+            System.out.println(as.getDescription());
+        }
+*/
+       // cont.removeUserEventIdUser(1L);
+        List<UserEvent> list1=cont.getAllUserEvent();
+        for(UserEvent u: list1)
+        {
+            System.out.println(cont.getUserById(u.getId_user()).getPers().getLastName());
+            //System.out.println(u.getId_event());
+        }
+
+
 
     }
     }
