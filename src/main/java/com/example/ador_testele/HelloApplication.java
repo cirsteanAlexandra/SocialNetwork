@@ -43,9 +43,9 @@ public class HelloApplication extends Application {
         AnchorPane loginLayout=fxmlLoader.load();
 
         LoginController loginController= fxmlLoader.getController();
-        loginController.setLoginController(cont);
 
         Scene scene = new Scene(loginLayout);
+        loginController.setLoginController(cont,stage,loginLayout);
         stage.setTitle("Login");
 
         stage.setScene(scene);
