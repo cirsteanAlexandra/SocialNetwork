@@ -24,6 +24,11 @@ public class UserMemoryRepo extends MemoryRepo<Long, User> implements UserRepo {
         return user;
     }
 
+    @Override
+    public User getUserLogin(String username, String hash_pass) {
+        return null;
+    }
+
     /**
      * Saves an user to repository
      * @param entity the object to be saved

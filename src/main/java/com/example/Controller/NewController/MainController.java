@@ -2,12 +2,14 @@ package com.example.Controller.NewController;
 
 import com.example.Domain.*;
 
+import com.example.Utils.Algoritms.Algoritm;
 import com.example.Utils.Exceptions.Exception;
 import com.example.Utils.Exceptions.*;
 import com.example.Utils.Observer.Observable;
 import com.example.Utils.Observer.Observer;
 
 
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -639,6 +641,12 @@ public class MainController implements Observable {
         if(contP!=null)contP.closeConnection();
     }
 
+    public User tryLogin(String username, String password) throws NoSuchAlgorithmException {
+        String hash_pass=Algoritm.hashPassword(password);
+        System.out.println(hash_pass);
+        return contU.getUserLogin(username,hash_pass);
+        //return hash_pass;
+    }
 
     public boolean addEvent(Event event){
 

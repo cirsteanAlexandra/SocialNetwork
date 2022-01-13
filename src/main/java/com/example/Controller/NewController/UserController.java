@@ -2,17 +2,16 @@ package com.example.Controller.NewController;
 
 
 
-import com.example.Domain.Persone;
-
 import com.example.Domain.User;
 import com.example.Repository.UserRepo;
 
 import java.util.List;
 
 public class UserController extends Controller<Long, User> {
-
+    UserRepo repoU;
     public UserController(UserRepo rep) {
         super.repo=rep;
+        repoU= (UserRepo) repo;
     }
 
 
@@ -44,7 +43,9 @@ public class UserController extends Controller<Long, User> {
     }
 
 
-
+    public User getUserLogin(String username, String hash_pass){
+        return repoU.getUserLogin(username,hash_pass);
+    }
 
 
 }

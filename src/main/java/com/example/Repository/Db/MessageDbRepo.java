@@ -11,10 +11,12 @@ import com.example.Utils.Exceptions.MessageRepoException;
 import com.example.Utils.Generator;
 import org.postgresql.util.PSQLException;
 
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Types;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class MessageDbRepo extends DbRepoId<Long,Message> implements MessageRepo {
@@ -30,73 +32,67 @@ public class MessageDbRepo extends DbRepoId<Long,Message> implements MessageRepo
 
     @Override
     public boolean save(Message entity) {
-        if(entity.getId()==null && entity.getReceivers().size()==1) {
-            entity.setId(generateId());
-            super.sql= "insert into public.\"Messages\" values (?, ?, ?, ?, ?, ?)";
-            return super.save(entity);
-        }
-        else {
-            if(entity.getReceivers().size()==1){
-                super.sql= "insert into public.\"Messages\" values (?, ?, ?, ?, ?, ?)";
-                return super.save(entity);
-            }
-            boolean process=true;
-            boolean firstTime=true;
-            for (User user: entity.getReceivers()){
-                Message mess= new Message(entity.getFrom(), entity.getMessage(), Arrays.asList(user),entity.getDate(),entity.getReply());
-                if(firstTime && entity.getId()!=null) {
-                    mess.setId(entity.getId());
-                    firstTime=false;
-                }
-                else mess.setId(generateId());
-                super.sql= "insert into public.\"Messages\" values (?, ?, ?, ?, ?, ?)";
-                process= process && super.save(mess);
-            }
-            return process;
-        }
+        if(entity.getId()==null)entity.setId(generateId());
+        super.sql= "insert into public.\"Messages\" values (?, ?, ?, ?, ?);";
+        super.save(entity);
+        MessagesUsersDbRepo repoAux=new MessagesUsersDbRepo(url,username,password);
+        repoAux.save(entity);
+        repoAux.closeConnection();
+        return true;
     }
+
 
     @Override
     public Message get(Long id) {
-        sql= "select * from public.\"Messages\" where id_mess="+id.toString();
+        sql= "select * from public.\"Messages\" M inner join public.\"Messages_Users\" MU on M.id_mess=MU.id_mess where MU.id_mess="+id.toString() ;
         return super.get(id);
     }
 
     @Override
     public boolean update(Long id, Message entity) {
         if(get(id)==null) throw new MessageRepoException("There is no message with that id");
-        sql= "update public.\"Messages\" set id_mess=?,sender=?,receiver=?,date_time=?,description=?,message_reply=? where id_mess=?";
-        return super.update(id, entity);
+        if(entity.getId()!=id){
+            return super.delete(id) && super.save(entity);
+        }
+        sql= "update public.\"Messages\" set sender=?,date_time=?,description=?,message_reply=? where id_mess=?";
+        super.update(id, entity);
+        MessagesUsersDbRepo repoAux=new MessagesUsersDbRepo(url,username,password);
+        repoAux.delete(id);
+        repoAux.save(entity);
+        repoAux.closeConnection();
+        return true;
     }
 
     @Override
     public boolean delete(Long id) {
         if(get(id)==null) throw new MessageRepoException("There is no message with that id");
-        sql="delete from public.\"Messages\" where id_mess=?";
+        sql="delete from public.\"Messages_Users\" where id_mess=?;update public.\"Messages\" set message_reply=NULL where id_mess=?;delete from public.\"Messages\" where id_mess=?;";
         return super.delete(id);
     }
 
     @Override
     protected void deleteAll() {
-        sql= "delete from public.\"Messages\" where id_mess != 0";
+        sql= "delete from public.\"Messages_Users\";delete from public.\"Messages\" where message_reply is not null;delete from public.\"Messages\";";
         super.deleteAll();
     }
 
     @Override
     public int getSize() {
-        sql="select count(*) as \"size\" from public.\"Messages\"";
-        return super.getSize();
+        MessagesUsersDbRepo repoAux=new MessagesUsersDbRepo(url,username,password);
+        int Nr=repoAux.getSize();
+        repoAux.closeConnection();
+        return Nr;
     }
 
     @Override
     public List<Message> getAll() {
-        sql="select * from public.\"Messages\"";
+        sql="select * from public.\"Messages\" M inner join public.\"Messages_Users\" MU on M.id_mess=MU.id_mess";
         return super.getAll();
     }
 
     @Override
     public Page<Message> getAll(Pageble pageble) {
-        sql="select * from ( select * ,ROW_NUMBER() over (order by id_mess ASC) as rowss from public.\"Messages\")as Foo where rowss>=? and rowss<? ";
+        sql="select * from ( select * ,ROW_NUMBER() over (order by id_mess ASC) as rowss from public.\"Messages\" M inner join public.\"Messages_Users\" MU on M.id_mess=MU.id_mess\")as Foo where rowss>=? and rowss<? ";
         return super.getAll(pageble);
         //return super.getAll();
     }
@@ -131,22 +127,23 @@ public class MessageDbRepo extends DbRepoId<Long,Message> implements MessageRepo
     protected void setSaveStatement(PreparedStatement ps, Message entity) throws SQLException {
         ps.setLong(1, entity.getId());
         ps.setString(2, entity.getFrom().getUsername());
-        ps.setString(3, entity.getReceivers().get(0).getUsername());
-        ps.setObject(4,entity.getDate());
-        ps.setString(5, entity.getMessage());
+        ps.setObject(3,entity.getDate());
+        ps.setString(4, entity.getMessage());
         if (entity.getReply()!=null){
-            ps.setLong(6,entity.getReply().getId());
+            ps.setLong(5,entity.getReply().getId());
         }
-        else ps.setNull(6, Types.BIGINT);
+        else ps.setNull(5, Types.BIGINT);
     }
 
     @Override
     protected Message getGetStatement(ResultSet ps) throws SQLException {
         Message mess=null;
+        List<User> listUsers=new ArrayList<>();
         while (ps.next()) {
             Long id = ps.getLong("id_mess");
             String from = ps.getString("sender");
             String to = ps.getString("receiver");
+            listUsers.add(new User(to,new Persone("","")));
             LocalDateTime dateTime= ps.getObject("date_time",LocalDateTime.class);
             String message= ps.getString("description");
             Long id_replay;
@@ -157,7 +154,7 @@ public class MessageDbRepo extends DbRepoId<Long,Message> implements MessageRepo
             }
             Message reply=null;
             if(id_replay!=null) reply=get(id_replay);
-            mess=new Message(id,new User(from,new Persone("","")), message,Arrays.asList(new User(to,new Persone("",""))),dateTime,reply);
+            mess=new Message(id,new User(from,new Persone("","")), message,listUsers,dateTime,reply);
         }
         return mess;
     }
@@ -175,10 +172,12 @@ public class MessageDbRepo extends DbRepoId<Long,Message> implements MessageRepo
     @Override
     protected List<Message> getAllStatement(ResultSet ps) throws SQLException {
         List<Message> messages=new ArrayList<>();
+        List<User> listUsers=new ArrayList<>();
         while (ps.next()) {
             Long id = ps.getLong("id_mess");
             String from = ps.getString("sender");
             String to = ps.getString("receiver");
+            listUsers.add(new User(to,new Persone("","")));
             LocalDateTime dateTime= ps.getObject("date_time",LocalDateTime.class);
             String message= ps.getString("description");
             Long id_replay;
@@ -189,7 +188,7 @@ public class MessageDbRepo extends DbRepoId<Long,Message> implements MessageRepo
             }
             Message reply=null;
             if(id_replay!=null) reply=get(id_replay);
-            Message mess=new Message(id,new User(from,new Persone("","")), message,Arrays.asList(new User(to,new Persone("",""))),dateTime,reply);
+            Message mess=new Message(id,new User(from,new Persone("","")), message,listUsers,dateTime,reply);
             messages.add(mess);
         }
         return messages;
@@ -198,20 +197,20 @@ public class MessageDbRepo extends DbRepoId<Long,Message> implements MessageRepo
     @Override
     protected void setDeleteStatement(PreparedStatement ps, Long id) throws SQLException {
         ps.setLong(1, id);
+        ps.setLong(2, id);
+        ps.setLong(3, id);
     }
 
     @Override
     protected void setUpdateStatement(PreparedStatement ps, Long id, Message entity) throws SQLException {
-        ps.setLong(1, entity.getId());
-        ps.setString(2, entity.getFrom().getUsername());
-        ps.setString(3, entity.getReceivers().get(0).getUsername());
-        ps.setObject(4,entity.getDate());
-        ps.setString(5, entity.getMessage());
+        ps.setString(1, entity.getFrom().getUsername());
+        ps.setObject(2,entity.getDate());
+        ps.setString(3, entity.getMessage());
         if (entity.getReply()!=null){
-            ps.setLong(6,entity.getReply().getId());
+            ps.setLong(4,entity.getReply().getId());
         }
-        else ps.setNull(6, Types.BIGINT);
-        ps.setLong(7,id);
+        else ps.setNull(4, Types.BIGINT);
+        ps.setLong(5,id);
     }
 
     @Override
@@ -223,29 +222,36 @@ public class MessageDbRepo extends DbRepoId<Long,Message> implements MessageRepo
     @Override
     public List<Message> getBySR(String sender, String Receiver) {
         List<Message> list;
-        sql = "select * from public.\"Messages\" where sender=? and receiver=?";
-        try (Connection connection = DriverManager.getConnection(url, username, password);
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+        sql = "select * from public.\"Messages\" M inner join public.\"Messages_Users\" MU on M.id_mess=MU.id_mess where M.sender=? and MU.receiver=?";
+        try {
+            if(connection.isClosed())openConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
             setGetOtherStatement(ps, sender, Receiver);
             ResultSet resultSet = ps.executeQuery();
             list=getAllStatement(resultSet);
             return list;
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new EntityRepoException(e.getMessage());
         }
     }
 
     @Override
     public List<Message> getByDateTime(LocalDateTime dateTime) {
-        sql= "select * from public.\"Messages\" where date_time=?";
-        List<Message> list;try (Connection connection = DriverManager.getConnection(url, username, password);
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+        sql= "select * from public.\"Messages\" M inner join public.\"Messages_Users\" MU on M.id_mess=MU.id_mess where M.date_time=?";
+        List<Message> list;
+        try {
+            if(connection.isClosed())openConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
             ps.setObject(1,dateTime);
             ResultSet resultSet = ps.executeQuery();
             list=getAllStatement(resultSet);
             return list;
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new EntityRepoException(e.getMessage());
         }
     }
+
+
 }

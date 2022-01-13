@@ -40,6 +40,7 @@ class MessageDbRepoTest {
         repo.closeConnection();
 
         MessageRepo repoM=new MessageDbRepo(Connections.URL,Connections.Username,Connections.Password);
+        //repoM.save(new Message(2L,new User(1L,"a",new Persone(1L,"wewe","weew")),"balh", Arrays.asList(new User(2L,"biscuit",new Persone(1L,"wewe","weew"))), LocalDateTime.now()));
         repoM.save(new Message(1L,new User(1L,"a",new Persone(1L,"wewe","weew")),"Morning", Arrays.asList(new User(2L,"biscuit",new Persone(1L,"wewe","weew")),new User(3L,"macaron",new Persone(1L,"wewe","weew"))), LocalDateTime.now()));
         repoM.closeConnection();
     }
@@ -163,14 +164,15 @@ class MessageDbRepoTest {
     void getMultiple() {
         MessageRepo repoM=new MessageDbRepo(Connections.URL,Connections.Username,Connections.Password);
 
-        User user1= new User(1L,"a",new Persone(1L,"wewe","weew"));
-        User user2= new User(2L,"biscuit",new Persone(1L,"wewe","weew"));
-        User user3=new User(3L,"macaron",new Persone(1L,"wewe","weew"));
-        User user4=new User(4L,"bucalea",new Persone(1L,"wewe","weew"));
+        User user1= new User("a",new Persone(1L,"wewe","weew"));
+        User user2= new User("biscuit",new Persone("",""));
+        User user3=new User("macaron",new Persone("",""));
+        User user4=new User("bucalea",new Persone("",""));
         Message message1= new Message(2L,user1, "hello",Arrays.asList(user2,user3,user4),LocalDateTime.of(2019,11,2,12,53));
-        Message message2= new Message(2L,user1, "hello",Arrays.asList(user2),LocalDateTime.of(2019,11,2,12,53));
+        Message message2= new Message(2L,user1, "hello",Arrays.asList(user2,user3,user4),LocalDateTime.of(2019,11,2,12,53));
         repoM.save(message1);
-        assertEquals(repoM.get(2L),message2);
+        assertEquals(
+                repoM.get(2L),message2);
         repoM.closeConnection();
     }
 
@@ -250,7 +252,7 @@ class MessageDbRepoTest {
         repoM.save(message);
         assertTrue(repoM.delete(2L));
         assertEquals(repoM.get(2L),null);
-        assertEquals(repoM.getSize(),4);
+        assertEquals(repoM.getSize(),2);
         repoM.closeConnection();
     }
 

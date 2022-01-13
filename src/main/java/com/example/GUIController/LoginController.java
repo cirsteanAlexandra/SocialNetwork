@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 
 public class LoginController {
     private MainController cont;
@@ -26,17 +27,21 @@ public class LoginController {
 
     @FXML
     private TextField textUsername;
+    @FXML
+    private TextField textPassword;
 
     public void handleLoginAction(ActionEvent ev){
         //MessageAlert.showMessage(null, Alert.AlertType.INFORMATION,"Feature not yet implemented","The menu for admin is not yet available!");
         try {
             String Username = textUsername.getText();
+            String Password = textPassword.getText();
             if (Username.equals("admin"))
                 MessageAlert.showMessage(null, Alert.AlertType.INFORMATION, "Feature not yet implemented", "The menu for admin is not yet available!");
             if(Username.equals("") || Username==null ||Username.isEmpty())
                 MessageAlert.showErrorMessage(null, "The text field must contain an username!");
             else {
-                User user = cont.getUserByUsername(Username);
+                //User user = cont.getUserByUsername(Username);
+                User user=cont.tryLogin(Username,Password);
                 showUserLayout();
                //MessageAlert.showMessage(null, Alert.AlertType.INFORMATION, "Feature not yet implemented", "The menu for user is not yet available!");
             }
@@ -45,10 +50,12 @@ public class LoginController {
             MessageAlert.showErrorMessage(null, e.getDescription());
         }
         catch(NullPointerException e){
-            e.printStackTrace();
             MessageAlert.showErrorMessage(null, "The text field must contain an username!");
+        } catch (NoSuchAlgorithmException e) {
+            MessageAlert.showErrorMessage(null, e.getMessage());
         }
         textUsername.setText(null);
+        textPassword.setText(null);
     }
 
     private void showUserLayout()  {

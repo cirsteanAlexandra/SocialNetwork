@@ -55,6 +55,15 @@ public class UserDbRepo extends DbRepoId<Long, User> implements UserRepo {
         return super.get(id);
     }
 
+    @Override
+    public User getUserLogin(String username, String hash_pass) {
+        sql= "select * from public.\"Users\" where username=\'"+username+"\' and hash_password=\'"+hash_pass+"\'";
+        List<User> listUser=super.getAll();
+        if(listUser==null || listUser.isEmpty())
+            throw new UserRepoException("The username or the password is incorrect");
+        listUser.get(0).setPassword("");
+        return listUser.get(0);
+    }
     /**
      * Deletes all the data from the repository
      * @throws EntityRepoException if the connection to the repository fails or there ar other
