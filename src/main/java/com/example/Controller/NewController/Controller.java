@@ -1,8 +1,10 @@
 package com.example.Controller.NewController;
 
 import com.example.Domain.Entity;
+import com.example.Repository.PagingRepo.Page;
 import com.example.Repository.Repository;
-import com.example.Utils.Exceptions.*;
+import com.example.Utils.Exceptions.EntityException;
+import com.example.Utils.Exceptions.EntityRepoException;
 
 import java.util.List;
 
@@ -77,6 +79,17 @@ public abstract class Controller<T,E extends Entity> {
         return repo.getAll();
     }
 
+    public Page<E> getCurrentPage(){
+        return repo.getCurrentPage();
+    }
+
+    public Page<E> getNextPage(){
+        return repo.getNextPage();
+    }
+
+    public Page<E> getPreviousPage(){
+        return repo.getPreviousPage();
+    }
     /**
      * Gives the current number of entities in the repository
      * @return number of entities in the repository
@@ -86,5 +99,11 @@ public abstract class Controller<T,E extends Entity> {
         return repo.getSize();
     }
 
+    public void openConnection(){
+        repo.openConnection();
+    }
 
+    public void closeConnection(){
+        repo.closeConnection();
+    }
 }

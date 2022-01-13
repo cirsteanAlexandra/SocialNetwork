@@ -48,6 +48,8 @@ public class FriendsTableController implements Observer {
     @FXML
     private TextField username;
 
+
+
     @FXML
     private TextField SearchFriend;
 
@@ -59,6 +61,7 @@ public class FriendsTableController implements Observer {
         tableColumnName.setCellValueFactory(new PropertyValueFactory<PrintedPersones, String>("First_Name"));
         tableColumnLastName.setCellValueFactory(new PropertyValueFactory<PrintedPersones, String>("Last_Name"));
         tableView.setItems(model);
+
     }
 
     public void initModel() {

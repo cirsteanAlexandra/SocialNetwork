@@ -22,15 +22,17 @@ public class Main {
         RelationshipRepo repoR= new RelationshipDbRepo(ConnectionsMain.URL,ConnectionsMain.Username,ConnectionsMain.Password);
         RequestsDbRepo repoRQ=new RequestsDbRepo(ConnectionsMain.URL,ConnectionsMain.Username,ConnectionsMain.Password);
         MessageDbRepo repoM=new MessageDbRepo(ConnectionsMain.URL,ConnectionsMain.Username,ConnectionsMain.Password);
-
+        EvenDbRepo repoE=new EvenDbRepo(ConnectionsMain.URL,ConnectionsMain.Username,ConnectionsMain.Password);
+        UserEventDbRepo repoUE=new UserEventDbRepo(ConnectionsMain.URL,ConnectionsMain.Username,ConnectionsMain.Password);
 
         UserController contU=new UserController(repoU);
         RelationshipController contR=new RelationshipController((RelationshipDbRepo) repoR);
         PersoneController contP=new PersoneController(repoP);
         RequestsController contRQ=new RequestsController(repoRQ);
         MessageController contM=new MessageController(repoM);
-
-        MainController cont= new MainController(contU,contR,contP,contM,contRQ);
+        EventController contE=new EventController(repoE);
+        UserEventController contUE=new UserEventController(repoUE);
+        MainController cont= new MainController(contU,contR,contP,contM,contRQ,contE,contUE);
 
         Login ui= new Login(cont);
         ui.mainMenu();

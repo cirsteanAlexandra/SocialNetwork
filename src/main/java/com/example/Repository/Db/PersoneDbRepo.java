@@ -1,6 +1,8 @@
 package com.example.Repository.Db;
 
 import com.example.Domain.Persone;
+import com.example.Repository.PagingRepo.Page;
+import com.example.Repository.PagingRepo.Pageble;
 import com.example.Repository.Repository;
 import com.example.Utils.Exceptions.EntityRepoException;
 import com.example.Utils.Exceptions.PersoneRepoException;
@@ -108,6 +110,13 @@ public class PersoneDbRepo extends DbRepoId<Long, Persone> implements Repository
     public List<Persone> getAll() {
         sql="select * from public.\"Persone\"";
         return super.getAll();
+    }
+
+    @Override
+    public Page<Persone> getAll(Pageble pageble) {
+        sql="select * from ( select * ,ROW_NUMBER() over (order by id_pers ASC) as rowss from public.\"Persone\")as Foo where rowss>=? and rowss<? ";
+        return super.getAll(pageble);
+        //return super.getAll();
     }
 
     /**

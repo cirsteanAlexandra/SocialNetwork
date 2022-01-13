@@ -72,7 +72,7 @@ public class ProfileController implements Observer {
 
                 Relationship rel = new Relationship(user.getUsername(), username, LocalDate.now(), "pending");
                 cont.AddRequest(rel);
-               // add.setText("Requested");
+                //add.setText("Requested");
                 SetTextButtonAdd();
 
             } catch (Exception e) {

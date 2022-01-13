@@ -1,9 +1,6 @@
 package com.example.Controller.NewController;
 
-import com.example.Domain.Message;
-import com.example.Domain.Persone;
-import com.example.Domain.Relationship;
-import com.example.Domain.User;
+import com.example.Domain.*;
 
 import com.example.Utils.Exceptions.Exception;
 import com.example.Utils.Exceptions.*;
@@ -22,6 +19,8 @@ public class MainController implements Observable {
     PersoneController contP;
     MessageController contM;
     RequestsController contRQ;
+    EventController contE;
+    UserEventController contUE;
 
     List<Observer> listObserver;
 
@@ -37,9 +36,6 @@ public class MainController implements Observable {
      * @param contR controller for relationships
      * @param contP controller for persons
      */
-
-
-
     public MainController(UserController contU, RelationshipController contR,PersoneController contP,MessageController contM) {
         this.contU = contU;
         this.contR = contR;
@@ -56,6 +52,18 @@ public class MainController implements Observable {
         this.contRQ = contRQ;
         listObserver=new ArrayList<>();
     }
+
+    public MainController(UserController contU, RelationshipController contR, PersoneController contP, MessageController contM, RequestsController contRQ,EventController contE,UserEventController contUE) {
+        this.contU = contU;
+        this.contR = contR;
+        this.contP = contP;
+        this.contM = contM;
+        this.contRQ = contRQ;
+        this.contE=contE;
+        this.contUE=contUE;
+        listObserver=new ArrayList<>();
+    }
+
 
     /**
      * Adds a user to the repository
@@ -78,6 +86,9 @@ public class MainController implements Observable {
         }
         return true;
     }
+
+
+
 
     /**
      * Adds a relationship to the repository
@@ -229,6 +240,7 @@ public class MainController implements Observable {
         if(rel==null) throw new RelationshipRepoException("There isnt a relationship with that usernames");
         return rel;
     }
+
     /**
      * Retrieves a list with all the users from the repository
      * @return a list with all the users from the repository
@@ -329,8 +341,6 @@ public class MainController implements Observable {
         return null;
     }
 
-
-
     /**
      * for each username add in a list the specific user
      * @param usernameList a list of usernames
@@ -398,7 +408,6 @@ public class MainController implements Observable {
     }
 
     /**
-
      * Retrieves a list with all the relationships from the repository
      * @return a list with all the relationships from the repository
      * @throws EntityException if there are errors during the retrieving process
@@ -473,7 +482,7 @@ public class MainController implements Observable {
         User sender=getUserByUsername(message.getFrom().getUsername());
         User receiver=getUserByUsername(message.getReceivers().get(0).getUsername());
         contM.add(new Message(message.getId(),sender, message.getMessage(), Arrays.asList(receiver), LocalDateTime.now(),message.getReply()));
-       notifyObservers();
+        notifyObservers();
         return true;
     }
 
@@ -571,8 +580,6 @@ public class MainController implements Observable {
 
 
     public String getUsernameByFirstName(String firstName){
-
-
         for( User u :getAllUsers())
             if(u.getPers().getLastName().equals(firstName))
                 return u.getUsername();
@@ -621,7 +628,82 @@ public class MainController implements Observable {
 
     @Override
     public void notifyObservers() {
-        listObserver.forEach(o-> o.update());
+        if(listObserver!=null)listObserver.forEach(o-> o.update());
+    }
+
+    public void closeConnections(){
+        if(contR!=null)contR.closeConnection();
+        if(contU!=null)contU.closeConnection();
+        if(contRQ!=null)contRQ.closeConnection();
+        if(contM!=null)contM.openConnection();
+        if(contP!=null)contP.closeConnection();
+    }
+
+
+    public boolean addEvent(Event event){
+
+
+         if(contE.getByOther(event.getName())!=null)
+           throw new Exception("There is an event with the same name!");
+        contE.add(event);
+        return true;
+
+    }
+
+    public List<Event> getAllEvents(){
+        return contE.getAll();
+    }
+
+    public boolean removeEventId(Long id) {
+
+        Event event=contE.getById(id);
+        if(event==null) throw new Exception("There isnt an event with that id");
+       contE.removeById(id);
+        return true;
+    }
+
+    public List<UserEvent> getAllUserEvent(){
+        return contUE.getAll();
+    }
+
+    public boolean getIdUserFromParticipationList(Long id){
+        for(UserEvent u:getAllUserEvent())
+        {
+            if(u.getId_user().equals(id))
+                return true;
+        }
+        return false;
+    }
+
+    public boolean getIdEventFromParticipationList(Long id){
+        for(UserEvent u:getAllUserEvent())
+        {
+            if(u.getId_event().equals(id))
+                return true;
+        }
+        return false;
+    }
+
+    public boolean addUE(UserEvent userEvent){
+        System.out.println(getIdUserFromParticipationList(userEvent.getId_user()));
+        System.out.println(getIdEventFromParticipationList(userEvent.getId_event()));
+       if(getIdUserFromParticipationList(userEvent.getId_user()) && getIdEventFromParticipationList(userEvent.getId_event()))
+                   throw new Exception("This user is already on the list");
+        contUE.add(userEvent);
+        return true;
+    }
+
+    // getUserByParticipation
+    //getEventByParticipation
+    //removeFromParticipationByUser
+    //RemoveFromParticipationByEvent
+
+    public boolean removeUserEventIdUser(Long id) {
+
+        UserEvent Uevent=contUE.getById(id);
+        if(Uevent==null) throw new Exception("There isnt a participation with that id");
+        contUE.removeById(id);
+        return true;
     }
 
 }

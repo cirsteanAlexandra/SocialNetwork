@@ -17,6 +17,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -34,6 +35,7 @@ import java.util.stream.Collectors;
 public class UserGuiController  {
     public ImageView idImage;
     public Image image;
+    public Button ButonCuIco;
     private MainController cont;
 
 
@@ -55,7 +57,7 @@ public class UserGuiController  {
         this.cont = cont;
         this.user=user;
         //aici trebuie modificat
-        idImage.setImage(new Image("C:\\Users\\Alexandra\\Desktop\\LastTry\\src\\main\\resources\\com\\example\\ador_testele\\images\\search-icon.png"));
+        idImage.setImage(new Image("C:\\Users\\Alexandra\\Desktop\\LastTry\\src\\main\\resources\\com\\example\\ador_testele\\images\\pozaProiect.jpg"));
         textUsername.setText(user.getUsername());
         FirstNameUser.setText(user.getPers().getFirstName());
         LastNameUser.setText(user.getPers().getLastName());
@@ -109,11 +111,17 @@ public class UserGuiController  {
             AnchorPane loginLayout = fxmlLoader.load();
             String Username = textUsername.getText();
             Stage registerStage = new Stage();
+            VBox vb=new VBox();
             FriendsTableController requestController = fxmlLoader.getController();
             requestController.setFriendsController(cont,registerStage,cont.getUserByOther(Username));
             Scene scene = new Scene(loginLayout);
             registerStage.initModality(Modality.WINDOW_MODAL);
             registerStage.setTitle("Friends");
+            Image img = new Image("C:\\Users\\Alexandra\\Desktop\\LastTry\\src\\main\\resources\\com\\example\\ador_testele\\images\\HomeIcon.png");
+            ImageView view = new ImageView(img);
+            view.setFitHeight(80);
+            view.setPreserveRatio(true);
+            ButonCuIco.setGraphic(view);
             registerStage.setScene(scene);
             registerStage.show();
         }catch(IOException | InterruptedException | Exception e){
@@ -228,4 +236,29 @@ public class UserGuiController  {
 
 
     }
+
+    public void handleButonDeProba(ActionEvent actionEvent) {
+        try {
+
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(new File(Algoritm.getFullPath("ceva_de_proba.fxml")).toURI().toURL());
+            AnchorPane loginLayout = fxmlLoader.load();
+
+            ControllerDeProba profileController=fxmlLoader.getController();
+            profileController.setProfileController(cont);
+            Stage registerStage = new Stage();
+            Scene scene = new Scene(loginLayout);
+            registerStage.initModality(Modality.WINDOW_MODAL);
+
+            registerStage.setScene(scene);
+            registerStage.show();
+        }
+        catch (IOException | InterruptedException | Exception e){
+            e.printStackTrace();
+            MessageAlert.showErrorMessage(null, e.getMessage()+"\n"+e.getCause());
+        }
+
+
+    }
+
 }

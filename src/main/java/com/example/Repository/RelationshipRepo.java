@@ -1,6 +1,8 @@
 package com.example.Repository;
 
 import com.example.Domain.Relationship;
+import com.example.Repository.PagingRepo.Page;
+import com.example.Repository.PagingRepo.Pageble;
 
 public interface RelationshipRepo extends Repository<Long, Relationship>{
     /**
@@ -10,4 +12,6 @@ public interface RelationshipRepo extends Repository<Long, Relationship>{
      * @return the corespondent object or null otherwise
      */
     Relationship getByUserNames(String username1, String username2);
+
+    public Page<Relationship> getUsersFriends(String username, Pageble pageble);
 }

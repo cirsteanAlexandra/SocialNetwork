@@ -39,6 +39,7 @@ class MainControllerTest {
         repoP.save(new Persone(8L,"weew","erui6"));
         repoP.save(new Persone(9L,"weew","erui7"));
         repoP.save(new Persone(10L,"weew","erui8"));
+        repoP.closeConnection();
 
         UserRepo repoU=new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
         repoU.save(new User(1L,"mama",new Persone(1L,"wewe","weew")));
@@ -51,7 +52,7 @@ class MainControllerTest {
         repoU.save(new User(8L,"meh",new Persone(8L,"wewe","erui6")));
         repoU.save(new User(9L,"vespuci",new Persone(9L,"wewe","erui7")));
         repoU.save(new User(10L,"acadea",new Persone(10L,"wewe","erui8")));
-
+        repoU.closeConnection();
 
         RelationshipDbRepo repo=new RelationshipDbRepo(Connections.URL,Connections.Username,Connections.Password);
         repo.save(new Relationship(1L,"mama","mea",LocalDate.of(
@@ -61,6 +62,7 @@ class MainControllerTest {
                 2021,11,21)));
         repo.save(new Relationship(3L,"macaron","mea",LocalDate.of(
                 2021,11,21)));
+        repo.closeConnection();
 
         RequestsDbRepo repoRQ=new RequestsDbRepo(Connections.URL,Connections.Username,Connections.Password);
         repoRQ.save(new Relationship(1L,"mama","belea",LocalDate.of(2021,11,22),"pending"));
@@ -68,30 +70,36 @@ class MainControllerTest {
         repoRQ.save(new Relationship(3L,"mama","mea",LocalDate.of(2021,11,21),"accept"));
         repoRQ.save(new Relationship(4L,"biscuit","mama",LocalDate.of(2021,11,21),"accept"));
         repoRQ.save(new Relationship(5L,"macaron","mea",LocalDate.of(2021,11,21),"accept"));
-
+        repoRQ.closeConnection();
 
         MessageDbRepo repoM=new MessageDbRepo(Connections.URL,Connections.Username,Connections.Password);
         repoM.save(new Message(1L,new User(1L,"mama",new Persone(1L,"wewe","weew")),"hello", Arrays.asList(new User(2L,"mea",new Persone(2L,"wewe","erui")),new User(3L,"biscuit",new Persone(3L,"wewe","erui1"))), LocalDateTime.of(2019,11,2,12,53)));
         repoM.save(new Message(2L,new User(1L,"mama",new Persone(1L,"wewe","weew")),"asl pls", Arrays.asList(new User(2L,"mea",new Persone(2L,"wewe","erui"))), LocalDateTime.of(2019,11,2,12,53)));
         repoM.save(new Message(3L,new User(2L,"mea",new Persone(2L,"wewe","erui")),"20, woman, Cluj", Arrays.asList(new User(1L,"mama",new Persone(1L,"wewe","weew"))), LocalDateTime.of(2019,11,2,12,53)));
+        repoM.closeConnection();
     }
 
     @AfterEach
     void tearDown() {
         RequestsDbRepo repoRQ=new RequestsDbRepo(Connections.URL,Connections.Username,Connections.Password);
         repoRQ.restoreToDefault();
+        repoRQ.closeConnection();
 
         MessageDbRepo repoM=new MessageDbRepo(Connections.URL,Connections.Username,Connections.Password);
         repoM.restoreToDefault();
+        repoM.closeConnection();
 
         RelationshipDbRepo repo=new RelationshipDbRepo(Connections.URL,Connections.Username,Connections.Password);
         repo.restoreToDefault();
+        repo.closeConnection();
 
         UserDbRepo repoU=new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
         repoU.restoreToDefault();
+        repoU.closeConnection();
 
         PersoneDbRepo repoP=new PersoneDbRepo(Connections.URL,Connections.Username,Connections.Password);
         repoP.restoreToDefault();
+        repoP.closeConnection();
     }
 
     @Test
@@ -110,6 +118,7 @@ class MainControllerTest {
         assertTrue(cont.addUser(new User("malala",new Persone(1L,"wewe","weew"))));
         assertEquals(contU.getSize(),11);
         assertEquals(contP.getSize(),10);
+        cont.closeConnections();
     }
 
     @Test
@@ -128,6 +137,7 @@ class MainControllerTest {
         assertTrue(cont.addUser(new User("malala",new Persone(5L,"abraham","link"))));
         assertEquals(contU.getSize(),11);
         assertEquals(repoP.getSize(),10);
+        cont.closeConnections();
     }
 
     @Test
@@ -155,7 +165,7 @@ class MainControllerTest {
             assertEquals(contU.getSize(),10);
             assertEquals(repoP.getSize(),10);
         }
-
+        cont.closeConnections();
     }
 
     @Test
@@ -180,6 +190,7 @@ class MainControllerTest {
         assertEquals(contR.getSize(),4);
         assertEquals(contU.getSize(),10);
         assertEquals(contP.getSize(),10);
+        cont.closeConnections();
     }
 
     @Test
@@ -205,6 +216,7 @@ class MainControllerTest {
         }finally {
             assertEquals(contR.getSize(), 3);
         }
+        cont.closeConnections();
     }
 
     @Test
@@ -229,6 +241,7 @@ class MainControllerTest {
         }finally {
             assertEquals(contR.getSize(), 3);
         }
+        cont.closeConnections();
     }
 
     @Test
@@ -253,6 +266,7 @@ class MainControllerTest {
         }finally {
             assertEquals(contR.getSize(), 3);
         }
+        cont.closeConnections();
     }
 
     @Test
@@ -277,6 +291,7 @@ class MainControllerTest {
         }finally {
             assertEquals(contR.getSize(), 3);
         }
+        cont.closeConnections();
     }
 
     @Test
@@ -308,6 +323,7 @@ class MainControllerTest {
         assertEquals(contR.getSize(),1);
         assertEquals(contU.getSize(),9);
         assertEquals(contP.getSize(),10);
+        cont.closeConnections();
     }
 
     @Test
@@ -335,6 +351,7 @@ class MainControllerTest {
         assertEquals(contR.getSize(),0);
         assertEquals(contU.getSize(),0);
         assertEquals(contP.getSize(),9);
+        cont.closeConnections();
     }
 
     @Test
@@ -360,6 +377,7 @@ class MainControllerTest {
             assertEquals(contR.getSize(), 3);
             assertEquals(contU.getSize(), 10);
             assertEquals(contP.getSize(), 10);
+            cont.closeConnections();
         }
     }
 
@@ -389,6 +407,7 @@ class MainControllerTest {
         assertEquals(contR.getSize(),4);
         assertEquals(contU.getSize(),10);
         assertEquals(contP.getSize(),10);
+        cont.closeConnections();
     }
 
     @Test
@@ -415,7 +434,9 @@ class MainControllerTest {
             assertEquals(contR.getSize(), 3);
             assertEquals(contU.getSize(), 10);
             assertEquals(contP.getSize(), 10);
+            cont.closeConnections();
         }
+
     }
 
     @Test
@@ -447,6 +468,7 @@ class MainControllerTest {
         assertEquals(contR.getSize(),1);
         assertEquals(contU.getSize(),9);
         assertEquals(contP.getSize(),10);
+        cont.closeConnections();
     }
 
     @Test
@@ -476,6 +498,7 @@ class MainControllerTest {
         assertEquals(contR.getSize(),0);
         assertEquals(contU.getSize(),0);
         assertEquals(contP.getSize(),9);
+        cont.closeConnections();
     }
 
     @Test
@@ -502,6 +525,7 @@ class MainControllerTest {
             assertEquals(contR.getSize(), 3);
             assertEquals(contU.getSize(), 10);
             assertEquals(contP.getSize(), 10);
+            cont.closeConnections();
         }
     }
 
@@ -533,6 +557,7 @@ class MainControllerTest {
             assertEquals(contR.getSize(), 1);
             assertEquals(contU.getSize(), 9);
             assertEquals(contP.getSize(), 10);
+            cont.closeConnections();
         }
     }
 
@@ -561,6 +586,7 @@ class MainControllerTest {
         assertEquals(contR.getSize(),4);
         assertEquals(contU.getSize(),10);
         assertEquals(contP.getSize(),10);
+        cont.closeConnections();
     }
 
     @Test
@@ -586,6 +612,7 @@ class MainControllerTest {
             assertEquals(contR.getSize(), 3);
             assertEquals(contU.getSize(), 10);
             assertEquals(contP.getSize(), 10);
+            cont.closeConnections();
         }
     }
 
@@ -613,6 +640,7 @@ class MainControllerTest {
             assertEquals(contR.getSize(), 2);
             assertEquals(contU.getSize(), 10);
             assertEquals(contP.getSize(), 10);
+            cont.closeConnections();
         }
     }
 
@@ -630,7 +658,7 @@ class MainControllerTest {
         MainController cont= new MainController(contU,contR,contP);
 
         assertEquals(cont.getUserById(1L),new User(1L,"mama",new Persone(1L,"wewe","weew")));
-
+        cont.closeConnections();
     }
 
     @Test
@@ -653,6 +681,7 @@ class MainControllerTest {
         }catch(Exception e){
             assertTrue(true);
         }
+        cont.closeConnections();
     }
 
     @Test
@@ -670,7 +699,7 @@ class MainControllerTest {
         MainController cont= new MainController(contU,contR,contP);
 
         assertEquals(cont.getRelationshipById(1L),new Relationship(1L,"mama","mea"));
-
+        cont.closeConnections();
     }
 
     @Test
@@ -693,6 +722,7 @@ class MainControllerTest {
         }catch(Exception e){
             assertTrue(true);
         }
+        cont.closeConnections();
     }
 
     @Test
@@ -731,6 +761,7 @@ class MainControllerTest {
         }catch(Exception e){
             assertTrue(true);
         }
+        cont.closeConnections();
     }
 
     @Test
@@ -747,7 +778,7 @@ class MainControllerTest {
         MainController cont= new MainController(contU,contR,contP);
 
         assertEquals(cont.getRelationshipByOther("mama","mea"),new Relationship(1L,"mama","mea"));
-
+        cont.closeConnections();
     }
 
     @Test
@@ -770,6 +801,7 @@ class MainControllerTest {
         }catch(Exception e){
             assertTrue(true);
         }
+        cont.closeConnections();
     }
 
     @Test
@@ -793,6 +825,7 @@ class MainControllerTest {
         user.addFriend("mea");
         user.addFriend("biscuit");
         assertEquals(list.get(5),user);
+        cont.closeConnections();
     }
 
     @Test
@@ -816,6 +849,7 @@ class MainControllerTest {
 
 
         assertEquals(list.get(0),rel);
+        cont.closeConnections();
     }
 
     @Test
@@ -833,6 +867,7 @@ class MainControllerTest {
         MainController cont= new MainController(contU,contR,contP);
 
         assertEquals(cont.getUserSize(),10);
+        cont.closeConnections();
     }
 
     @Test
@@ -849,6 +884,7 @@ class MainControllerTest {
         MainController cont= new MainController(contU,contR,contP);
 
         assertEquals(cont.getRelationshipSize(),3);
+        cont.closeConnections();
     }
 
     @Test
@@ -866,6 +902,7 @@ class MainControllerTest {
         map1.put(new Persone("weew","erui1"),LocalDate.parse("2021-11-21"));
         map1.put(new Persone("weew", "erui"),LocalDate.parse("2021-11-21"));
         assertEquals(cont.getFriendsByUsername("mama"), map1);
+        cont.closeConnections();
     }
 
     @Test
@@ -884,7 +921,9 @@ class MainControllerTest {
         map1.put(new Persone("weew","erui1"),LocalDate.parse("2021-11-21"));
         map1.put(new Persone("weew", "erui"),LocalDate.parse("2021-11-21"));
         assertEquals(cont.getFriendsByUsernameAndMonth("mama",11),map1 );
+        cont.closeConnections();
     }
+
     @Test
     void getUserByUsername(){
         UserRepo repoU= new UserDbRepo(Connections.URL, Connections.Username,Connections.Password);
@@ -898,6 +937,7 @@ class MainControllerTest {
         MainController cont= new MainController(contU,contR,contP);
 
         assertEquals(cont.getUserByUsername("mama"),new User(1L,"mama",new Persone(1L,"wewe","weew")));
+        cont.closeConnections();
     }
 
     @Test
@@ -917,6 +957,7 @@ class MainControllerTest {
         }catch(Exception e){
             assertTrue(true);
         }
+        cont.closeConnections();
     }
 
     @Test
@@ -935,6 +976,7 @@ class MainControllerTest {
 
         assertEquals(cont.loadConversation("mama","mea").size(),3);
         assertEquals(cont.loadConversation("biscuit","mama").size(),1);
+        cont.closeConnections();
     }
 
     @Test
@@ -952,6 +994,7 @@ class MainControllerTest {
         MainController cont= new MainController(contU,contR,contP,contM);
 
         assertTrue(cont.sendMessage(new Message(4L,new User(1L,"mama",new Persone(1L,"wewe","weew")),"how are u", Arrays.asList(new User(2L,"mea",new Persone(2L,"wewe","erui"))), LocalDateTime.of(2019,11,2,12,53))));
+        cont.closeConnections();
     }
 
     @Test
@@ -973,6 +1016,7 @@ class MainControllerTest {
         }catch(Exception e){
             assertTrue(true);
         }
+        cont.closeConnections();
     }
 
     @Test
@@ -990,6 +1034,7 @@ class MainControllerTest {
         MainController cont= new MainController(contU,contR,contP,contM);
 
         assertTrue(cont.sendMessageToAll(new Message(4L,new User(1L,"mama",new Persone(1L,"wewe","weew")),"how are u guys", Arrays.asList(new User(2L,"mea",new Persone(2L,"wewe","erui")),new User(3L,"biscuit",new Persone(3L,"wewe","erui1"))), LocalDateTime.of(2019,11,2,12,53))));
+        cont.closeConnections();
     }
 
     @Test
@@ -1012,6 +1057,7 @@ class MainControllerTest {
         }catch(Exception e){
             assertTrue(true);
         }
+        cont.closeConnections();
     }
 
     @Test
@@ -1033,6 +1079,7 @@ class MainControllerTest {
         MainController cont= new MainController(contU,contR,contP,contM,contRQ);
 
         assertEquals(cont.getAllRequests().size(),5);
+        cont.closeConnections();
     }
 
     @Test
@@ -1055,6 +1102,7 @@ class MainControllerTest {
 
         assertEquals(cont.getFriendshipsRequests("belea"),Arrays.asList("mama"));
         assertTrue(cont.getFriendshipsRequests("mama").isEmpty());
+        cont.closeConnections();
     }
 
     @Test
@@ -1077,6 +1125,7 @@ class MainControllerTest {
 
         cont.UpdateStatusRequest("accept","mama","belea");
         assertEquals(contR.getSize(),4);
+        cont.closeConnections();
     }
 
     @Test
@@ -1099,6 +1148,7 @@ class MainControllerTest {
 
         cont.UpdateStatusRequest("reject","mama","belea");
         assertEquals(contR.getSize(),3);
+        cont.closeConnections();
     }
 
     @Test
@@ -1120,7 +1170,9 @@ class MainControllerTest {
         MainController cont= new MainController(contU,contR,contP,contM,contRQ);
 
         assertTrue(cont.AddRequest(new Relationship("belea","noua",LocalDate.of(2021,12,11),"pending")));
+        cont.closeConnections();
     }
+
     @Test
     void AddSameRequest(){
         UserRepo repoU= new UserDbRepo(Connections.URL,Connections.Username,Connections.Password);
@@ -1144,6 +1196,7 @@ class MainControllerTest {
         }catch(Exception e){
             assertTrue(true);
         }
+        cont.closeConnections();
     }
 
     @Test
@@ -1169,6 +1222,7 @@ class MainControllerTest {
         }catch(Exception e){
             assertTrue(true);
         }
+        cont.closeConnections();
     }
 
     @Test
@@ -1194,5 +1248,6 @@ class MainControllerTest {
         }catch(Exception e){
             assertTrue(true);
         }
+        cont.closeConnections();
     }
 }
