@@ -10,14 +10,20 @@ import com.example.Utils.Exceptions.Exception;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class RegisterController {
     private MainController cont;
     Stage registerStage;
-    public void setRegisterController(MainController cont, Stage stage) {
+    SplitPane split;
+    AnchorPane loginLayout;
+    public void setRegisterController(MainController cont, Stage stage,SplitPane split,AnchorPane loginLayout) {
         this.cont = cont;
+        this.split=split;
+        this.loginLayout=loginLayout;
         this.registerStage=stage;
     }
 
@@ -31,6 +37,12 @@ public class RegisterController {
     private TextField textPassword;
     @FXML
     private TextField textRetypePassword;
+    @FXML
+    private AnchorPane anchorReg;
+
+    public AnchorPane getRegisterAnchor(){
+        return anchorReg;
+    }
 
     public void handleRegister(ActionEvent ev){
         try{
@@ -55,10 +67,13 @@ public class RegisterController {
             MessageAlert.showErrorMessage(null, "The text field must contain an username!");
         }
         finally {
-            registerStage.close();
+            split.getItems().set(1,loginLayout);
+            registerStage.show();
         }
     }
     public void handleCancel(ActionEvent ev){
-            registerStage.close();
+        //registerStage.close();
+        split.getItems().set(1,loginLayout);
+        registerStage.show();
     }
 }

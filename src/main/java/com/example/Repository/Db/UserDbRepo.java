@@ -57,6 +57,7 @@ public class UserDbRepo extends DbRepoId<Long, User> implements UserRepo {
 
     @Override
     public User getUserLogin(String username, String hash_pass) {
+        System.out.println(hash_pass);
         sql= "select * from public.\"Users\" where username=\'"+username+"\' and hash_password=\'"+hash_pass+"\'";
         List<User> listUser=super.getAll();
         if(listUser==null || listUser.isEmpty())

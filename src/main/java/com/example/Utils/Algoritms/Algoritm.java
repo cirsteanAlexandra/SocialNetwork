@@ -49,8 +49,16 @@ public class Algoritm {
             hashText = "0" + hashText;
         }
 
+        //byte[] digest = messageDigest.digest();
+        //StringBuffer hexString = new StringBuffer();
+        //for (int i=0;i<digest.length;i++) {
+        //    hexString.append(Integer.toHexString(0xFF & digest[i]));
+        //}
+        //System.out.println(hexString.toString()) ;
+
         //System.out.println(hashText);
         //System.out.println(hash1);
+        //return hexString.toString();
         return hashText;
     }
 
