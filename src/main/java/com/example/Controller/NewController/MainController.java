@@ -736,8 +736,9 @@ public class MainController implements Observable {
     public List<User> getPageRequests(String username, PageType type){
         Page<Relationship> pageR=contRQ.getPageRequests(username,type);
         System.out.println(pageR.getCurrentPage().getPageNumber());
+        List<Relationship> listR=pageR.getPageContent().collect(Collectors.toList());
         List<User> listU=new ArrayList<>();
-        for(var el:pageR.getPageContent().collect(Collectors.toList())){
+        for(var el:listR){
             if(!el.getFirstUserName().equals(username))
                 listU.add(getUserByUsername(el.getFirstUserName()));
             else listU.add(getUserByUsername(el.getSecondUserName()));

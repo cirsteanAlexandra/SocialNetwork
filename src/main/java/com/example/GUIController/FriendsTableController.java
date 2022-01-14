@@ -96,22 +96,22 @@ public class FriendsTableController implements Observer {
         for(int i=1;i<=4;i++){
             if(i==1 && i<=listU.size() ){
                 User use=listU.get(i-1);
-                flname1.setText(user.getPers().getFirstName()+" "+use.getPers().getLastName());
+                flname1.setText(use.getPers().getFirstName()+" "+use.getPers().getLastName());
                 uname1.setText(use.getUsername());
             }
             if(i==2 && i<=listU.size() ){
                 User use=listU.get(i-1);
-                flname2.setText(user.getPers().getFirstName()+" "+use.getPers().getLastName());
+                flname2.setText(use.getPers().getFirstName()+" "+use.getPers().getLastName());
                 uname2.setText(use.getUsername());
             }
             if(i==3 && i<=listU.size() ){
                 User use=listU.get(i-1);
-                flname3.setText(user.getPers().getFirstName()+" "+use.getPers().getLastName());
+                flname3.setText(use.getPers().getFirstName()+" "+use.getPers().getLastName());
                 uname3.setText(use.getUsername());
             }
             if(i==4 && i<=listU.size() ){
                 User use=listU.get(i-1);
-                flname4.setText(user.getPers().getFirstName()+" "+use.getPers().getLastName());
+                flname4.setText(use.getPers().getFirstName()+" "+use.getPers().getLastName());
                 uname4.setText(use.getUsername());
             }
         }
@@ -128,22 +128,22 @@ public class FriendsTableController implements Observer {
         for(int i=1;i<=4;i++){
             if(i==1 && i<=listR.size() ){
                 User use=listR.get(i-1);
-                flnamer1.setText(user.getPers().getFirstName()+" "+use.getPers().getLastName());
+                flnamer1.setText(use.getPers().getFirstName()+" "+use.getPers().getLastName());
                 unamer1.setText(use.getUsername());
             }
             if(i==2 && i<=listR.size() ){
                 User use=listR.get(i-1);
-                flnamer2.setText(user.getPers().getFirstName()+" "+use.getPers().getLastName());
+                flnamer2.setText(use.getPers().getFirstName()+" "+use.getPers().getLastName());
                 unamer2.setText(use.getUsername());
             }
             if(i==3 && i<=listR.size() ){
                 User use=listR.get(i-1);
-                flnamer3.setText(user.getPers().getFirstName()+" "+use.getPers().getLastName());
+                flnamer3.setText(use.getPers().getFirstName()+" "+use.getPers().getLastName());
                 unamer3.setText(use.getUsername());
             }
             if(i==4 && i<=listR.size() ){
                 User use=listR.get(i-1);
-                flnamer4.setText(user.getPers().getFirstName()+" "+use.getPers().getLastName());
+                flnamer4.setText(use.getPers().getFirstName()+" "+use.getPers().getLastName());
                 unamer4.setText(use.getUsername());
             }
         }

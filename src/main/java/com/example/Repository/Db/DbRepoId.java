@@ -177,10 +177,12 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
         try{
              if(connection.isClosed()) openConnection();
              PreparedStatement ps = connection.prepareStatement(sql);
+            System.out.println(ps);
              ResultSet resultSet = ps.executeQuery();
              list=getAllStatement(resultSet);
              return list;
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new EntityRepoException(e.getMessage());
 
         }

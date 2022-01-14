@@ -128,14 +128,14 @@ public class RelationshipDbRepo<Messages> extends DbRepoId<Long, Relationship> i
      * @throws EntityRepoException if the connection to the repository fails or there ar other
      * problems on processing the data
      */
-    @Override
-    public List<Relationship> getAll() {
-        sql="select * from public.\"Relationship\"";
-        return super.getAll();
-    }
+    //@Override
+    //public List<Relationship> getAll() {
+     //   sql="select * from public.\"Relationship\"";
+      ///  return super.getAll();
+    //}
 
     public Page<Relationship> getPageFriends(String username, PageType type) {
-        sql="select * from ( select * ,ROW_NUMBER() over (order by id_rel ASC) as rowss from (select * from public.\"Relationship\" where (first_username=\'"+username+"\' or second_username=\'"+username+"\') )as Foo where rowss>=? and rowss<? ";
+        sql="select * from ( select * ,ROW_NUMBER() over (order by id_rel ASC) as rowss from (select * from public.\"Relationship\" where (first_username=\'"+username+"\' or second_username=\'"+username+"\') as Foo1 )as Foo where rowss>=? and rowss<? ";
         switch(type){
             case CURRENT -> {return super.getCurrentPage();}
             case NEXT -> {return super.getNextPage();}

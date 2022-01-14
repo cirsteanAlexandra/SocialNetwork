@@ -3,6 +3,7 @@ package com.example.GUIController;
 import com.example.Controller.NewController.MainController;
 import com.example.Domain.User;
 import com.example.Utils.Algoritms.Algoritm;
+import com.example.Utils.Exceptions.Exception;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -36,12 +37,17 @@ public class MainWindowController {
     }
 
     public void handleMessage(ActionEvent ev) throws IOException, InterruptedException {
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(new File(Algoritm.getFullPath("message_view.fxml")).toURI().toURL());
-        AnchorPane messLayout = fxmlLoader.load();
-        splitMain.getItems().set(1,messLayout);
-        MessageGUIController messageController = fxmlLoader.getController();
-        messageController.setMessageGUIController(cont,stage,user);
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(new File(Algoritm.getFullPath("message_view.fxml")).toURI().toURL());
+            AnchorPane messLayout = fxmlLoader.load();
+            splitMain.getItems().set(1, messLayout);
+            MessageGUIController messageController = fxmlLoader.getController();
+            messageController.setMessageGUIController(cont, stage, user);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     public void handleFriends(ActionEvent ev) throws IOException, InterruptedException {

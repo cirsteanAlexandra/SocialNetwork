@@ -91,22 +91,21 @@ public class RequestsDbRepo extends DbRepoId<Long, Relationship> implements Repo
         return super.getAll();
     }
 
-    @Override
-    public Page<Relationship> getAll(Pageble pageble) {
-        sql="select * from ( select * ,ROW_NUMBER() over (order by id_r ASC) as rowss from public.\"Requests\")as Foo where rowss>=? and rowss<? ";
-        return super.getAll(pageble);
+    //@Override
+    //public Page<Relationship> getAll(Pageble pageble) {
+    //    sql="select * from ( select * ,ROW_NUMBER() over (order by id_r ASC) as rowss from public.\"Requests\")as Foo where rowss>=? and rowss<? ";
+    //    return super.getAll(pageble);
         //return super.getAll();
-    }
+    //}
 
     public Page<Relationship> getPageRequest(String username, PageType type) {
-        sql="select * from ( select * ,ROW_NUMBER() over (order by id_r ASC) as rowss from (select * from public.\"Requests\" where (status=\'pending\' and second_username=\'"+username+"\') )as Foo where rowss>=? and rowss<? ";
+        sql="select * from ( select * ,ROW_NUMBER() over (order by id_r ASC) as rowss from (select * from public.\"Requests\" where (status='pending' and second_username=\'"+username+"\')) as Foo ) as Foo1 where rowss>=? and rowss<?;";
         switch(type){
             case CURRENT -> {return super.getCurrentPage();}
             case NEXT -> {return super.getNextPage();}
             case PREVIOUS -> {return super.getPreviousPage();}
         };
         return null;
-        //return super.getAll();
     }
 
     @Override
