@@ -87,7 +87,7 @@ public class RequestsDbRepo extends DbRepoId<Long, Relationship> implements Repo
 
         @Override
     public List<Relationship> getAll() {
-        sql="select * from public.\"Requests\"";
+        if(super.sql==null)sql="select * from public.\"Requests\"";
         return super.getAll();
     }
 
@@ -106,6 +106,11 @@ public class RequestsDbRepo extends DbRepoId<Long, Relationship> implements Repo
             case PREVIOUS -> {return super.getPreviousPage();}
         };
         return null;
+    }
+
+    public Page<Relationship> getFirstPageRequest(String username, PageType type) {
+        super.page=super.page=new Page(new Pageble(0,super.page.getCurrentPage().getPageSize()), new ArrayList().stream());
+        return getPageRequest(username,type);
     }
 
     @Override

@@ -19,9 +19,10 @@ public class RelationshipDbRepo<Messages> extends DbRepoId<Long, Relationship> i
     public RelationshipDbRepo(String url, String username, String password) {
         super(url, username, password);
     }
-
+    //int size;
     public RelationshipDbRepo(String url, String username, String password,int size) {
         super(url, username, password);
+        //this.size=size;
         super.page=new Page(new Pageble(0,size), new ArrayList().stream());
     }
 
@@ -41,12 +42,12 @@ public class RelationshipDbRepo<Messages> extends DbRepoId<Long, Relationship> i
             rel=getByOther(entity.getFirstUserName(),entity.getSecondUserName());
             if(rel!=null)throw new RelationshipRepoException("There is a relationship with the same usernames");
             else{
-                super.sql= "insert into public.\"Relationship\" values (?, ?, ?,?)";
+                if(super.sql==null)super.sql= "insert into public.\"Relationship\" values (?, ?, ?,?)";
                 return super.save(entity);
             }
         }
         catch(EntityRepoException e){
-            super.sql= "insert into public.\"Relationship\" values (?, ?, ?,?)";
+            if(super.sql==null)super.sql= "insert into public.\"Relationship\" values (?, ?, ?,?)";
 
         }
 
@@ -62,7 +63,7 @@ public class RelationshipDbRepo<Messages> extends DbRepoId<Long, Relationship> i
      */
     @Override
     public Relationship get(Long id) {
-        sql= "select * from public.\"Relationship\" where id_rel="+id.toString();
+        if(super.sql==null)sql= "select * from public.\"Relationship\" where id_rel="+id.toString();
         return super.get(id);
     }
 
@@ -78,9 +79,7 @@ public class RelationshipDbRepo<Messages> extends DbRepoId<Long, Relationship> i
     @Override
     public boolean update(Long id, Relationship entity) {
         if(get(id)==null) throw new RelationshipRepoException("There is no relationship with that id");
-
-        sql= "update public.\"Relationship\" set id_rel=?,first_username=?,second_username=?, the_data=? where id_rel=?";
-
+        if(super.sql==null)sql= "update public.\"Relationship\" set id_rel=?,first_username=?,second_username=?, the_data=? where id_rel=?";
         return super.update(id, entity);
 
     }
@@ -96,7 +95,7 @@ public class RelationshipDbRepo<Messages> extends DbRepoId<Long, Relationship> i
     @Override
     public boolean delete(Long id) {
         if(get(id)==null) throw new RelationshipRepoException("There is no relationship with that id");
-        sql="delete from public.\"Relationship\" where id_rel=?";
+        if(super.sql==null)sql="delete from public.\"Relationship\" where id_rel=?";
         return super.delete(id);
     }
 
@@ -107,7 +106,7 @@ public class RelationshipDbRepo<Messages> extends DbRepoId<Long, Relationship> i
      */
     @Override
     protected void deleteAll() {
-        sql= "delete from public.\"Relationship\" where id_rel != 0";
+        if(super.sql==null)sql= "delete from public.\"Relationship\" where id_rel != 0";
         super.deleteAll();
     }
     /**
@@ -118,7 +117,7 @@ public class RelationshipDbRepo<Messages> extends DbRepoId<Long, Relationship> i
      */
     @Override
     public int getSize() {
-        sql="select count(*) as \"size\" from public.\"Relationship\"";
+        if(super.sql==null)sql="select count(*) as \"size\" from public.\"Relationship\"";
         return super.getSize();
     }
 
@@ -134,8 +133,22 @@ public class RelationshipDbRepo<Messages> extends DbRepoId<Long, Relationship> i
         return super.getAll();
     }
 
+    @Override
+    public Page<Relationship> getAll(Pageble pageble) {
+        if(super.sql==null)sql="select * from ( select * ,ROW_NUMBER() over (order by id_rel ASC) as rowss from public.\"Relationship\")as Foo where rowss>=? and rowss<? ";
+        return super.getAll(pageble);
+        //return super.getAll();
+    }
+
+    @Override
+    public Page<Relationship> getUsersFriends(String username,Pageble pageble) {
+        if(super.sql==null)sql="select * from ( select * ,ROW_NUMBER() over (order by id_rel ASC) as rowss from public.\"Relationship\")as Foo where rowss>=? and rowss<? and (first_username="+ username +" or second_username="+username+")";
+        return super.getAll(pageble);
+        //return super.getAll();
+    }
+
     public Page<Relationship> getPageFriends(String username, PageType type) {
-        sql="select * from ( select * ,ROW_NUMBER() over (order by id_rel ASC) as rowss from (select * from public.\"Relationship\" where (first_username=\'"+username+"\' or second_username=\'"+username+"\') as Foo1 )as Foo where rowss>=? and rowss<? ";
+        if(super.sql==null)sql="select * from ( select * ,ROW_NUMBER() over (order by id_rel ASC) as rowss from (select * from public.\"Relationship\" where (first_username=\'"+username+"\' or second_username=\'"+username+"\' ) ) as Fooo ) as Foo where rowss>=? and rowss<?";
         switch(type){
             case CURRENT -> {return super.getCurrentPage();}
             case NEXT -> {return super.getNextPage();}
@@ -145,6 +158,10 @@ public class RelationshipDbRepo<Messages> extends DbRepoId<Long, Relationship> i
         //return super.getAll();
     }
 
+    public Page<Relationship> getFirstPageFriends(String username, PageType type) {
+        super.page=super.page=new Page(new Pageble(0,super.page.getCurrentPage().getPageSize()), new ArrayList().stream());
+        return getPageFriends(username,type);
+    }
 
     /**
      * Gives a list with all the ids store din repository
@@ -189,9 +206,13 @@ public class RelationshipDbRepo<Messages> extends DbRepoId<Long, Relationship> i
      */
     @Override
     public Relationship getByUserNames(String username1, String username2) {
-        sql= "select * from public.\"Relationship\" where first_username=? and second_username= ?";
+        if(super.sql==null)sql= "select * from public.\"Relationship\" where first_username=? and second_username= ?";
         Relationship rel=super.getByOther(username1,username2);
-        return rel==null ? super.getByOther(username2,username1) : rel;
+        if(super.sql==null)sql= "select * from public.\"Relationship\" where first_username=? and second_username= ?";
+        if (rel==null)
+            return super.getByOther(username2,username1);
+        else sql=null;
+        return rel;
     }
 
     /**
@@ -339,19 +360,6 @@ public class RelationshipDbRepo<Messages> extends DbRepoId<Long, Relationship> i
 
     }
 
-    @Override
-    public Page<Relationship> getAll(Pageble pageble) {
-        sql="select * from ( select * ,ROW_NUMBER() over (order by id_rel ASC) as rowss from public.\"Relationship\")as Foo where rowss>=? and rowss<? ";
-        return super.getAll(pageble);
-        //return super.getAll();
-    }
-
-    @Override
-    public Page<Relationship> getUsersFriends(String username,Pageble pageble) {
-        sql="select * from ( select * ,ROW_NUMBER() over (order by id_rel ASC) as rowss from public.\"Relationship\")as Foo where rowss>=? and rowss<? and (first_username="+ username +" or second_username="+username+")";
-        return super.getAll(pageble);
-        //return super.getAll();
-    }
 
 
 }

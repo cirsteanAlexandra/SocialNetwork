@@ -201,11 +201,14 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
             if(connection.isClosed()) openConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
             setGetAllPageStatement(ps, pageble);
+            System.out.println(ps);
             ResultSet resultSet = ps.executeQuery();
             list=getAllStatement(resultSet);
+            System.out.println(list);
             sql=null;
             return new Page<E>(pageble,list.stream());
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new EntityRepoException(e.getMessage());
         }
     }
@@ -284,6 +287,7 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
             if(connection.isClosed()) openConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
             setGetOtherStatement(ps,other);
+            System.out.println(ps);
             ResultSet resultSet = ps.executeQuery();
             sql=null;
             return getGetOtherStatement(resultSet);

@@ -1,7 +1,6 @@
 package com.example.GUIController;
 
 import com.example.Controller.NewController.MainController;
-import com.example.Domain.Relationship;
 import com.example.Domain.User;
 import com.example.Repository.PagingRepo.PageType;
 import com.example.Utils.Exceptions.Exception;
@@ -10,11 +9,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public class FriendsTableController implements Observer {
@@ -27,8 +26,8 @@ public class FriendsTableController implements Observer {
         this.registerStage = stage;
         this.user = user;
         cont.addObserver(this);
-        updateListFriend(PageType.CURRENT);
-        updateListRequest(PageType.CURRENT);
+        updateListFriend(PageType.CURRENT,true);
+        updateListRequest(PageType.CURRENT,true);
         //initModel();
     }
 
@@ -40,8 +39,6 @@ public class FriendsTableController implements Observer {
     private Label flname2;
     @FXML
     private Label flname3;
-    @FXML
-    private Label flname4;
 
     @FXML
     private Label flnamer1;
@@ -49,8 +46,6 @@ public class FriendsTableController implements Observer {
     private Label flnamer2;
     @FXML
     private Label flnamer3;
-    @FXML
-    private Label flnamer4;
 
     @FXML
     private Label uname1;
@@ -58,8 +53,6 @@ public class FriendsTableController implements Observer {
     private Label uname2;
     @FXML
     private Label uname3;
-    @FXML
-    private Label uname4;
 
     @FXML
     private Label unamer1;
@@ -76,8 +69,6 @@ public class FriendsTableController implements Observer {
     private HBox hboxf2;
     @FXML
     private HBox hboxf3;
-    @FXML
-    private HBox hboxf4;
 
     @FXML
     private HBox hboxr1;
@@ -85,15 +76,14 @@ public class FriendsTableController implements Observer {
     private HBox hboxr2;
     @FXML
     private HBox hboxr3;
-    @FXML
-    private HBox hboxr4;
+
 
     private List<User> listU;
     private List<User> listR;
 
     public void printFriends(){
         if(!listU.isEmpty())
-        for(int i=1;i<=4;i++){
+        for(int i=1;i<=3;i++){
             if(i==1 && i<=listU.size() ){
                 User use=listU.get(i-1);
                 flname1.setText(use.getPers().getFirstName()+" "+use.getPers().getLastName());
@@ -109,25 +99,19 @@ public class FriendsTableController implements Observer {
                 flname3.setText(use.getPers().getFirstName()+" "+use.getPers().getLastName());
                 uname3.setText(use.getUsername());
             }
-            if(i==4 && i<=listU.size() ){
-                User use=listU.get(i-1);
-                flname4.setText(use.getPers().getFirstName()+" "+use.getPers().getLastName());
-                uname4.setText(use.getUsername());
-            }
         }
-        for(int i=listU.size()+1;i<=4;i++){
+        for(int i=listU.size()+1;i<=3;i++){
             if(i==1)hboxf1.setVisible(false);
             if(i==2)hboxf2.setVisible(false);
             if(i==3)hboxf3.setVisible(false);
-            if(i==4)hboxf4.setVisible(false);
         }
     }
 
     public void printRequests(){
         if(!listR.isEmpty())
-        for(int i=1;i<=4;i++){
+        for(int i=1;i<=3;i++){
             if(i==1 && i<=listR.size() ){
-                User use=listR.get(i-1);
+                 User use=listR.get(i-1);
                 flnamer1.setText(use.getPers().getFirstName()+" "+use.getPers().getLastName());
                 unamer1.setText(use.getUsername());
             }
@@ -141,17 +125,11 @@ public class FriendsTableController implements Observer {
                 flnamer3.setText(use.getPers().getFirstName()+" "+use.getPers().getLastName());
                 unamer3.setText(use.getUsername());
             }
-            if(i==4 && i<=listR.size() ){
-                User use=listR.get(i-1);
-                flnamer4.setText(use.getPers().getFirstName()+" "+use.getPers().getLastName());
-                unamer4.setText(use.getUsername());
-            }
         }
-        for(int i=listR.size()+1;i<=4;i++){
+        for(int i=listR.size()+1;i<=3;i++){
             if(i==1)hboxr1.setVisible(false);
             if(i==2)hboxr2.setVisible(false);
             if(i==3)hboxr3.setVisible(false);
-            if(i==4)hboxr4.setVisible(false);
         }
     }
 
@@ -160,51 +138,40 @@ public class FriendsTableController implements Observer {
         remove(username);
     }
     public void handleRemoveFriend2(ActionEvent actionEvent) {
-        String username=uname1.getText();
+        String username=uname3.getText();
         remove(username);
     }
     public void handleRemoveFriend3(ActionEvent actionEvent) {
-        String username=uname1.getText();
-        remove(username);
-    }
-    public void handleRemoveFriend4(ActionEvent actionEvent) {
-        String username=uname1.getText();
+        String username=uname3.getText();
         remove(username);
     }
 
     public void handleAcceptFriend1(ActionEvent actionEvent) {
-        String username=uname1.getText();
+        String username=unamer1.getText();
         accept(username);
     }
     public void handleAcceptFriend2(ActionEvent actionEvent) {
-        String username=uname1.getText();
+        String username=unamer2.getText();
         accept(username);
     }
     public void handleAcceptFriend3(ActionEvent actionEvent) {
-        String username=uname1.getText();
-        accept(username);
-    }
-    public void handleAcceptFriend4(ActionEvent actionEvent) {
-        String username=uname1.getText();
+        String username=unamer3.getText();
         accept(username);
     }
 
     public void handleRejectFriend1(ActionEvent actionEvent) {
-        String username=uname1.getText();
+        String username=unamer1.getText();
         reject(username);
     }
     public void handleRejectFriend2(ActionEvent actionEvent) {
-        String username=uname1.getText();
+        String username=unamer2.getText();
         reject(username);
     }
     public void handleRejectFriend3(ActionEvent actionEvent) {
-        String username=uname1.getText();
+        String username=unamer3.getText();
         reject(username);
     }
-    public void handleRejectFriend4(ActionEvent actionEvent) {
-        String username=uname1.getText();
-        reject(username);
-    }
+
 
     public void remove(String username){
         try {
@@ -217,8 +184,8 @@ public class FriendsTableController implements Observer {
 
     public void accept(String username){
         try {
-            Relationship rel = new Relationship(user.getUsername(), username, LocalDate.now(), "pending");
-            cont.AddRequest(rel);
+            cont.UpdateStatusRequest("accept",username,user.getUsername());
+            MessageAlert.showMessage(null, Alert.AlertType.INFORMATION,"Succes","The friend has been added!");
         } catch (Exception e) {
             MessageAlert.showErrorMessage(registerStage,e.getDescription());
         }
@@ -226,46 +193,54 @@ public class FriendsTableController implements Observer {
 
     public void reject(String username){
         try {
-            cont.UpdateStatusRequest("accept",username,user.getUsername());
+            cont.UpdateStatusRequest("reject",username,user.getUsername());
+            MessageAlert.showMessage(null, Alert.AlertType.INFORMATION,"Succes","The raquest has been rejected!");
         } catch (Exception e) {
             MessageAlert.showErrorMessage(registerStage,e.getDescription());
         }
     }
 
     public void handleFriendNextPage(ActionEvent ev){
-        if(listU.size()==4){
-            updateListFriend(PageType.NEXT);
+        if(listU.size()==3){
+            updateListFriend(PageType.NEXT,false);
         }
     }
 
     public void handleFriendPreviousPage(ActionEvent ev){
-            updateListFriend(PageType.PREVIOUS);
+            updateListFriend(PageType.PREVIOUS,false);
     }
 
     public void handleRequestNextPage(ActionEvent ev){
-        if(listR.size()==4){
-            updateListRequest(PageType.NEXT);
+        if(listR.size()==3){
+            updateListRequest(PageType.NEXT,false);
         }
     }
 
     public void handleRequestPreviousPage(ActionEvent ev){
-        updateListRequest(PageType.PREVIOUS);
+        updateListRequest(PageType.PREVIOUS,false);
     }
 
-    public void updateListFriend( PageType type){
-        listU=cont.getPageFriends(user.getUsername(), type);
+    public void updateListFriend( PageType type,boolean f){
+        listU=cont.getPageFriends(user.getUsername(), type,f);
+        hboxf1.setVisible(true);
+        hboxf2.setVisible(true);
+        hboxf3.setVisible(true);
         printFriends();
+
     }
 
-    public void updateListRequest( PageType type){
-        listR=cont.getPageRequests(user.getUsername(), type);
+    public void updateListRequest( PageType type,boolean f){
+        listR=cont.getPageRequests(user.getUsername(), type,f);
+        hboxr1.setVisible(true);
+        hboxr2.setVisible(true);
+        hboxr3.setVisible(true);
         printRequests();
     }
 
     @Override
     public void update() {
-        updateListFriend(PageType.CURRENT);
-        updateListRequest(PageType.CURRENT);
+        updateListFriend(PageType.CURRENT,false);
+        updateListRequest(PageType.CURRENT,false);
     }
 
     /*

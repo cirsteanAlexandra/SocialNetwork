@@ -531,6 +531,8 @@ public class MainController implements Observable {
     }
 
     public void UpdateStatusRequest(String status,String receiver,String sender){
+        System.out.println(receiver);
+        System.out.println(sender);
         Relationship rel=getRequestByUsername(receiver,sender);
         if(status.equals("accept")){
             Relationship rel1=new Relationship(rel.getFirstUserName(),rel.getSecondUserName(),rel.getDtf());
@@ -544,6 +546,7 @@ public class MainController implements Observable {
     }
 
     public Relationship getRequestByUsername(String receiver,String sender){
+        System.out.println(contRQ.getAll());
         for(Relationship r: contRQ.getAll())
             if(r.getSecondUserName().equals(sender) && r.getFirstUserName().equals(receiver))
                 return r;
@@ -722,20 +725,27 @@ public class MainController implements Observable {
         return true;
     }
 
-    public List<User> getPageFriends(String username, PageType type){
-        Page<Relationship> pageR=contR.getPageFriends(username,type);
+    public List<User> getPageFriends(String username, PageType type,boolean first){
+        Page<Relationship> pageR;
+        if(first)
+            pageR=contR.getFirstPageFriends(username,type);
+        else pageR=contR.getPageFriends(username,type);
+        List<Relationship> listR=pageR.getPageContent().collect(Collectors.toList());
         List<User> listU=new ArrayList<>();
-        for(var el:pageR.getPageContent().collect(Collectors.toList())){
+        for(var el:listR){
             if(!el.getFirstUserName().equals(username))
                 listU.add(getUserByUsername(el.getFirstUserName()));
             else listU.add(getUserByUsername(el.getSecondUserName()));
         }
+        //System.out.println(listU);
         return listU;
     }
 
-    public List<User> getPageRequests(String username, PageType type){
-        Page<Relationship> pageR=contRQ.getPageRequests(username,type);
-        System.out.println(pageR.getCurrentPage().getPageNumber());
+    public List<User> getPageRequests(String username, PageType type,boolean first){
+        Page<Relationship> pageR;
+        if(first)pageR=contRQ.getFirstPageRequests(username,type);
+        else pageR=contRQ.getPageRequests(username,type);
+        //System.out.println(pageR.getCurrentPage().getPageNumber());
         List<Relationship> listR=pageR.getPageContent().collect(Collectors.toList());
         List<User> listU=new ArrayList<>();
         for(var el:listR){
@@ -745,6 +755,8 @@ public class MainController implements Observable {
         }
         return listU;
     }
+
+
 
     public boolean FindIfUserParticipateToEvent(Long id_user,Long id_event) {
         for (UserEvent userEvent : getAllUserEvent())
