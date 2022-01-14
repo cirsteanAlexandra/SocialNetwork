@@ -62,4 +62,7 @@ public class RelationshipController extends Controller<Long, Relationship> {
         return backupRepo.getPageFriends(username, type);
     }
 
+    public Page<Relationship> getFirstPageFriends(String username, PageType type){
+        return backupRepo.getFirstPageFriends(username, type);
+    }
 }

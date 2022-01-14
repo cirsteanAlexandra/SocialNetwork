@@ -56,9 +56,8 @@ public class MainWindowController {
         fxmlLoader.setLocation(new File(Algoritm.getFullPath("friends_requests.fxml")).toURI().toURL());
         AnchorPane friendLayout = fxmlLoader.load();
         splitMain.getItems().set(1,friendLayout);
-        FriendsTableController requestController = fxmlLoader.getController();
-        System.out.println(cont.toString());
-        requestController.setFriendsController(cont,stage,user);
+        FriendsTableController friendsTableController = fxmlLoader.getController();
+        friendsTableController.setFriendsController(cont,stage,user);
 
     }
     public void handleEvents(ActionEvent ev){
@@ -74,11 +73,12 @@ public class MainWindowController {
         AnchorPane loginLayout=fxmlLoader.load();
         LoginController loginController= fxmlLoader.getController();
 
+        Stage loginStage=new Stage();
         Scene scene = new Scene(loginLayout);
-        loginController.setLoginController(cont,stage,loginLayout);
-        stage.setTitle("Login");
-
-        stage.setScene(scene);
-        stage.show();
+        loginController.setLoginController(cont,loginStage,loginLayout);
+        loginStage.setTitle("Login");
+        loginStage.setScene(scene);
+        loginStage.show();
+        stage.close();
     }
 }
