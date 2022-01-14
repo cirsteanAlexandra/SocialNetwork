@@ -83,7 +83,7 @@ public class LoginController {
             AnchorPane loginLayout1 = fxmlLoader.load();
             String Username =textUsername.getText();
             MainWindowController mainCont=fxmlLoader.getController();
-
+                //FirstPageController mainCont=fxmlLoader.getController();
             //UserGuiController requestController = fxmlLoader.getController();
             //requestController.setUserGuiController(cont,cont.getUserByUsername(Username));
             //ControllerDeProba profileController=fxmlLoader.getController();
@@ -91,6 +91,7 @@ public class LoginController {
             Stage registerStage = new Stage();
             System.out.println(cont.toString());
             mainCont.setMainWindowController(cont,registerStage,loginLayout,cont.getUserByUsername(Username));
+            //mainCont.setCont(cont);
             Scene scene = new Scene(loginLayout1);
             registerStage.initModality(Modality.WINDOW_MODAL);
             registerStage.setTitle(Username);

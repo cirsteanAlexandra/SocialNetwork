@@ -49,8 +49,7 @@ public class FriendsTableController implements Observer {
     private Label flnamer2;
     @FXML
     private Label flnamer3;
-    @FXML
-    private Label flnamer4;
+
 
     @FXML
     private Label uname1;
@@ -58,8 +57,7 @@ public class FriendsTableController implements Observer {
     private Label uname2;
     @FXML
     private Label uname3;
-    @FXML
-    private Label uname4;
+
 
     @FXML
     private Label unamer1;
@@ -67,8 +65,7 @@ public class FriendsTableController implements Observer {
     private Label unamer2;
     @FXML
     private Label unamer3;
-    @FXML
-    private Label unamer4;
+
 
     @FXML
     private HBox hboxf1;
@@ -76,8 +73,7 @@ public class FriendsTableController implements Observer {
     private HBox hboxf2;
     @FXML
     private HBox hboxf3;
-    @FXML
-    private HBox hboxf4;
+
 
     @FXML
     private HBox hboxr1;
@@ -85,15 +81,14 @@ public class FriendsTableController implements Observer {
     private HBox hboxr2;
     @FXML
     private HBox hboxr3;
-    @FXML
-    private HBox hboxr4;
+
 
     private List<User> listU;
     private List<User> listR;
 
     public void printFriends(){
         if(!listU.isEmpty())
-        for(int i=1;i<=4;i++){
+        for(int i=1;i<=3;i++){
             if(i==1 && i<=listU.size() ){
                 User use=listU.get(i-1);
                 flname1.setText(user.getPers().getFirstName()+" "+use.getPers().getLastName());
@@ -109,23 +104,23 @@ public class FriendsTableController implements Observer {
                 flname3.setText(user.getPers().getFirstName()+" "+use.getPers().getLastName());
                 uname3.setText(use.getUsername());
             }
-            if(i==4 && i<=listU.size() ){
+           /* if(i==4 && i<=listU.size() ){
                 User use=listU.get(i-1);
                 flname4.setText(user.getPers().getFirstName()+" "+use.getPers().getLastName());
                 uname4.setText(use.getUsername());
-            }
+            }*/
         }
-        for(int i=listU.size()+1;i<=4;i++){
+        for(int i=listU.size()+1;i<=3;i++){
             if(i==1)hboxf1.setVisible(false);
             if(i==2)hboxf2.setVisible(false);
             if(i==3)hboxf3.setVisible(false);
-            if(i==4)hboxf4.setVisible(false);
+           // if(i==4)hboxf4.setVisible(false);
         }
     }
 
     public void printRequests(){
         if(!listR.isEmpty())
-        for(int i=1;i<=4;i++){
+        for(int i=1;i<=3;i++){
             if(i==1 && i<=listR.size() ){
                 User use=listR.get(i-1);
                 flnamer1.setText(user.getPers().getFirstName()+" "+use.getPers().getLastName());
@@ -141,17 +136,17 @@ public class FriendsTableController implements Observer {
                 flnamer3.setText(user.getPers().getFirstName()+" "+use.getPers().getLastName());
                 unamer3.setText(use.getUsername());
             }
-            if(i==4 && i<=listR.size() ){
+           /* if(i==4 && i<=listR.size() ){
                 User use=listR.get(i-1);
                 flnamer4.setText(user.getPers().getFirstName()+" "+use.getPers().getLastName());
                 unamer4.setText(use.getUsername());
-            }
+            }*/
         }
-        for(int i=listR.size()+1;i<=4;i++){
+        for(int i=listR.size()+1;i<=3;i++){
             if(i==1)hboxr1.setVisible(false);
             if(i==2)hboxr2.setVisible(false);
             if(i==3)hboxr3.setVisible(false);
-            if(i==4)hboxr4.setVisible(false);
+            //if(i==4)hboxr4.setVisible(false);
         }
     }
 
@@ -233,7 +228,7 @@ public class FriendsTableController implements Observer {
     }
 
     public void handleFriendNextPage(ActionEvent ev){
-        if(listU.size()==4){
+        if(listU.size()==3){
             updateListFriend(PageType.NEXT);
         }
     }
@@ -243,7 +238,7 @@ public class FriendsTableController implements Observer {
     }
 
     public void handleRequestNextPage(ActionEvent ev){
-        if(listR.size()==4){
+        if(listR.size()==3){
             updateListRequest(PageType.NEXT);
         }
     }
