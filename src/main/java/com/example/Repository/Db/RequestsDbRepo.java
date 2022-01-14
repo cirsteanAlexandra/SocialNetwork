@@ -2,6 +2,7 @@ package com.example.Repository.Db;
 
 import com.example.Domain.Relationship;
 import com.example.Repository.PagingRepo.Page;
+import com.example.Repository.PagingRepo.PageType;
 import com.example.Repository.PagingRepo.Pageble;
 import com.example.Repository.Repository;
 import com.example.Utils.Exceptions.EntityRepoException;
@@ -26,6 +27,13 @@ public class RequestsDbRepo extends DbRepoId<Long, Relationship> implements Repo
     public RequestsDbRepo(String url, String username, String password) {
         super(url, username, password);
     }
+
+    public RequestsDbRepo(String url, String username, String password,int size) {
+        super(url, username, password);
+        super.page=new Page(new Pageble(0,size), new ArrayList().stream());
+    }
+
+
 
 
     @Override
@@ -87,6 +95,17 @@ public class RequestsDbRepo extends DbRepoId<Long, Relationship> implements Repo
     public Page<Relationship> getAll(Pageble pageble) {
         sql="select * from ( select * ,ROW_NUMBER() over (order by id_r ASC) as rowss from public.\"Requests\")as Foo where rowss>=? and rowss<? ";
         return super.getAll(pageble);
+        //return super.getAll();
+    }
+
+    public Page<Relationship> getPageRequest(String username, PageType type) {
+        sql="select * from ( select * ,ROW_NUMBER() over (order by id_r ASC) as rowss from (select * from public.\"Requests\" where (status=\'pending\' and second_username=\'"+username+"\') )as Foo where rowss>=? and rowss<? ";
+        switch(type){
+            case CURRENT -> {return super.getCurrentPage();}
+            case NEXT -> {return super.getNextPage();}
+            case PREVIOUS -> {return super.getPreviousPage();}
+        };
+        return null;
         //return super.getAll();
     }
 

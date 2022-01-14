@@ -201,13 +201,15 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
     }
     @Override
     public Page<E> getCurrentPage(){
-       if(page.getPageContent().toList().isEmpty())
+        page=new Page((Pageble) page.getCurrentPage(),new ArrayList().stream());
+       if(page.getPageContent()!=null && page.getPageContent().toList().isEmpty())
            page=getAll((Pageble) page.getCurrentPage());
        return page;
     }
 
     @Override
     public Page<E> getNextPage(){
+        page=new Page((Pageble) page.getCurrentPage(),new ArrayList().stream());
         page=new Page((Pageble) page.getNextPage(), new ArrayList().stream());
         page=getAll((Pageble) page.getCurrentPage());
         return page;

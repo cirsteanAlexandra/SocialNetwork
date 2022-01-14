@@ -26,10 +26,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
-import java.util.Set;
 import java.util.function.Predicate;
-
 import java.util.stream.Collectors;
 
 public class UserGuiController  {
@@ -57,7 +54,7 @@ public class UserGuiController  {
         this.cont = cont;
         this.user=user;
         //aici trebuie modificat
-        idImage.setImage(new Image("C:\\Users\\Alexandra\\Desktop\\LastTry\\src\\main\\resources\\com\\example\\ador_testele\\images\\pozaProiect.jpg"));
+        //idImage.setImage(new Image("C:\\Users\\Alexandra\\Desktop\\LastTry\\src\\main\\resources\\com\\example\\ador_testele\\images\\pozaProiect.jpg"));
         textUsername.setText(user.getUsername());
         FirstNameUser.setText(user.getPers().getFirstName());
         LastNameUser.setText(user.getPers().getLastName());
