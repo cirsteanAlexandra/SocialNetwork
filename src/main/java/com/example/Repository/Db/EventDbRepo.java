@@ -1,7 +1,9 @@
 package com.example.Repository.Db;
 
 import com.example.Domain.Event;
+import com.example.Domain.Relationship;
 import com.example.Repository.PagingRepo.Page;
+import com.example.Repository.PagingRepo.PageType;
 import com.example.Repository.PagingRepo.Pageble;
 import com.example.Repository.Repository;
 import com.example.Utils.Generator;
@@ -78,6 +80,18 @@ public class EventDbRepo extends DbRepoId<Long,Event> implements Repository<Long
         return super.getAll(pageble);
         //return super.getAll();
     }
+
+    public Page<Event> getPageEvents(PageType type) {
+        super.sql="select * from ( select * ,ROW_NUMBER() over (order by id_rel ASC) as rowss from (select * from public.\"Events\"  as Foo where rowss>=? and rowss<? ";
+        switch(type){
+            case CURRENT -> {return super.getCurrentPage();}
+            case NEXT -> {return super.getNextPage();}
+            case PREVIOUS -> {return super.getPreviousPage();}
+        };
+        return null;
+        //return super.getAll();
+    }
+
 
     @Override
     public List<Long> getAllIds() {

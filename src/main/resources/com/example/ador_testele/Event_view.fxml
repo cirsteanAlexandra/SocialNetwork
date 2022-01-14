@@ -15,9 +15,9 @@
             <Image url="@images/flake-logo.png" />
          </image>
       </ImageView>
-      <Button fx:id="Participate" layoutX="381.0" layoutY="43.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="79.0"  />
+      <Button layoutX="381.0" layoutY="43.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="79.0" text="Participate" />
       <TextField fx:id="Date_event" layoutX="110.0" layoutY="43.0" prefHeight="25.0" prefWidth="101.0" text="data_eveniment" />
       <TextArea fx:id="DecriptionEvent" layoutX="226.0" layoutY="10.0" prefHeight="57.0" prefWidth="114.0" text="descrierea" />
-      <Button fx:id="Notify" layoutX="381.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="79.0" text="Notify me !" />
+      <Button layoutX="381.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="79.0" text="Notify me !" />
    </children>
 </AnchorPane>

@@ -234,7 +234,8 @@ public class FriendsTableController implements Observer {
     }
 
     public void handleFriendPreviousPage(ActionEvent ev){
-            updateListFriend(PageType.PREVIOUS);
+
+        updateListFriend(PageType.PREVIOUS);
     }
 
     public void handleRequestNextPage(ActionEvent ev){

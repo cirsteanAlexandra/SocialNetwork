@@ -754,4 +754,12 @@ public class MainController implements Observable {
 
     }
 
+    public List<Event> getPageEvents(PageType type){
+
+
+        List<Event> listU=new ArrayList<>();
+        return getAllEvents();
+
+    }
+
 }
