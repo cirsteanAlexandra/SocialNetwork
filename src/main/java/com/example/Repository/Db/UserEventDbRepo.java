@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class UserEventDbRepo extends DbRepoId<Long, UserEvent> implements Repository<Long,UserEvent> {
 
 
@@ -36,45 +37,45 @@ public class UserEventDbRepo extends DbRepoId<Long, UserEvent> implements Reposi
 
     @Override
     public UserEvent get(Long aLong) {
-        sql= "select * from public.\"UserEvents\" where id="+aLong.toString();
+        super.sql= "select * from public.\"UserEvents\" where id="+aLong.toString();
         return super.get(aLong);
     }
 
     @Override
     public boolean update(Long aLong, UserEvent entity) {
-        sql= "update public.\"UserEvents\" set id=?,id_u=?,id_e=?, where id=?";
+        super.sql= "update public.\"UserEvents\" set id=?,id_u=?,id_e=?, where id=?";
 
         return super.update(aLong, entity);
     }
 
     @Override
     public boolean delete(Long aLong) {
-        sql="delete from public.\"UserEvents\" where id=?";
+        super.sql="delete from public.\"UserEvents\" where id=?";
 
         return super.delete(aLong);
     }
 
     @Override
     protected void deleteAll() {
-        sql= "delete from public.\"UserEvents\" where id != 0";
+        super.sql= "delete from public.\"UserEvents\" where id != 0";
         super.deleteAll();
     }
 
     @Override
     public int getSize() {
-        sql="select count(*) as \"size\" from public.\"UserEvents\"";
+        super.sql="select count(*) as \"size\" from public.\"UserEvents\"";
         return super.getSize();
     }
 
     @Override
     public List<UserEvent> getAll() {
-        sql="select * from public.\"UserEvents\"";
+        super.sql="select * from public.\"UserEvents\"";
         return super.getAll();
     }
 
     @Override
     public List<Long> getAllIds() {
-        sql= "select id from public.\"UserEvents\"";
+        super.sql= "select id from public.\"UserEvents\"";
         return super.getAllIds();
     }
 
@@ -124,7 +125,7 @@ public class UserEventDbRepo extends DbRepoId<Long, UserEvent> implements Reposi
 
     public UserEvent getByUserAnEvent(Long id_u,Long id_e)
     {
-        sql= "select * from public.\"UserEvents\" where id_u=? and id_e=?";
+        super.sql= "select * from public.\"UserEvents\" where id_u=? and id_e=?";
         UserEvent ev=super.getByOther(id_e.toString(),id_e.toString());
 
 

@@ -44,7 +44,7 @@ public class MessageDbRepo extends DbRepoId<Long,Message> implements MessageRepo
 
     @Override
     public Message get(Long id) {
-        sql= "select * from public.\"Messages\" M inner join public.\"Messages_Users\" MU on M.id_mess=MU.id_mess where MU.id_mess="+id.toString() ;
+        super.sql= "select * from public.\"Messages\" M inner join public.\"Messages_Users\" MU on M.id_mess=MU.id_mess where MU.id_mess="+id.toString() ;
         return super.get(id);
     }
 
@@ -54,7 +54,7 @@ public class MessageDbRepo extends DbRepoId<Long,Message> implements MessageRepo
         if(entity.getId()!=id){
             return super.delete(id) && super.save(entity);
         }
-        sql= "update public.\"Messages\" set sender=?,date_time=?,description=?,message_reply=? where id_mess=?";
+        super.sql= "update public.\"Messages\" set sender=?,date_time=?,description=?,message_reply=? where id_mess=?";
         super.update(id, entity);
         MessagesUsersDbRepo repoAux=new MessagesUsersDbRepo(url,username,password);
         repoAux.delete(id);
@@ -66,13 +66,13 @@ public class MessageDbRepo extends DbRepoId<Long,Message> implements MessageRepo
     @Override
     public boolean delete(Long id) {
         if(get(id)==null) throw new MessageRepoException("There is no message with that id");
-        sql="delete from public.\"Messages_Users\" where id_mess=?;update public.\"Messages\" set message_reply=NULL where id_mess=?;delete from public.\"Messages\" where id_mess=?;";
+        super.sql="delete from public.\"Messages_Users\" where id_mess=?;update public.\"Messages\" set message_reply=NULL where id_mess=?;delete from public.\"Messages\" where id_mess=?;";
         return super.delete(id);
     }
 
     @Override
     protected void deleteAll() {
-        sql= "delete from public.\"Messages_Users\";delete from public.\"Messages\" where message_reply is not null;delete from public.\"Messages\";";
+        super.sql= "delete from public.\"Messages_Users\";delete from public.\"Messages\" where message_reply is not null;delete from public.\"Messages\";";
         super.deleteAll();
     }
 
@@ -86,13 +86,13 @@ public class MessageDbRepo extends DbRepoId<Long,Message> implements MessageRepo
 
     @Override
     public List<Message> getAll() {
-        sql="select * from public.\"Messages\" M inner join public.\"Messages_Users\" MU on M.id_mess=MU.id_mess";
+        super.sql="select * from public.\"Messages\" M inner join public.\"Messages_Users\" MU on M.id_mess=MU.id_mess";
         return super.getAll();
     }
 
     @Override
     public Page<Message> getAll(Pageble pageble) {
-        sql="select * from ( select * ,ROW_NUMBER() over (order by id_mess ASC) as rowss from public.\"Messages\" M inner join public.\"Messages_Users\" MU on M.id_mess=MU.id_mess\")as Foo where rowss>=? and rowss<? ";
+        super.sql="select * from ( select * ,ROW_NUMBER() over (order by id_mess ASC) as rowss from public.\"Messages\" M inner join public.\"Messages_Users\" MU on M.id_mess=MU.id_mess\")as Foo where rowss>=? and rowss<? ";
         return super.getAll(pageble);
         //return super.getAll();
     }
@@ -107,7 +107,7 @@ public class MessageDbRepo extends DbRepoId<Long,Message> implements MessageRepo
 
     @Override
     public List<Long> getAllIds() {
-        sql= "select id_mess from public.\"Messages\"";
+        super.sql= "select id_mess from public.\"Messages\"";
         return super.getAllIds();
     }
 
@@ -222,7 +222,7 @@ public class MessageDbRepo extends DbRepoId<Long,Message> implements MessageRepo
     @Override
     public List<Message> getBySR(String sender, String Receiver) {
         List<Message> list;
-        sql = "select * from public.\"Messages\" M inner join public.\"Messages_Users\" MU on M.id_mess=MU.id_mess where M.sender=? and MU.receiver=?";
+        super.sql = "select * from public.\"Messages\" M inner join public.\"Messages_Users\" MU on M.id_mess=MU.id_mess where M.sender=? and MU.receiver=?";
         try {
             if(connection.isClosed())openConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -238,7 +238,7 @@ public class MessageDbRepo extends DbRepoId<Long,Message> implements MessageRepo
 
     @Override
     public List<Message> getByDateTime(LocalDateTime dateTime) {
-        sql= "select * from public.\"Messages\" M inner join public.\"Messages_Users\" MU on M.id_mess=MU.id_mess where M.date_time=?";
+        super.sql= "select * from public.\"Messages\" M inner join public.\"Messages_Users\" MU on M.id_mess=MU.id_mess where M.date_time=?";
         List<Message> list;
         try {
             if(connection.isClosed())openConnection();

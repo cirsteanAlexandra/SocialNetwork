@@ -58,6 +58,12 @@ public class UserGuiController  {
         textUsername.setText(user.getUsername());
         FirstNameUser.setText(user.getPers().getFirstName());
         LastNameUser.setText(user.getPers().getLastName());
+
+        Image img = new Image("C:\\Users\\Alexandra\\Desktop\\LastTry\\src\\main\\resources\\com\\example\\ador_testele\\Photos\\HomeIcon.png");
+        ImageView view = new ImageView(img);
+        view.setFitHeight(22);
+        view.setPreserveRatio(true);
+        ButonCuIco.setGraphic(view);
         initModel();
     }
 
@@ -238,11 +244,11 @@ public class UserGuiController  {
         try {
 
             FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(new File(Algoritm.getFullPath("ceva_de_proba.fxml")).toURI().toURL());
+            fxmlLoader.setLocation(new File(Algoritm.getFullPath("FinalFirstPage.fxml")).toURI().toURL());
             AnchorPane loginLayout = fxmlLoader.load();
 
-            ControllerDeProba profileController=fxmlLoader.getController();
-            profileController.setProfileController(cont);
+            FirstPageController profileController=fxmlLoader.getController();
+            profileController.setCont(cont);
             Stage registerStage = new Stage();
             Scene scene = new Scene(loginLayout);
             registerStage.initModality(Modality.WINDOW_MODAL);
@@ -258,4 +264,27 @@ public class UserGuiController  {
 
     }
 
+    public void HandleTestFancyTable(ActionEvent actionEvent) {
+        try {
+
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(new File(Algoritm.getFullPath("ceva_de_proba.fxml")).toURI().toURL());
+            AnchorPane loginLayout = fxmlLoader.load();
+            String Username2 = textUsername.getText();
+            TableEvents profileController=fxmlLoader.getController();
+            //aici probabil o sa fie o lista de eventinmente
+            profileController.set(cont,cont.getUserByUsername(Username2));
+            Stage registerStage = new Stage();
+            Scene scene = new Scene(loginLayout);
+            registerStage.initModality(Modality.WINDOW_MODAL);
+
+            registerStage.setScene(scene);
+            registerStage.show();
+        }
+        catch (IOException | InterruptedException | Exception e){
+            e.printStackTrace();
+            MessageAlert.showErrorMessage(null, e.getMessage()+"\n"+e.getCause());
+        }
+
+    }
 }

@@ -24,11 +24,14 @@ public class LoginController {
     private Stage stage;
     AnchorPane loginLayout;
 
+
     public void setLoginController(MainController cont,Stage stage,AnchorPane loginLayout) {
         this.cont = cont;
         this.stage=stage;
         this.loginAnchor=loginLayout;
     }
+
+
 
     @FXML
     private TextField textUsername;
@@ -36,6 +39,7 @@ public class LoginController {
     private TextField textPassword;
     @FXML
     private AnchorPane loginAnchor;
+
     @FXML
     private SplitPane splitLogin;
     private AnchorPane copy_loginAnchor;
@@ -79,7 +83,7 @@ public class LoginController {
             AnchorPane loginLayout1 = fxmlLoader.load();
             String Username =textUsername.getText();
             MainWindowController mainCont=fxmlLoader.getController();
-
+                //FirstPageController mainCont=fxmlLoader.getController();
             //UserGuiController requestController = fxmlLoader.getController();
             //requestController.setUserGuiController(cont,cont.getUserByUsername(Username));
             //ControllerDeProba profileController=fxmlLoader.getController();
@@ -87,6 +91,7 @@ public class LoginController {
             Stage registerStage = new Stage();
             System.out.println(cont.toString());
             mainCont.setMainWindowController(cont,registerStage,loginLayout,cont.getUserByUsername(Username));
+            //mainCont.setCont(cont);
             Scene scene = new Scene(loginLayout1);
             registerStage.initModality(Modality.WINDOW_MODAL);
             registerStage.setTitle(Username);

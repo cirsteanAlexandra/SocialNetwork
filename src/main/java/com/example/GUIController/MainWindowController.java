@@ -7,6 +7,7 @@ import com.example.Utils.Exceptions.Exception;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -67,7 +68,17 @@ public class MainWindowController {
         System.out.println("STATISTICS PROFILE");
     }
 
-    public void handleLogout(ActionEvent ev){
-        System.out.println("LOGOUT PROFILE");
+    public void handleLogout(ActionEvent ev) throws IOException, InterruptedException {
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(new File(Algoritm.getFullPath("login_view.fxml")).toURI().toURL());
+        AnchorPane loginLayout=fxmlLoader.load();
+        LoginController loginController= fxmlLoader.getController();
+
+        Scene scene = new Scene(loginLayout);
+        loginController.setLoginController(cont,stage,loginLayout);
+        stage.setTitle("Login");
+
+        stage.setScene(scene);
+        stage.show();
     }
 }

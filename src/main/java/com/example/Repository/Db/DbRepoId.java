@@ -64,6 +64,7 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
              PreparedStatement ps = connection.prepareStatement(sql);
              setSaveStatement(ps,entity);
              ps.executeUpdate();
+            sql=null;
              return true;
         } catch (SQLException e) {
             throw new EntityRepoException(e.getMessage());
@@ -83,6 +84,7 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
              if(connection.isClosed()) openConnection();
              PreparedStatement ps = connection.prepareStatement(sql);
              ResultSet resultSet = ps.executeQuery();
+            sql=null;
              return getGetStatement(resultSet);
         } catch (SQLException e) {
             throw new EntityRepoException(e.getMessage());
@@ -104,6 +106,7 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
             PreparedStatement ps = connection.prepareStatement(sql);
             setUpdateStatement(ps,id,entity);
             ps.executeUpdate();
+            sql=null;
             return true;
         } catch (SQLException e) {
             throw new EntityRepoException(e.getMessage());
@@ -124,6 +127,7 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
             PreparedStatement ps = connection.prepareStatement(sql);
             setDeleteStatement(ps,id);
             ps.executeUpdate();
+            sql=null;
             return true;
         } catch (SQLException e) {
             throw new EntityRepoException(e.getMessage());
@@ -140,6 +144,7 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
             if(connection.isClosed()) openConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.executeUpdate();
+            sql=null;
         } catch (SQLException e) {
             throw new EntityRepoException(e.getMessage());
         }
@@ -159,6 +164,7 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet resultSet = ps.executeQuery();
             size=getSizeStatement(resultSet);
+            sql=null;
             return size;
         } catch (SQLException e) {
             throw new EntityRepoException(e.getMessage());
@@ -180,6 +186,7 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
             System.out.println(ps);
              ResultSet resultSet = ps.executeQuery();
              list=getAllStatement(resultSet);
+             sql=null;
              return list;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -196,6 +203,7 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
             setGetAllPageStatement(ps, pageble);
             ResultSet resultSet = ps.executeQuery();
             list=getAllStatement(resultSet);
+            sql=null;
             return new Page<E>(pageble,list.stream());
         } catch (SQLException e) {
             throw new EntityRepoException(e.getMessage());
@@ -205,7 +213,7 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
     public Page<E> getCurrentPage(){
         page=new Page((Pageble) page.getCurrentPage(),new ArrayList().stream());
        if(page.getPageContent()!=null && page.getPageContent().toList().isEmpty())
-           page=getAll((Pageble) page.getCurrentPage());
+           page=this.getAll((Pageble) page.getCurrentPage());
        return page;
     }
 
@@ -213,14 +221,14 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
     public Page<E> getNextPage(){
         page=new Page((Pageble) page.getCurrentPage(),new ArrayList().stream());
         page=new Page((Pageble) page.getNextPage(), new ArrayList().stream());
-        page=getAll((Pageble) page.getCurrentPage());
+        page=this.getAll((Pageble) page.getCurrentPage());
         return page;
     }
 
     @Override
     public Page<E> getPreviousPage(){
         page=new Page((Pageble) page.getPreviousPage(), new ArrayList().stream());
-        page=getAll((Pageble) page.getCurrentPage());
+        page=this.getAll((Pageble) page.getCurrentPage());
         return page;
     }
 
@@ -239,6 +247,7 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
              PreparedStatement ps = connection.prepareStatement(sql);
              ResultSet resultSet = ps.executeQuery();
              list=getAllIdStatement(resultSet);
+            sql=null;
              return list;
         } catch (SQLException e) {
             throw new EntityRepoException(e.getMessage());
@@ -276,6 +285,7 @@ public abstract class DbRepoId<Id,E extends Entity<Id>>implements Repository<Id,
             PreparedStatement ps = connection.prepareStatement(sql);
             setGetOtherStatement(ps,other);
             ResultSet resultSet = ps.executeQuery();
+            sql=null;
             return getGetOtherStatement(resultSet);
         } catch (SQLException e) {
             throw new EntityRepoException(e.getMessage());
