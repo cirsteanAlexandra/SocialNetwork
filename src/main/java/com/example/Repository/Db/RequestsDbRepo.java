@@ -50,7 +50,7 @@ public class RequestsDbRepo extends DbRepoId<Long, Relationship> implements Repo
     @Override
     public boolean update(Long id, Relationship entity) {
         if(get(id)==null) throw new RelationshipRepoException("There is no relationship with that id");
-        sql= "update public.\"Requests\" set id_r=?,first_username=?,second_username=?, the_date=? , status=? where id_r=?";
+        super.sql= "update public.\"Requests\" set id_r=?,first_username=?,second_username=?, the_date=? , status=? where id_r=?";
         return super.update(id, entity);
     }
 
@@ -61,7 +61,7 @@ public class RequestsDbRepo extends DbRepoId<Long, Relationship> implements Repo
      */
     @Override
     protected void deleteAll() {
-        sql= "delete from public.\"Requests\"";
+        super.sql= "delete from public.\"Requests\"";
         super.deleteAll();
     }
 
@@ -74,19 +74,20 @@ public class RequestsDbRepo extends DbRepoId<Long, Relationship> implements Repo
      */
     @Override
     public Relationship get(Long id) {
-        sql= "select * from public.\"Requests\" where id_r="+id.toString();
+        super.sql= "select * from public.\"Requests\" where id_r="+id.toString();
         return super.get(id);
     }
 
     @Override
     public boolean delete(Long id) {
         if (get(id) == null) throw new RelationshipRepoException("There is no relationship with that id");
-        sql = "delete from public.\"Requests\" where id_r=?";
+        super.sql = "delete from public.\"Requests\" where id_r=?";
         return super.delete(id);
     }
 
         @Override
     public List<Relationship> getAll() {
+
         if(super.sql==null)sql="select * from public.\"Requests\"";
         return super.getAll();
     }
@@ -95,10 +96,17 @@ public class RequestsDbRepo extends DbRepoId<Long, Relationship> implements Repo
     //public Page<Relationship> getAll(Pageble pageble) {
     //    sql="select * from ( select * ,ROW_NUMBER() over (order by id_r ASC) as rowss from public.\"Requests\")as Foo where rowss>=? and rowss<? ";
     //    return super.getAll(pageble);
+
+
+    @Override
+    public Page<Relationship> getAll(Pageble pageble) {
+        super.sql="select * from ( select * ,ROW_NUMBER() over (order by id_r ASC) as rowss from public.\"Requests\")as Foo where rowss>=? and rowss<? ";
+        return super.getAll(pageble);
         //return super.getAll();
-    //}
+    }
 
     public Page<Relationship> getPageRequest(String username, PageType type) {
+
         sql="select * from ( select * ,ROW_NUMBER() over (order by id_r ASC) as rowss from (select * from public.\"Requests\" where (status='pending' and second_username=\'"+username+"\')) as Foo ) as Foo1 where rowss>=? and rowss<?;";
         switch(type){
             case CURRENT -> {return super.getCurrentPage();}
@@ -115,7 +123,7 @@ public class RequestsDbRepo extends DbRepoId<Long, Relationship> implements Repo
 
     @Override
     public List<Long> getAllIds() {
-        sql= "select id_r from public.\"Requests\"";
+        super.sql= "select id_r from public.\"Requests\"";
         return super.getAllIds();
     }
 

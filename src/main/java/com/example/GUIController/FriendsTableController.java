@@ -47,6 +47,7 @@ public class FriendsTableController implements Observer {
     @FXML
     private Label flnamer3;
 
+
     @FXML
     private Label uname1;
     @FXML
@@ -54,14 +55,14 @@ public class FriendsTableController implements Observer {
     @FXML
     private Label uname3;
 
+
     @FXML
     private Label unamer1;
     @FXML
     private Label unamer2;
     @FXML
     private Label unamer3;
-    @FXML
-    private Label unamer4;
+
 
     @FXML
     private HBox hboxf1;
@@ -69,6 +70,7 @@ public class FriendsTableController implements Observer {
     private HBox hboxf2;
     @FXML
     private HBox hboxf3;
+
 
     @FXML
     private HBox hboxr1;
@@ -104,6 +106,7 @@ public class FriendsTableController implements Observer {
             if(i==1)hboxf1.setVisible(false);
             if(i==2)hboxf2.setVisible(false);
             if(i==3)hboxf3.setVisible(false);
+
         }
     }
 
@@ -125,11 +128,13 @@ public class FriendsTableController implements Observer {
                 flnamer3.setText(use.getPers().getFirstName()+" "+use.getPers().getLastName());
                 unamer3.setText(use.getUsername());
             }
+
         }
         for(int i=listR.size()+1;i<=3;i++){
             if(i==1)hboxr1.setVisible(false);
             if(i==2)hboxr2.setVisible(false);
             if(i==3)hboxr3.setVisible(false);
+
         }
     }
 
@@ -202,17 +207,23 @@ public class FriendsTableController implements Observer {
 
     public void handleFriendNextPage(ActionEvent ev){
         if(listU.size()==3){
+
             updateListFriend(PageType.NEXT,false);
+
         }
     }
 
     public void handleFriendPreviousPage(ActionEvent ev){
+
             updateListFriend(PageType.PREVIOUS,false);
+
     }
 
     public void handleRequestNextPage(ActionEvent ev){
         if(listR.size()==3){
+
             updateListRequest(PageType.NEXT,false);
+
         }
     }
 
@@ -241,6 +252,12 @@ public class FriendsTableController implements Observer {
     public void update() {
         updateListFriend(PageType.CURRENT,false);
         updateListRequest(PageType.CURRENT,false);
+    }
+
+    public void handleSearch(ActionEvent actionEvent) {
+    }
+
+    public void handleDeleteFriend(ActionEvent actionEvent) {
     }
 
     /*

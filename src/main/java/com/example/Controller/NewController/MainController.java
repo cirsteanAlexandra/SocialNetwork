@@ -725,6 +725,7 @@ public class MainController implements Observable {
         return true;
     }
 
+
     public List<User> getPageFriends(String username, PageType type,boolean first){
         Page<Relationship> pageR;
         if(first)
@@ -754,6 +755,15 @@ public class MainController implements Observable {
             else listU.add(getUserByUsername(el.getSecondUserName()));
         }
         return listU;
+
+    }
+
+    public List<Event> getPageEvents(PageType type){
+
+
+        List<Event> listU=new ArrayList<>();
+        return getAllEvents();
+
     }
 
 

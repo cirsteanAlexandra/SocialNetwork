@@ -98,8 +98,11 @@
                                     <RowConstraints maxHeight="59.599981689453124" minHeight="10.0" prefHeight="51.79998779296874" vgrow="SOMETIMES" />
                                  </rowConstraints>
                                  <children>
+
                                     <TextField fx:id="textUsername" prefWidth="230.0" GridPane.columnIndex="1" text="babushka20"/>
                                     <TextField fx:id="textPassword" accessibleRole="PASSWORD_FIELD" prefWidth="230.0" GridPane.columnIndex="1" GridPane.rowIndex="1" text="sobolanuldeaur" />
+
+
                                     <Label prefHeight="35.0" prefWidth="132.0" text="Username :">
                                        <font>
                                           <Font size="24.0" />

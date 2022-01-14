@@ -80,6 +80,7 @@ public class RelationshipDbRepo<Messages> extends DbRepoId<Long, Relationship> i
     public boolean update(Long id, Relationship entity) {
         if(get(id)==null) throw new RelationshipRepoException("There is no relationship with that id");
         if(super.sql==null)sql= "update public.\"Relationship\" set id_rel=?,first_username=?,second_username=?, the_data=? where id_rel=?";
+
         return super.update(id, entity);
 
     }
@@ -106,6 +107,7 @@ public class RelationshipDbRepo<Messages> extends DbRepoId<Long, Relationship> i
      */
     @Override
     protected void deleteAll() {
+
         if(super.sql==null)sql= "delete from public.\"Relationship\" where id_rel != 0";
         super.deleteAll();
     }
@@ -118,6 +120,7 @@ public class RelationshipDbRepo<Messages> extends DbRepoId<Long, Relationship> i
     @Override
     public int getSize() {
         if(super.sql==null)sql="select count(*) as \"size\" from public.\"Relationship\"";
+
         return super.getSize();
     }
 
@@ -129,7 +132,9 @@ public class RelationshipDbRepo<Messages> extends DbRepoId<Long, Relationship> i
      */
     @Override
     public List<Relationship> getAll() {
+
         if(super.sql==null)sql="select * from public.\"Relationship\"";
+
         return super.getAll();
     }
 
@@ -148,7 +153,9 @@ public class RelationshipDbRepo<Messages> extends DbRepoId<Long, Relationship> i
     }
 
     public Page<Relationship> getPageFriends(String username, PageType type) {
+
         if(super.sql==null)sql="select * from ( select * ,ROW_NUMBER() over (order by id_rel ASC) as rowss from (select * from public.\"Relationship\" where (first_username=\'"+username+"\' or second_username=\'"+username+"\' ) ) as Fooo ) as Foo where rowss>=? and rowss<?";
+
         switch(type){
             case CURRENT -> {return super.getCurrentPage();}
             case NEXT -> {return super.getNextPage();}
@@ -171,7 +178,7 @@ public class RelationshipDbRepo<Messages> extends DbRepoId<Long, Relationship> i
      */
     @Override
     public List<Long> getAllIds() {
-        sql= "select id_rel from public.\"Relationship\"";
+        super.sql= "select id_rel from public.\"Relationship\"";
         return super.getAllIds();
     }
 
@@ -206,7 +213,9 @@ public class RelationshipDbRepo<Messages> extends DbRepoId<Long, Relationship> i
      */
     @Override
     public Relationship getByUserNames(String username1, String username2) {
+
         if(super.sql==null)sql= "select * from public.\"Relationship\" where first_username=? and second_username= ?";
+
         Relationship rel=super.getByOther(username1,username2);
         if(super.sql==null)sql= "select * from public.\"Relationship\" where first_username=? and second_username= ?";
         if (rel==null)
@@ -356,10 +365,9 @@ public class RelationshipDbRepo<Messages> extends DbRepoId<Long, Relationship> i
     }
 
     public void deleteRelationshipByUsername(String username){
-        sql= "delete from public.\"Relationship\" where first_username =? or second_username=? ";
+        super.sql= "delete from public.\"Relationship\" where first_username =? or second_username=? ";
 
     }
-
 
 
 }
