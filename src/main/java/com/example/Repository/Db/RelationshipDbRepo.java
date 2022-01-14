@@ -2,6 +2,7 @@ package com.example.Repository.Db;
 
 import com.example.Domain.Relationship;
 import com.example.Repository.PagingRepo.Page;
+import com.example.Repository.PagingRepo.PageType;
 import com.example.Repository.PagingRepo.Pageble;
 import com.example.Repository.RelationshipRepo;
 import com.example.Utils.Exceptions.EntityRepoException;
@@ -17,6 +18,11 @@ import java.util.List;
 public class RelationshipDbRepo<Messages> extends DbRepoId<Long, Relationship> implements RelationshipRepo {
     public RelationshipDbRepo(String url, String username, String password) {
         super(url, username, password);
+    }
+
+    public RelationshipDbRepo(String url, String username, String password,int size) {
+        super(url, username, password);
+        super.page=new Page(new Pageble(0,size), new ArrayList().stream());
     }
 
     /**
@@ -127,6 +133,18 @@ public class RelationshipDbRepo<Messages> extends DbRepoId<Long, Relationship> i
         sql="select * from public.\"Relationship\"";
         return super.getAll();
     }
+
+    public Page<Relationship> getPageFriends(String username, PageType type) {
+        sql="select * from ( select * ,ROW_NUMBER() over (order by id_rel ASC) as rowss from (select * from public.\"Relationship\" where (first_username=\'"+username+"\' or second_username=\'"+username+"\') )as Foo where rowss>=? and rowss<? ";
+        switch(type){
+            case CURRENT -> {return super.getCurrentPage();}
+            case NEXT -> {return super.getNextPage();}
+            case PREVIOUS -> {return super.getPreviousPage();}
+        };
+        return null;
+        //return super.getAll();
+    }
+
 
     /**
      * Gives a list with all the ids store din repository

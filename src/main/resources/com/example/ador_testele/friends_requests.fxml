@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.GUIController.FriendsTableController">
+   <children>
+      <SplitPane dividerPositions="0.4999999999999999" layoutX="200.0" layoutY="96.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <TextField layoutX="32.0" layoutY="8.0" prefHeight="26.0" prefWidth="231.0" promptText="Search for a friend..." />
+                  <VBox layoutX="33.0" layoutY="43.0" prefHeight="298.0" prefWidth="252.0" spacing="3.0">
+                     <children>
+                        <HBox fx:id="hboxf1" prefHeight="73.0" prefWidth="230.0">
+                           <children>
+                              <AnchorPane prefHeight="72.0" prefWidth="254.0">
+                                 <children>
+                                    <ImageView fitHeight="53.0" fitWidth="57.0" layoutX="7.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                                    <Label fx:id="flname1" layoutX="71.0" layoutY="14.0" text="Label" />
+                                    <Label fx:id="uname1" layoutX="71.0" layoutY="37.0" text="Label" />
+                                    <Button layoutX="177.0" layoutY="4.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="63.0" text="Remove" onAction="#handleRemoveFriend1"/>
+                                    <Button layoutX="178.0" layoutY="41.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="63.0" text="Profile" />
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </HBox>
+                        <HBox fx:id="hboxf2" prefHeight="73.0" prefWidth="230.0">
+                           <children>
+                              <AnchorPane prefHeight="72.0" prefWidth="258.0">
+                                 <children>
+                                    <ImageView fitHeight="53.0" fitWidth="57.0" layoutX="7.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                                    <Label fx:id="flname2" layoutX="71.0" layoutY="14.0" text="Label" />
+                                    <Label fx:id="uname2" layoutX="71.0" layoutY="37.0" text="Label" />
+                                    <Button layoutX="179.0" layoutY="4.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="63.0" text="Remove" onAction="#handleRemoveFriend2"/>
+                                    <Button layoutX="179.0" layoutY="41.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="63.0" text="Profile" />
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </HBox>
+                        <HBox fx:id="hboxf3" prefHeight="73.0" prefWidth="230.0">
+                           <children>
+                              <AnchorPane prefHeight="73.0" prefWidth="256.0">
+                                 <children>
+                                    <ImageView fitHeight="53.0" fitWidth="57.0" layoutX="7.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="10.599999999999994" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="167.2" />
+                                    <Label fx:id="flname3" layoutX="71.0" layoutY="14.0" text="Label" />
+                                    <Label fx:id="uname3" layoutX="71.0" layoutY="37.0" text="Label" />
+                                    <Button layoutX="180.0" layoutY="4.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="63.0" text="Remove" onAction="#handleRemoveFriend3"/>
+                                    <Button layoutX="181.0" layoutY="41.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="63.0" text="Profile" />
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </HBox>
+                        <HBox fx:id="hboxf4" prefHeight="73.0" prefWidth="230.0">
+                           <children>
+                              <AnchorPane prefHeight="73.0" prefWidth="253.0">
+                                 <children>
+                                    <ImageView fitHeight="53.0" fitWidth="57.0" layoutX="7.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                                    <Label fx:id="flname4" layoutX="71.0" layoutY="14.0" text="Label" />
+                                    <Label fx:id="uname4" layoutX="71.0" layoutY="37.0" text="Label" />
+                                    <Button layoutX="181.0" layoutY="4.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="63.0" text="Remove" onAction="#handleRemoveFriend4"/>
+                                    <Button layoutX="182.0" layoutY="41.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="63.0" text="Profile" />
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <Button layoutX="10.0" layoutY="344.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="70.0" text="Previous Page" textAlignment="CENTER" wrapText="true" onAction="#handleFriendPreviousPage"/>
+                  <Button layoutX="213.0" layoutY="344.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="70.0" text=" Next  Page" textAlignment="CENTER" wrapText="true" onAction="#handleFriendNextPage"/>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <TextField layoutX="13.0" layoutY="7.0" prefHeight="26.0" prefWidth="238.0" promptText="Search for a request..." />
+                  <VBox layoutX="16.0" layoutY="34.0" prefHeight="298.0" prefWidth="267.0" spacing="3.0">
+                     <children>
+                        <HBox fx:id="hboxr1" prefHeight="73.0" prefWidth="230.0">
+                           <children>
+                              <AnchorPane prefHeight="72.0" prefWidth="267.0">
+                                 <children>
+                                    <ImageView fitHeight="53.0" fitWidth="57.0" layoutX="7.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                                    <Label fx:id="flnamer1" layoutX="71.0" layoutY="14.0" text="Label" />
+                                    <Label fx:id="unamer1" layoutX="71.0" layoutY="37.0" text="Label" />
+                                    <Button layoutX="169.0" layoutY="4.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="63.0" text="Accept" onAction="#handleAcceptFriend1" />
+                                    <Button layoutX="168.0" layoutY="41.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="63.0" text="Reject" onAction="#handleRejectFriend1"/>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </HBox>
+                        <HBox fx:id="hboxr2" prefHeight="73.0" prefWidth="230.0">
+                           <children>
+                              <AnchorPane prefHeight="72.0" prefWidth="267.0">
+                                 <children>
+                                    <ImageView fitHeight="53.0" fitWidth="57.0" layoutX="7.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                                    <Label fx:id="flnamer2" layoutX="71.0" layoutY="14.0" text="Label" />
+                                    <Label fx:id="unamer2" layoutX="71.0" layoutY="37.0" text="Label" />
+                                    <Button layoutX="168.0" layoutY="4.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="63.0" text="Accept" onAction="#handleAcceptFriend2"/>
+                                    <Button layoutX="168.0" layoutY="41.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="63.0" text="Reject" onAction="#handleRejectFriend2"/>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </HBox>
+                        <HBox fx:id="hboxr3" prefHeight="73.0" prefWidth="230.0">
+                           <children>
+                              <AnchorPane prefHeight="73.0" prefWidth="269.0">
+                                 <children>
+                                    <ImageView fitHeight="53.0" fitWidth="57.0" layoutX="7.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="10.599999999999994" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="167.2" />
+                                    <Label fx:id="flnamer3" layoutX="71.0" layoutY="14.0" text="Label" />
+                                    <Label fx:id="unamer3" layoutX="71.0" layoutY="37.0" text="Label" />
+                                    <Button layoutX="168.0" layoutY="4.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="63.0" text="Accept" onAction="#handleAcceptFriend3"/>
+                                    <Button layoutX="168.0" layoutY="41.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="63.0" text="Reject" onAction="#handleRejectFriend3"/>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </HBox>
+                        <HBox fx:id="hboxr4" prefHeight="73.0" prefWidth="230.0">
+                           <children>
+                              <AnchorPane prefHeight="73.0" prefWidth="269.0">
+                                 <children>
+                                    <ImageView fitHeight="53.0" fitWidth="57.0" layoutX="7.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                                    <Label fx:id="flnamer4" layoutX="71.0" layoutY="14.0" text="Label" />
+                                    <Label fx:id="unamer4" layoutX="71.0" layoutY="37.0" text="Label" />
+                                    <Button layoutX="168.0" layoutY="4.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="63.0" text="Accept" onAction="#handleAcceptFriend4"/>
+                                    <Button layoutX="168.0" layoutY="41.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="63.0" text="Reject" onAction="#handleRejectFriend4"/>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <Button layoutX="14.0" layoutY="343.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="70.0" text="Previous Page" textAlignment="CENTER" wrapText="true" onAction="#handleRequestPreviousPage"/>
+                  <Button layoutX="215.0" layoutY="345.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="70.0" text=" Next  Page" textAlignment="CENTER" wrapText="true" onAction="#handleRequestNextPage"/>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

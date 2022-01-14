@@ -21,4 +21,5 @@ module com.example.ador_testele {
     exports com.example.ador_testele;
     exports com.example.GUIController;
     exports com.example.Domain;
+
 }

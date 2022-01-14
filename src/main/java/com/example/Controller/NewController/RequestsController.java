@@ -2,14 +2,18 @@ package com.example.Controller.NewController;
 
 import com.example.Domain.Relationship;
 import com.example.Repository.Db.RequestsDbRepo;
+import com.example.Repository.PagingRepo.Page;
+import com.example.Repository.PagingRepo.PageType;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RequestsController  extends Controller<Long, Relationship>{
 
+    private RequestsDbRepo backupRepo;
     public RequestsController(RequestsDbRepo rep) {
         super.repo=rep;
+        backupRepo=rep;
     }
 
     public void UpdateStatus(Long id,Relationship entity){
@@ -40,8 +44,10 @@ public class RequestsController  extends Controller<Long, Relationship>{
         }
 
         repo.delete(id);
+    }
 
-
+    public Page<Relationship> getPageRequests(String username, PageType type){
+        return backupRepo.getPageRequest(username, type);
     }
 
 }

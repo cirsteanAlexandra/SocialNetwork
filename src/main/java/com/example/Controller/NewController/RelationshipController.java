@@ -2,6 +2,8 @@ package com.example.Controller.NewController;
 
 import com.example.Domain.Relationship;
 import com.example.Repository.Db.RelationshipDbRepo;
+import com.example.Repository.PagingRepo.Page;
+import com.example.Repository.PagingRepo.PageType;
 import com.example.Utils.Algoritms.Graph;
 import com.example.Utils.Exceptions.EntityException;
 
@@ -9,9 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RelationshipController extends Controller<Long, Relationship> {
-
+    private RelationshipDbRepo backupRepo;
     public RelationshipController(RelationshipDbRepo rep) {
         super.repo=rep;
+        backupRepo= rep;
     }
 
     /**
@@ -55,6 +58,8 @@ public class RelationshipController extends Controller<Long, Relationship> {
         return graph.theMostSociableCommunity((RelationshipDbRepo) repo);
     }
 
-
+    public Page<Relationship> getPageFriends(String username, PageType type){
+        return backupRepo.getPageFriends(username, type);
+    }
 
 }
