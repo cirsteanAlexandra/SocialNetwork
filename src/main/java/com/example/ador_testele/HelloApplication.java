@@ -13,6 +13,7 @@ import com.example.GUIController.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -28,20 +29,22 @@ public class HelloApplication extends Application {
         RelationshipRepo repoR= new RelationshipDbRepo(ConnectionsMain.URL,ConnectionsMain.Username,ConnectionsMain.Password);
         RequestsDbRepo repoRQ=new RequestsDbRepo(ConnectionsMain.URL,ConnectionsMain.Username,ConnectionsMain.Password);
         MessageDbRepo repoM=new MessageDbRepo(ConnectionsMain.URL,ConnectionsMain.Username,ConnectionsMain.Password);
-
+        EvenDbRepo repoE=new EvenDbRepo(ConnectionsMain.URL,ConnectionsMain.Username,ConnectionsMain.Password);
+        UserEventDbRepo repoUE=new UserEventDbRepo(ConnectionsMain.URL,ConnectionsMain.Username,ConnectionsMain.Password);
 
         UserController contU=new UserController(repoU);
         RelationshipController contR=new RelationshipController((RelationshipDbRepo) repoR);
         PersoneController contP=new PersoneController(repoP);
         RequestsController contRQ=new RequestsController(repoRQ);
         MessageController contM=new MessageController(repoM);
+        EventController contE=new EventController(repoE);
+        UserEventController contUE=new UserEventController(repoUE);
 
-        MainController cont= new MainController(contU,contR,contP,contM,contRQ);
+        MainController cont= new MainController(contU,contR,contP,contM,contRQ,contE,contUE);
 
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(new File(Algoritm.getFullPath("login_view.fxml")).toURI().toURL());
         AnchorPane loginLayout=fxmlLoader.load();
-
         LoginController loginController= fxmlLoader.getController();
 
         Scene scene = new Scene(loginLayout);

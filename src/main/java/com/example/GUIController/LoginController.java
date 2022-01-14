@@ -24,11 +24,14 @@ public class LoginController {
     private Stage stage;
     AnchorPane loginLayout;
 
+
     public void setLoginController(MainController cont,Stage stage,AnchorPane loginLayout) {
         this.cont = cont;
         this.stage=stage;
         this.loginAnchor=loginLayout;
     }
+
+
 
     @FXML
     private TextField textUsername;
@@ -36,6 +39,7 @@ public class LoginController {
     private TextField textPassword;
     @FXML
     private AnchorPane loginAnchor;
+
     @FXML
     private SplitPane splitLogin;
     private AnchorPane copy_loginAnchor;

@@ -6,8 +6,8 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-
-<SplitPane dividerPositions="0.20218120805369125" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="595.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.GUIController.FirstPageController">
+<SplitPane dividerPositions="0.20218120805369125" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" >
   <items>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
          <children>
@@ -18,28 +18,14 @@
                </image>
             </ImageView>
             <TextField layoutX="138.0" layoutY="26.0" prefHeight="33.0" prefWidth="132.0" />
-            <Button layoutX="300.0" layoutY="30.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="Home" />
-            <Button layoutX="350.0" layoutY="30.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="Messages" />
-            <Button layoutX="400.0" layoutY="30.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="People" />
-            <Button layoutX="450.0" layoutY="30.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="Events" />
-            <Button layoutX="500.0" layoutY="30.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="Statistics" />
-            <Button layoutX="550.0" layoutY="30.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="Exit" />
-
-            <ImageView fitHeight="33.0" fitWidth="25.0" layoutX="305.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@Photos/HomeIcon.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="351.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@Photos/MessagesIcon.png" />
-               </image>
-            </ImageView>
-            <Button layoutX="521.0" layoutY="30.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="32.0" text="exit" />
+            <Button fx:id="HomeButton" layoutX="315.0" layoutY="32.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0"  />
+            <Button fx:id="MessagesButton" layoutX="362.0" layoutY="32.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0"  />
+            <Button fx:id="PeopleButton" layoutX="409.0" layoutY="32.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0"  />
+            <Button fx:id="EventsButton" layoutX="456.0" layoutY="32.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0"  />
+            <Button fx:id="StatisticsButton" layoutX="503.0" layoutY="32.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0"  />
+            <Button fx:id="ExitButton" layoutX="550.0" layoutY="32.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0"  />
          </children></AnchorPane>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-         <children>
-            <ImageView fitHeight="40.0" fitWidth="51.0" layoutX="127.0" layoutY="198.0" pickOnBounds="true" preserveRatio="true" />
-         </children></AnchorPane>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
   </items>
 </SplitPane>
+</AnchorPane>

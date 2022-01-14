@@ -76,6 +76,13 @@ public class EvenDbRepo extends DbRepoId<Long, Event> implements Repository<Long
     }
 
     @Override
+    public Page<Event> getAll(Pageble pageble) {
+        sql="select * from ( select * ,ROW_NUMBER() over (order by id ASC) as rowss from public.\"Events\" E inner join public.\"UserEvents\" UE on U.id=UE.id_e)as Foo where rowss>=? and rowss<? ";
+        return super.getAll(pageble);
+        //return super.getAll();
+    }
+
+    @Override
     public List<Long> getAllIds() {
         sql= "select id from public.\"Events\"";
         return super.getAllIds();

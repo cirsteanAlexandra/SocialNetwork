@@ -39,12 +39,8 @@
          </image>
       </ImageView>
       <Button layoutX="216.0" layoutY="383.0" mnemonicParsing="false" onAction="#handleButonDeProba" text="ButonDeProba" />
-      <Button fx:id="ButonCuIco" layoutX="19.0" layoutY="383.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />
-      <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="19.0" layoutY="383.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="C:\Users\Alexandra\Desktop\LastTry\src\main\resources\com\example\ador_testele\images\HomeIcon.png" />
-         </image>
-      </ImageView>
+      <Button fx:id="ButonCuIco" layoutX="19.0" layoutY="383.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0"  onAction="#HandleTestFancyTable"/>
+
   
    </children>
 </AnchorPane>

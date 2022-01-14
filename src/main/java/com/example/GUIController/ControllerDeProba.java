@@ -1,11 +1,13 @@
 package com.example.GUIController;
 
 import com.example.Controller.NewController.MainController;
+import com.example.Domain.Persone;
 import com.example.Domain.User;
 import com.example.Utils.Algoritms.Algoritm;
 import com.example.Utils.Exceptions.Exception;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -19,16 +21,11 @@ import java.io.IOException;
 
 
 public class ControllerDeProba {
-    public TextField ll;
-    /*public TextField unu;
-        public TextField doi;*/
+    public TextField textField;
+
     private MainController cont;
     @FXML
     public TextField unu,doi;
-
-    //
-
-
     @FXML
     private AnchorPane[] fancyTable ;
 
@@ -38,28 +35,15 @@ public class ControllerDeProba {
     public void setProfileController(MainController cont) {
         this.cont=cont;
         AnchorPane[] fancyTable = new AnchorPane[15];
-       /* fancyTable[1]=new TextField();
-        fancyTable[1].setText("primul text field");
-        fancyTable[2]=new TextField();
-        fancyTable[2].setText("al doilea text field");*/
-        //fancyTable[1].g
-        /*vb.getChildren().add(fancyTable[1]);
-        vb.getChildren().add(new Label());
-        vb.getChildren().add(fancyTable[2]);
-        vb.getChildren().add(new Label());
-        vb.getChildren().add(new Button("fff"));
-        vb.getChildren().add(new VBox());
-        vb.getChildren().add(new Label());*/
-       // vb.getChildren().add(new AnchorPane().getBackground("green"));
 
-
-        for(int i=1;i<=10;i++) {
+        for(int i=1;i<=3;i++) {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(new File(Algoritm.getFullPath("AnchorForTFancyTable.fxml")).toURI().toURL());
-
-               //unu.setText("aici tre sa fie poza");
                 fancyTable[i] = fxmlLoader.load();
+                User user=new User("username",new Persone(2L,"ionescu","vlad"));
+                //TableEvents profileController=fxmlLoader.getController();
+                //profileController.set(cont,user);
                 vb.getChildren().add(fancyTable[i]);
             } catch (IOException | InterruptedException | Exception e) {
                 e.printStackTrace();

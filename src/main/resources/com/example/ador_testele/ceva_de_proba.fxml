@@ -3,8 +3,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="419.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.GUIController.ControllerDeProba">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="419.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.GUIController.TableEvents">
    <children>
-      <VBox fx:id="vb" layoutX="2.0" layoutY="-2.0" prefHeight="419.0" prefWidth="600.0" />
+      <VBox fx:id="vertical_box" layoutX="2.0" layoutY="-2.0" prefHeight="419.0" prefWidth="600.0" />
+
    </children>
 </AnchorPane>
