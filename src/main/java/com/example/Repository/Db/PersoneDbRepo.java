@@ -42,7 +42,7 @@ public class PersoneDbRepo extends DbRepoId<Long, Persone> implements Repository
      */
     @Override
     public Persone get(Long id) {
-        sql= "select * from public.\"Persone\" where id_pers="+id.toString();
+        super.sql= "select * from public.\"Persone\" where id_pers="+id.toString();
         return super.get(id);
     }
 
@@ -53,7 +53,7 @@ public class PersoneDbRepo extends DbRepoId<Long, Persone> implements Repository
      */
     @Override
     protected void deleteAll(){
-        sql= "delete from public.\"Persone\" where id_pers != 0";
+        super.sql= "delete from public.\"Persone\" where id_pers != 0";
         super.deleteAll();
     }
 
@@ -69,7 +69,7 @@ public class PersoneDbRepo extends DbRepoId<Long, Persone> implements Repository
     @Override
     public boolean update(Long id, Persone entity) {
         if(get(id)==null) throw new PersoneRepoException("There is no persone with that id");
-        sql= "update public.\"Persone\" set id_pers=?,first_name=?,last_name=? where id_pers=?";
+        super.sql= "update public.\"Persone\" set id_pers=?,first_name=?,last_name=? where id_pers=?";
         return super.update(id, entity);
     }
 
@@ -84,7 +84,7 @@ public class PersoneDbRepo extends DbRepoId<Long, Persone> implements Repository
     @Override
     public boolean delete(Long id) {
         if(get(id)==null) throw new PersoneRepoException("There is no persone with that id");
-        sql="delete from public.\"Persone\" where id_pers=?";
+        super.sql="delete from public.\"Persone\" where id_pers=?";
         return super.delete(id);
     }
 
@@ -96,7 +96,7 @@ public class PersoneDbRepo extends DbRepoId<Long, Persone> implements Repository
      */
     @Override
     public int getSize() {
-        sql="select count(*) as \"size\" from public.\"Persone\"";
+        super.sql="select count(*) as \"size\" from public.\"Persone\"";
         return super.getSize();
     }
 
@@ -108,16 +108,18 @@ public class PersoneDbRepo extends DbRepoId<Long, Persone> implements Repository
      */
     @Override
     public List<Persone> getAll() {
-        sql="select * from public.\"Persone\"";
+        super.sql="select * from public.\"Persone\"";
         return super.getAll();
     }
 
     @Override
     public Page<Persone> getAll(Pageble pageble) {
-        sql="select * from ( select * ,ROW_NUMBER() over (order by id_pers ASC) as rowss from public.\"Persone\")as Foo where rowss>=? and rowss<? ";
+        super.sql="select * from ( select * ,ROW_NUMBER() over (order by id_pers ASC) as rowss from public.\"Persone\")as Foo where rowss>=? and rowss<? ";
         return super.getAll(pageble);
         //return super.getAll();
     }
+
+
 
     /**
      * Gives a list with all the ids store din repository
@@ -127,7 +129,7 @@ public class PersoneDbRepo extends DbRepoId<Long, Persone> implements Repository
      */
     @Override
     public List<Long> getAllIds() {
-        sql= "select id_pers from public.\"Persone\"";
+        super.sql= "select id_pers from public.\"Persone\"";
         return super.getAllIds();
     }
 
@@ -160,7 +162,7 @@ public class PersoneDbRepo extends DbRepoId<Long, Persone> implements Repository
      * problems on retrieving the data
      */
     private Persone getByNames(String first,String last){
-        sql= "select * from public.\"Persone\" where first_name=? and last_name=?";
+        super.sql= "select * from public.\"Persone\" where first_name=? and last_name=?";
         return super.getByOther(first,last);
     }
 

@@ -10,7 +10,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.TextFlow?>
+<?import javafx.scene.layout.VBox?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.GUIController.MessageGUIController">
    <children>
@@ -19,13 +19,11 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="308.0" prefWidth="192.0">
                <children>
                   <TextField fx:id="textFilterUser" layoutX="44.0" layoutY="25.0" prefHeight="26.0" prefWidth="151.0" />
-                  <TableView fx:id="tableUsername" layoutX="1.0" layoutY="62.0" prefHeight="200.0" prefWidth="200.0">
+                  <TableView fx:id="tableUsername" layoutX="1.0" layoutY="62.0" onMouseClicked="#handleChoose" prefHeight="200.0" prefWidth="200.0">
                     <columns>
                       <TableColumn fx:id="columnUsername" prefWidth="199.19999384880066" text="Friends Username" />
                     </columns>
                   </TableView>
-                  <Button layoutX="55.0" layoutY="284.0" mnemonicParsing="false" onAction="#handleChoose" prefHeight="38.0" prefWidth="98.0" text="Choose friend" />
-                  <Button layoutX="10.0" layoutY="367.0" mnemonicParsing="false" onAction="#handleExit" text="Exit" />
                   <ImageView fitHeight="26.0" fitWidth="35.0" layoutX="5.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
                        <image>
                            <Image url="@images/search-icon.png" />
@@ -39,7 +37,7 @@
                   <TextArea fx:id="textMess" layoutX="4.0" layoutY="342.0" prefHeight="47.0" prefWidth="292.0" wrapText="true" />
                   <ScrollPane prefHeight="334.0" prefWidth="383.0">
                      <content>
-                        <TextFlow fx:id="mainSceneTExt" prefHeight="336.0" prefWidth="384.0" />
+                        <VBox fx:id="mainSceneTExt" prefHeight="334.0" prefWidth="382.0" />
                      </content>
                   </ScrollPane>
                </children>

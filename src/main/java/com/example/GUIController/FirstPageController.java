@@ -1,6 +1,7 @@
 package com.example.GUIController;
 
 import com.example.Controller.NewController.MainController;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -32,5 +33,21 @@ public class FirstPageController {
     }
 
 
+    public void handleHome(ActionEvent actionEvent) {
+    }
 
+    public void handleMessage(ActionEvent actionEvent) {
+    }
+
+    public void handleFriends(ActionEvent actionEvent) {
+    }
+
+    public void handleEvents(ActionEvent actionEvent) {
+    }
+
+    public void handleStatistics(ActionEvent actionEvent) {
+    }
+
+    public void handleLogout(ActionEvent actionEvent) {
+    }
 }

@@ -51,14 +51,14 @@ public class UserDbRepo extends DbRepoId<Long, User> implements UserRepo {
      */
     @Override
     public User get(Long id) {
-        sql= "select * from public.\"Users\" where id_user="+id.toString();
+        super.sql= "select * from public.\"Users\" where id_user="+id.toString();
         return super.get(id);
     }
 
     @Override
     public User getUserLogin(String username, String hash_pass) {
         System.out.println(hash_pass);
-        sql= "select * from public.\"Users\" where username=\'"+username+"\' and hash_password=\'"+hash_pass+"\'";
+        super.sql= "select * from public.\"Users\" where username=\'"+username+"\' and hash_password=\'"+hash_pass+"\'";
         List<User> listUser=super.getAll();
         if(listUser==null || listUser.isEmpty())
             throw new UserRepoException("The username or the password is incorrect");
@@ -72,7 +72,7 @@ public class UserDbRepo extends DbRepoId<Long, User> implements UserRepo {
      */
     @Override
     protected void deleteAll(){
-        sql= "delete from public.\"Users\" where id_user != 0";
+        super.sql= "delete from public.\"Users\" where id_user != 0";
         super.deleteAll();
     }
 
@@ -88,7 +88,7 @@ public class UserDbRepo extends DbRepoId<Long, User> implements UserRepo {
     @Override
     public boolean update(Long id, User entity) {
         if(get(id)==null) throw new UserRepoException("There is no user with that id");
-        sql= "update public.\"Users\" set id_user=?,username=?,id_pers=? where id_user=?";
+        super.sql= "update public.\"Users\" set id_user=?,username=?,id_pers=? where id_user=?";
         return super.update(id, entity);
     }
 
@@ -103,7 +103,7 @@ public class UserDbRepo extends DbRepoId<Long, User> implements UserRepo {
     @Override
     public boolean delete(Long id) {
         if(get(id)==null) throw new UserRepoException("There is no user with that id");
-        sql="delete from public.\"Users\" where id_user=?";
+        super.sql="delete from public.\"Users\" where id_user=?";
         return super.delete(id);
     }
 
@@ -115,13 +115,13 @@ public class UserDbRepo extends DbRepoId<Long, User> implements UserRepo {
      */
     @Override
     public List<User> getAll() {
-        sql="select * from public.\"Users\"";
+        super.sql="select * from public.\"Users\"";
         return super.getAll();
     }
 
     @Override
     public Page<User> getAll(Pageble pageble) {
-        sql="select * from ( select * ,ROW_NUMBER() over (order by id_user ASC) as rowss from public.\"Users\")as Foo where rowss>=? and rowss<? ";
+        super.sql="select * from ( select * ,ROW_NUMBER() over (order by id_user ASC) as rowss from public.\"Users\")as Foo where rowss>=? and rowss<? ";
         return super.getAll(pageble);
         //return super.getAll();
     }
@@ -135,7 +135,7 @@ public class UserDbRepo extends DbRepoId<Long, User> implements UserRepo {
      */
     @Override
     public List<Long> getAllIds() {
-        sql= "select id_user from public.\"Users\"";
+        super.sql= "select id_user from public.\"Users\"";
         return super.getAllIds();
     }
 
@@ -160,7 +160,7 @@ public class UserDbRepo extends DbRepoId<Long, User> implements UserRepo {
      */
     @Override
     public User getByUserName(String username) {
-        sql= "select * from public.\"Users\" where username=?";
+        super.sql= "select * from public.\"Users\" where username=?";
         return super.getByOther(username);
     }
 
@@ -182,7 +182,7 @@ public class UserDbRepo extends DbRepoId<Long, User> implements UserRepo {
      */
     @Override
     public int getSize() {
-        sql="select count(*) as \"size\" from public.\"Users\"";
+        super.sql="select count(*) as \"size\" from public.\"Users\"";
         return super.getSize();
     }
 

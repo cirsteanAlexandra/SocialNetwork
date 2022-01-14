@@ -1,13 +1,13 @@
 package com.example.Controller.NewController;
 
 import com.example.Domain.*;
-
+import com.example.Repository.PagingRepo.Page;
+import com.example.Repository.PagingRepo.PageType;
 import com.example.Utils.Algoritms.Algoritm;
 import com.example.Utils.Exceptions.Exception;
 import com.example.Utils.Exceptions.*;
 import com.example.Utils.Observer.Observable;
 import com.example.Utils.Observer.Observer;
-
 
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
@@ -722,11 +722,36 @@ public class MainController implements Observable {
         return true;
     }
 
-    public boolean FindIfUserParticipateToEvent(Long id_user,Long id_event){
-        for(UserEvent userEvent: getAllUserEvent())
-            if(userEvent.getId_user().equals(id_user) && userEvent.getId_event().equals(id_event))
-                return  true;
+
+    public boolean FindIfUserParticipateToEvent(Long id_user,Long id_event) {
+        for (UserEvent userEvent : getAllUserEvent())
+            if (userEvent.getId_user().equals(id_user) && userEvent.getId_event().equals(id_event))
+                return true;
         return false;
+    }
+
+    public List<User> getPageFriends(String username, PageType type){
+        Page<Relationship> pageR=contR.getPageFriends(username,type);
+        List<User> listU=new ArrayList<>();
+        for(var el:pageR.getPageContent().collect(Collectors.toList())){
+            if(!el.getFirstUserName().equals(username))
+                listU.add(getUserByUsername(el.getFirstUserName()));
+            else listU.add(getUserByUsername(el.getSecondUserName()));
+        }
+        return listU;
+    }
+
+    public List<User> getPageRequests(String username, PageType type){
+        Page<Relationship> pageR=contRQ.getPageRequests(username,type);
+        System.out.println(pageR.getCurrentPage().getPageNumber());
+        List<User> listU=new ArrayList<>();
+        for(var el:pageR.getPageContent().collect(Collectors.toList())){
+            if(!el.getFirstUserName().equals(username))
+                listU.add(getUserByUsername(el.getFirstUserName()));
+            else listU.add(getUserByUsername(el.getSecondUserName()));
+        }
+        return listU;
+
     }
 
 }

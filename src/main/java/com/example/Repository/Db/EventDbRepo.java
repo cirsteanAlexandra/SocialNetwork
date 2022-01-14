@@ -1,11 +1,9 @@
 package com.example.Repository.Db;
 
 import com.example.Domain.Event;
-import com.example.Domain.Relationship;
 import com.example.Repository.PagingRepo.Page;
 import com.example.Repository.PagingRepo.Pageble;
 import com.example.Repository.Repository;
-import com.example.Utils.Exceptions.RelationshipRepoException;
 import com.example.Utils.Generator;
 import org.postgresql.util.PSQLException;
 
@@ -14,8 +12,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EvenDbRepo extends DbRepoId<Long, Event> implements Repository<Long,Event> {
-
+public class EventDbRepo extends DbRepoId<Long,Event> implements Repository<Long, Event> {
     /**
      * Basic constructor of a Db Repository
      *
@@ -23,7 +20,7 @@ public class EvenDbRepo extends DbRepoId<Long, Event> implements Repository<Long
      * @param username the user of the database
      * @param password the password of the user
      */
-    public EvenDbRepo(String url, String username, String password) {
+    public EventDbRepo(String url, String username, String password) {
         super(url, username, password);
     }
 
@@ -36,15 +33,15 @@ public class EvenDbRepo extends DbRepoId<Long, Event> implements Repository<Long
 
     @Override
     public Event get(Long id) {
-        sql= "select * from public.\"Events\" where id="+id.toString();
+        super.sql= "select * from public.\"Events\" where id="+id.toString();
         return super.get(id);
     }
 
     @Override
     public boolean update(Long id, Event entity) {
-       // if(get(id)==null) throw new RelationshipRepoException("There is no event with that id");
+        // if(get(id)==null) throw new RelationshipRepoException("There is no event with that id");
 
-        sql= "update public.\"Events\" set id=?,name=?,the_date=?, description=? where id=?";
+        super.sql= "update public.\"Events\" set id=?,name=?,the_date=?, description=? where id=?";
 
         return super.update(id, entity);
 
@@ -53,44 +50,44 @@ public class EvenDbRepo extends DbRepoId<Long, Event> implements Repository<Long
     @Override
     public boolean delete(Long id) {
         //if(get(id)==null) throw new RelationshipRepoException("There is no event with that id");
-        sql="delete from public.\"Events\" where id=?";
+        super.sql="delete from public.\"Events\" where id=?";
         return super.delete(id);
     }
 
     @Override
     protected void deleteAll() {
-        sql= "delete from public.\"Events\" where id != 0";
+        super.sql= "delete from public.\"Events\" where id != 0";
         super.deleteAll();
     }
 
     @Override
     public int getSize() {
-        sql="select count(*) as \"size\" from public.\"Events\"";
+        super.sql="select count(*) as \"size\" from public.\"Events\"";
         return super.getSize();
     }
 
     @Override
     public List<Event> getAll() {
-        sql="select * from public.\"Events\"";
+        super.sql="select * from public.\"Events\"";
         return super.getAll();
     }
 
     @Override
     public Page<Event> getAll(Pageble pageble) {
-        sql="select * from ( select * ,ROW_NUMBER() over (order by id ASC) as rowss from public.\"Events\" E inner join public.\"UserEvents\" UE on U.id=UE.id_e)as Foo where rowss>=? and rowss<? ";
+        super.sql="select * from ( select * ,ROW_NUMBER() over (order by id ASC) as rowss from public.\"Events\" E inner join public.\"UserEvents\" UE on U.id=UE.id_e)as Foo where rowss>=? and rowss<? ";
         return super.getAll(pageble);
         //return super.getAll();
     }
 
     @Override
     public List<Long> getAllIds() {
-        sql= "select id from public.\"Events\"";
+        super.sql= "select id from public.\"Events\"";
         return super.getAllIds();
     }
 
     @Override
     public Long generateId() {
-       return  Generator.generateId(getAllIds());
+        return  Generator.generateId(getAllIds());
     }
 
     @Override
@@ -101,7 +98,7 @@ public class EvenDbRepo extends DbRepoId<Long, Event> implements Repository<Long
 
     public Event getByNameEvent(String name)
     {
-        sql= "select * from public.\"Events\" where name=?";
+        super.sql= "select * from public.\"Events\" where name=?";
         Event ev=super.getByOther(name);
         return ev;//==null ? super.getByOther(name) : ev;
 
@@ -163,7 +160,7 @@ public class EvenDbRepo extends DbRepoId<Long, Event> implements Repository<Long
             catch(NullPointerException e){
                 lu=null;
             }
-           Event event =new Event(id,name,des,lu);
+            Event event =new Event(id,name,des,lu);
 
             events.add(event);
         }
@@ -192,6 +189,5 @@ public class EvenDbRepo extends DbRepoId<Long, Event> implements Repository<Long
     protected void setGetOtherStatement(PreparedStatement ps, String... other) throws SQLException {
         ps.setString(1,other[0]);
     }
-
 
 }

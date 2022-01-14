@@ -26,10 +26,10 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws IOException, InterruptedException {
         UserRepo repoU= new UserDbRepo(ConnectionsMain.URL,ConnectionsMain.Username,ConnectionsMain.Password);
         PersoneDbRepo repoP= new PersoneDbRepo(ConnectionsMain.URL,ConnectionsMain.Username,ConnectionsMain.Password);
-        RelationshipRepo repoR= new RelationshipDbRepo(ConnectionsMain.URL,ConnectionsMain.Username,ConnectionsMain.Password);
-        RequestsDbRepo repoRQ=new RequestsDbRepo(ConnectionsMain.URL,ConnectionsMain.Username,ConnectionsMain.Password);
+        RelationshipRepo repoR= new RelationshipDbRepo(ConnectionsMain.URL,ConnectionsMain.Username,ConnectionsMain.Password,4);
+        RequestsDbRepo repoRQ=new RequestsDbRepo(ConnectionsMain.URL,ConnectionsMain.Username,ConnectionsMain.Password,4);
         MessageDbRepo repoM=new MessageDbRepo(ConnectionsMain.URL,ConnectionsMain.Username,ConnectionsMain.Password);
-        EvenDbRepo repoE=new EvenDbRepo(ConnectionsMain.URL,ConnectionsMain.Username,ConnectionsMain.Password);
+        EventDbRepo repoE=new EventDbRepo(ConnectionsMain.URL,ConnectionsMain.Username,ConnectionsMain.Password);
         UserEventDbRepo repoUE=new UserEventDbRepo(ConnectionsMain.URL,ConnectionsMain.Username,ConnectionsMain.Password);
 
         UserController contU=new UserController(repoU);

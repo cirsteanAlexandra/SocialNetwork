@@ -42,7 +42,7 @@ public class MessagesUsersDbRepo extends DbRepoId<Long, Message>{
 
     @Override
     public int getSize() {
-        sql="select count(*) as \"size\" from public.\"Messages_Users\"";
+        super.sql="select count(*) as \"size\" from public.\"Messages_Users\"";
         return super.getSize();
     }
 

@@ -9,13 +9,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.time.LocalDateTime;
@@ -45,7 +47,7 @@ public class MessageGUIController implements Observer {
     private TextArea textMess;
 
     @FXML
-    private TextFlow mainSceneTExt;
+    private VBox mainSceneTExt;
 
     @FXML
     private TextField textFilterUser;
@@ -63,17 +65,50 @@ public class MessageGUIController implements Observer {
 
     public void loadTheConversation(){
         List<Message> conv=cont.loadConversation(user.getUsername(),otherPerson.getUsername());
-        mainSceneTExt.getChildren().clear();
+        //mainSceneTExt.getChildren().clear();
+        //mainSceneTExt.
+        //mainSceneTExt.getChildren().clear();
         for (var mess:conv){
-            Text Username1= new Text(mess.getFrom().getUsername()+": ");
+            HBox convo_mess=new HBox();
+            //TextArea convo_mess=new TextArea();
+            //Text Username1= new Text(mess.getFrom().getUsername()+": ");
+            TextArea Username1= new TextArea(mess.getFrom().getUsername());
+            Username1.setPadding(Insets.EMPTY);
+            //Username1.setStyle("-fx-padding: 0,0,0,0");
+            Username1.setEditable(false);
+            //Text Username1=new Text(mess.getFrom().getUsername()+":");
             if (mess.getFrom().getUsername().equals(user.getUsername()))
-                Username1.setFill(Color.RED);
+                //Username1.setFill(Color.RED);
+                Username1.setStyle("-fx-background-color:transparent; -fx-font-family: Consolas; -fx-highlight-fill: #00ff00; -fx-highlight-text-fill: #000000; -fx-text-fill: red; ");
             else if(mess.getFrom().getUsername().equals(otherPerson.getUsername()))
-                Username1.setFill(Color.GREEN);
-            Text Mess=new Text( mess.getMessage());
-            Text Date=new Text( mess.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm")).toString()+":");
-            mainSceneTExt.getChildren().addAll(Date,Username1,Mess);
-            mainSceneTExt.getChildren().add(new Text(System.lineSeparator()));
+                //Username1.setFill(Color.GREEN);
+                Username1.setStyle("-fx-background-color:rgba(0,0,0,0); -fx-font-family: Consolas; -fx-highlight-fill: #00ff00; -fx-highlight-text-fill: #000000; -fx-text-fill: green; ");
+           // Username1.setEditable(false);
+            //Text textMess=new Text(mess.getMessage());
+            TextArea Mess=new TextArea(mess.getMessage());
+            Mess.setPadding(Insets.EMPTY);
+            //Mess.setStyle("-fx-padding: 0,0,0,0");
+            Mess.setEditable(false);
+            Mess.setWrapText(true);
+           // Mess.setBackground(Background.EMPTY);
+            //Text Mess= new Text(mess.getMessage());
+//            Text Date=new Text(mess.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm")).toString()+":");
+            TextArea Date=new TextArea( mess.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm")).toString()+":");
+            Date.setEditable(false);
+            Date.setWrapText(true);
+            Date.setPadding(Insets.EMPTY);
+            Date.setBorder(Border.EMPTY);
+            //Date.setStyle("-fx-padding: 0,0,0,0");
+           // Date.setPrefSize(Date.getPrefWidth()/2,3*Date.getPrefHeight()/4);
+           // mainSceneTExt.getChildren().addAll(Date,Username1,Mess);
+           // mainSceneTExt.getChildren().add(new Text(System.lineSeparator()));
+            convo_mess.getChildren().add(Date);
+            convo_mess.getChildren().add(Username1);
+            convo_mess.getChildren().add(Mess);
+            convo_mess.setPadding(Insets.EMPTY);
+            //convo_mess.setPrefSize(Mess.getWidth(),Mess.getHeight());
+
+            mainSceneTExt.getChildren().add(convo_mess);
         }
     }
 
@@ -107,7 +142,7 @@ public class MessageGUIController implements Observer {
         }
     }
 
-    public void handleChoose(ActionEvent ev){
+    public void handleChoose(MouseEvent ev){
         String Usern=tableUsername.getSelectionModel().getSelectedItem();
         if(Usern==null)
             MessageAlert.showErrorMessage(null,"You haven't selected an user to chat with!");

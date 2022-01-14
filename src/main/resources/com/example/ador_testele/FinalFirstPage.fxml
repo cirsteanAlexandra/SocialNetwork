@@ -6,6 +6,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="595.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.GUIController.FirstPageController">
 <SplitPane dividerPositions="0.20218120805369125" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" >
   <items>
@@ -28,4 +29,51 @@
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
   </items>
 </SplitPane>
+
+<AnchorPane prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.GUIController.MainWindowController">
+   <children>
+      <SplitPane fx:id="splitMain" dividerPositions="0.1207865168539326" orientation="VERTICAL" prefHeight="500.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <items>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="45.0" prefWidth="599.0">
+               <children>
+                  <ImageView fitHeight="33.0" fitWidth="25.0" layoutX="41.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Photos/SearchIcon.png" />
+                     </image>
+                  </ImageView>
+                  <TextField layoutX="67.0" layoutY="19.0" prefHeight="34.0" prefWidth="210.0" promptText="Search" />
+                  <Button onAction="#handleHome" layoutX="300.0" layoutY="22.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" >
+                     <graphic>
+                        <ImageView fitHeight="33.0" fitWidth="25.0" layoutX="299.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Photos/HomeIcon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button onAction="#handleMessage" layoutX="350.0" layoutY="22.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" >
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="351.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Photos/MessagesIcon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button onAction="#handleFriends" layoutX="400.0" layoutY="22.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="People" />
+                  <Button onAction="#handleEvents" layoutX="450.0" layoutY="22.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="Events" />
+                  <Button onAction="#handleStatistics" layoutX="489.0" layoutY="22.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="Statistics" />
+                  <Button onAction="#handleLogout" layoutX="559.0" layoutY="22.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="Exit" />
+                  <Button layoutX="521.0" layoutY="22.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="exit" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="currentLayout" minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="600.0">
+               <children>
+                  <ImageView fitHeight="40.0" fitWidth="51.0" layoutX="127.0" layoutY="198.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </AnchorPane>
+         </items>
+      </SplitPane>
+   </children>
+
 </AnchorPane>

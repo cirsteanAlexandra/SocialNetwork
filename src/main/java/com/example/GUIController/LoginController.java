@@ -79,17 +79,25 @@ public class LoginController {
         try {
 
             FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(new File(Algoritm.getFullPath("user-view.fxml")).toURI().toURL());
-            AnchorPane loginLayout = fxmlLoader.load();
+            fxmlLoader.setLocation(new File(Algoritm.getFullPath("FinalFirstPage.fxml")).toURI().toURL());
+            AnchorPane loginLayout1 = fxmlLoader.load();
             String Username =textUsername.getText();
-            UserGuiController requestController = fxmlLoader.getController();
-            requestController.setUserGuiController(cont,cont.getUserByUsername(Username));
+            MainWindowController mainCont=fxmlLoader.getController();
+
+            //UserGuiController requestController = fxmlLoader.getController();
+            //requestController.setUserGuiController(cont,cont.getUserByUsername(Username));
+            //ControllerDeProba profileController=fxmlLoader.getController();
+            //profileController.setProfileController(cont);
             Stage registerStage = new Stage();
-            Scene scene = new Scene(loginLayout);
+            System.out.println(cont.toString());
+            mainCont.setMainWindowController(cont,registerStage,loginLayout,cont.getUserByUsername(Username));
+            Scene scene = new Scene(loginLayout1);
             registerStage.initModality(Modality.WINDOW_MODAL);
             registerStage.setTitle(Username);
             registerStage.setScene(scene);
+            stage.close();
             registerStage.show();
+
         }
         catch (IOException | InterruptedException | Exception e){
             e.printStackTrace();
