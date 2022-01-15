@@ -14,7 +14,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="600.0" stylesheets="css/message.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.GUIController.MessageGUIController">
+
    <children>
       <SplitPane dividerPositions="0.34124331550802134" layoutY="-3.0" prefHeight="331.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 
@@ -32,20 +34,26 @@
                            <Image url="@Photos/SearchIcon.png" />
                        </image>
                   </ImageView>
+
                   <Button layoutX="76.0" layoutY="270.0" mnemonicParsing="false" onAction="#handleSendAll" prefHeight="38.0" prefWidth="75.0" style="-fx-background-color: #b380ff;" text="Send all">
                      <font>
                         <Font size="15.0" />
                      </font></Button>
+
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="319.0" prefWidth="390.0" style="-fx-background-color: #8080ff;">
                <children>
+
                   <Button defaultButton="true" layoutX="292.0" layoutY="271.0" mnemonicParsing="false" onAction="#handleSend" prefHeight="38.0" prefWidth="89.0" style="-fx-background-color: #b380ff;" text="Send">
                      <font>
                         <Font size="15.0" />
                      </font></Button>
                   <TextArea fx:id="textMess" layoutY="271.0" prefHeight="38.0" prefWidth="292.0" style="-fx-background-color: #e6e6ff;" wrapText="true" />
                   <ScrollPane layoutY="14.0" prefHeight="248.0" prefWidth="383.0" style="-fx-background-color: #b380ff;">
+
+
+
                      <content>
                         <VBox fx:id="mainSceneTExt" prefHeight="253.0" prefWidth="379.0" style="-fx-background-color: #e6e6ff;" />
                      </content>

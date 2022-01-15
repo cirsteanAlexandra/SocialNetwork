@@ -99,8 +99,11 @@
                                  </rowConstraints>
                                  <children>
 
+
                                     <TextField fx:id="textUsername" prefWidth="230.0" text="allex" GridPane.columnIndex="1" />
                                     <TextField fx:id="textPassword" accessibleRole="PASSWORD_FIELD" prefWidth="230.0" text="da" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+
 
 
                                     <Label prefHeight="35.0" prefWidth="132.0" text="Username :">

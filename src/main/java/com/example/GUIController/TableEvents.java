@@ -4,6 +4,7 @@ import com.example.Controller.NewController.MainController;
 import com.example.Domain.Event;
 import com.example.Domain.User;
 
+
 import com.example.Domain.UserEvent;
 import com.example.Repository.PagingRepo.PageType;
 import com.example.Utils.Algoritms.Algoritm;
@@ -33,10 +34,13 @@ import java.io.IOException;
 import java.util.List;
 
 public class TableEvents  implements Observer {
+
     public VBox vertical_box;
     private MainController cont;
     private User user;
+
     private boolean FirstButton=false;
+
     Stage registerStage;
 
 
@@ -61,20 +65,45 @@ public class TableEvents  implements Observer {
 
 
 
+
     public void  set(MainController cont,User user) {
         this.cont = cont;
         this.user=user;
+
         cont.addObserver(this);
         updateListEvents2(PageType.CURRENT,true);
+
+
+        SetEventsTable1(events1);
+
 
     }
     ObservableList<PrintedPersones> model = FXCollections.observableArrayList();
 
+
     //ObservableList<PrintedPersones> model = FXCollections.observableArrayList();
    /* private void SetEventsTable() {
 
+<<<<<<< HEAD
             if(!events.isEmpty())
                 for(int i=1;i<=3;i++)
+=======
+    private List<Event> events;
+
+
+    private void SetEventsTable() {
+
+        //probabil ceva for, nu s prea sigura cum vine cu paginarea
+        //Lista de event
+
+        List<Event> events=cont.getAllEvents();
+
+
+       // =cont.getAllEvents();
+            if(!events.isEmpty())
+
+           for(int i=1;i<=3;i++)
+>>>>>>> e6a9d669f55624838f16a5cb8c108d6ad9975315
            {
                if(i==1 && i<=events.size())
                {
@@ -82,7 +111,10 @@ public class TableEvents  implements Observer {
                    NameEvent1.setText(ev.getName());
                    Date_event1.setText(ev.getDtf().toString());
                    DecriptionEvent1.setText(ev.getDescription());
+
+
                    Participate1.setText("Cancel");
+
                    Notify1.setText("Notify me!");
 
                }
@@ -92,7 +124,9 @@ public class TableEvents  implements Observer {
                    NameEvent2.setText(ev.getName());
                    Date_event2.setText(ev.getDtf().toString());
                    DecriptionEvent2.setText(ev.getDescription());
+
                    Participate2.setText("Cancel");
+
                    Notify2.setText("Notify me!");
 
                }
@@ -102,7 +136,9 @@ public class TableEvents  implements Observer {
                    NameEvent3.setText(ev.getName());
                    Date_event3.setText(ev.getDtf().toString());
                    DecriptionEvent3.setText(ev.getDescription());
+
                    Participate3.setText("Cancel");
+
                    Notify3.setText("Notify me!");
 
                }
@@ -115,6 +151,7 @@ public class TableEvents  implements Observer {
             if(i==3)hboxf3.setVisible(false);
         }
     }*/
+
 
     public void handleEventPreviousPage(ActionEvent ev){
         if(FirstButton==true)
@@ -132,8 +169,15 @@ public class TableEvents  implements Observer {
             if (events.size() == 3) {
                 updateListEvents2(PageType.NEXT, false);
             }
-        }
+
+
+           }
+
     }
+
+
+
+
 
     public void updateListEvents( PageType type,boolean f){
         events1=cont.getPageEventS(type,f,user);

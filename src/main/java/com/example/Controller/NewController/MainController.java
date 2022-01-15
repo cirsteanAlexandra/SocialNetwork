@@ -800,12 +800,17 @@ public class MainController implements Observable {
 
 
 
+
+
+
+
     public boolean FindIfUserParticipateToEvent(Long id_user,Long id_event) {
         for (UserEvent userEvent : getAllUserEvent())
             if (userEvent.getId_user().equals(id_user) && userEvent.getId_event().equals(id_event))
                 return true;
         return false;
     }
+
 
     public Message getMessageById(Long id){
         if(id==null)throw new MessageException("The id message is empty!");
@@ -816,6 +821,7 @@ public class MainController implements Observable {
         }
         return mess;
     }
+
 
     public Event getEventByName(String name){
         for(Event ev: getAllEvents())
@@ -831,4 +837,5 @@ public class MainController implements Observable {
                 return userEvent.getId_ue();
         return null;
     }
+
 }

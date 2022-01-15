@@ -126,6 +126,7 @@ public class EventDbRepo extends DbRepoId<Long,Event> implements Repository<Long
     }
 
 
+
     @Override
     public List<Long> getAllIds() {
         if(super.sql==null)super.sql= "select id from public.\"Events\"";
