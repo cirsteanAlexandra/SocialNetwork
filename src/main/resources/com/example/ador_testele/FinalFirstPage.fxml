@@ -13,10 +13,12 @@
       <items>
          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: #8080ff;" stylesheets="@../ador_testele/css/friends_requests.css" >
             <children>
-               <Button layoutX="52.0" layoutY="26.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="90.0" style="-fx-background-color: #ccccff;" text="Search">
+
+               <Button layoutX="52.0" layoutY="26.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="90.0" style="-fx-background-color: #ccccff;" text="Search" onAction="#handleSearch">
                   <font>
                      <Font size="15.0" />
                   </font></Button>
+
                <ImageView fitHeight="33.0" fitWidth="25.0" layoutX="27.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
                   <image>
                      <Image url="@Photos/SearchIcon.png" />
@@ -24,8 +26,11 @@
                </ImageView>
 
 
-               <TextField layoutX="138.0" layoutY="26.0" prefHeight="32.0" prefWidth="138.0" style="-fx-background-color: #e6e6ff;" />
+
+               <TextField fx:id="textSearch" layoutX="138.0" layoutY="26.0" prefHeight="32.0" prefWidth="138.0" style="-fx-background-color: #e6e6ff;" />
                <Button fx:id="HomeButton" layoutX="315.0" layoutY="24.0" mnemonicParsing="false" onAction="#handleHome" prefHeight="33.0" prefWidth="41.0" style="-fx-background-color: #8080ff;">
+
+
 
                   <graphic>
                      <ImageView fitHeight="33.0" fitWidth="25.0" layoutX="27.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
