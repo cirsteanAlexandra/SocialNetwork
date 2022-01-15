@@ -110,6 +110,7 @@ public class MainController implements Observable {
         if(contU.getByOther(rel.getFirstUserName())==null || contU.getByOther(rel.getSecondUserName())==null )
         throw new EntityRepoException("A relationship is only applied between tow existing users\n");
         contR.add(rel);
+        notifyObservers();
         return true;
     }
 
@@ -138,6 +139,7 @@ public class MainController implements Observable {
      */
     public boolean removeRelationshipById(Long id) {
         contR.removeById(id);
+        notifyObservers();
         return true;
     }
 
@@ -155,6 +157,7 @@ public class MainController implements Observable {
         contRQ.deleteAllRelationsByUsername(user.getUsername());
         contU.removeByOthers(username);
         removeSinglePersoneFromUsers(user.getPers());
+        notifyObservers();
         return true;
     }
 
@@ -546,15 +549,16 @@ public class MainController implements Observable {
     }
 
     public Relationship getRequestByUsername(String receiver,String sender){
-        System.out.println(contRQ.getAll());
-        for(Relationship r: contRQ.getAll())
-            if(r.getSecondUserName().equals(sender) && r.getFirstUserName().equals(receiver))
-                return r;
-            return null;
+        Relationship rel=null;
+        for(Relationship r: contRQ.getAllPending())
+            if(r.getSecondUserName().equals(sender) && r.getFirstUserName().equals(receiver) && r.getStatus().equals("pending"))
+                rel=r;
+        return rel;
     }
 
     public boolean AddRequest(Relationship rel){
-
+        Relationship rr=contR.getByOther(rel.getFirstUserName(), rel.getSecondUserName());
+        if(rr!=null)throw new RelationshipRepoException("The request was already accepted. :)");
         for(Relationship r: contRQ.getAll()) {
             if (r.getFirstUserName().equals(rel.getFirstUserName())
                     && r.getSecondUserName().equals(rel.getSecondUserName())) {
@@ -567,9 +571,6 @@ public class MainController implements Observable {
                     throw new RelationshipRepoException("There is a request to this user :( .");
             }
         }
-
-        Relationship r=contR.getByOther(rel.getFirstUserName(), rel.getSecondUserName());
-        if(r!=null)throw new RelationshipRepoException("The request was already accepted. :)");
         contRQ.add(rel);
         notifyObservers();
         return true;
@@ -783,5 +784,58 @@ public class MainController implements Observable {
             el=getUserByUsername(el.getUsername());
         }
         return mess;
+    }
+
+    public List<Event> getUserEventsById(Long id){
+        return contE.getUserEvents(id);
+    }
+    public List<Event> getUserEventsByUsername(String username){
+        return contE.getUserEvents(getUserByUsername(username).getId());
+    }
+
+    public int getNumberOfNewFriendsPeriod(String username,LocalDate dateS,LocalDate dateF){
+        User user=null;
+        for(var el:getAllUsers()){
+            if(el.getUsername().equals(username)) {
+                user = el;break;
+            }
+        }
+        int nr=0;
+        for(var el:user.getFriendsList()){
+            Relationship rel=getRelationshipByOther(username,el);
+            if(dateS.isBefore(rel.getDtf()) && dateF.isAfter(rel.getDtf()))
+                nr++;
+        }
+        return nr;
+    }
+
+    public Map<String,Integer> getNoMessagesPerFriend(String username,LocalDate dateS,LocalDate dateF){
+        User user=null;
+        for(var el:getAllUsers()){
+            if(el.getUsername().equals(username)) {
+                user = el;break;
+            }
+        }
+        Map<String,Integer> MessPerFr=new HashMap<>();
+        for(var el:user.getFriendsList()){
+            List<Message>convo=loadConversation(username,el);
+            int nr=0;
+            for(var mess:convo){
+                if(dateS.isBefore(mess.getDate().toLocalDate()) && dateF.isAfter(mess.getDate().toLocalDate()))
+                    nr++;
+            }
+            MessPerFr.put(el,nr);
+        }
+        return MessPerFr;
+    }
+
+    public List<Message> getConvoInSF(String username1,String username2,LocalDate dateS,LocalDate dateF){
+        List<Message> convoSF=new ArrayList<>();
+        List<Message>convo=loadConversation(username1,username2);
+        for(var mess:convo){
+            if(dateS.isBefore(mess.getDate().toLocalDate()) && dateF.isAfter(mess.getDate().toLocalDate()))
+                convoSF.add(mess);
+        }
+        return convoSF;
     }
 }

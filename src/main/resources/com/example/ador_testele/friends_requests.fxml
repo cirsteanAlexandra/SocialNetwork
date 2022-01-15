@@ -26,7 +26,7 @@
                                     <Label fx:id="flname1" layoutX="71.0" layoutY="14.0" text="Label" />
                                     <Label fx:id="uname1" layoutX="71.0" layoutY="37.0" text="Label" />
                                     <Button layoutX="177.0" layoutY="4.0" mnemonicParsing="false" onAction="#handleRemoveFriend1" prefHeight="26.0" prefWidth="63.0" text="Remove" />
-                                    <Button layoutX="178.0" layoutY="41.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="63.0" text="Profile" />
+                                    <Button layoutX="178.0" layoutY="41.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="63.0" text="Profile" onAction="#handleSeeProfileFriend1"/>
                                  </children>
                               </AnchorPane>
                            </children>
@@ -39,7 +39,7 @@
                                     <Label fx:id="flname2" layoutX="71.0" layoutY="14.0" text="Label" />
                                     <Label fx:id="uname2" layoutX="71.0" layoutY="37.0" text="Label" />
                                     <Button layoutX="179.0" layoutY="4.0" mnemonicParsing="false" onAction="#handleRemoveFriend2" prefHeight="26.0" prefWidth="63.0" text="Remove" />
-                                    <Button layoutX="179.0" layoutY="41.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="63.0" text="Profile" />
+                                    <Button layoutX="179.0" layoutY="41.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="63.0" text="Profile" onAction="#handleSeeProfileFriend2"/>
                                  </children>
                               </AnchorPane>
                            </children>
@@ -52,7 +52,7 @@
                                     <Label fx:id="flname3" layoutX="71.0" layoutY="14.0" text="Label" />
                                     <Label fx:id="uname3" layoutX="71.0" layoutY="37.0" text="Label" />
                                     <Button layoutX="180.0" layoutY="4.0" mnemonicParsing="false" onAction="#handleRemoveFriend3" prefHeight="26.0" prefWidth="63.0" text="Remove" />
-                                    <Button layoutX="181.0" layoutY="41.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="63.0" text="Profile" />
+                                    <Button layoutX="181.0" layoutY="41.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="63.0" text="Profile" onAction="#handleSeeProfileFriend3"/>
                                  </children>
                               </AnchorPane>
                            </children>

@@ -88,10 +88,9 @@ public class MainWindowController {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(new File(Algoritm.getFullPath("friends_requests.fxml")).toURI().toURL());
         AnchorPane friendLayout = fxmlLoader.load();
-
         splitMain.getItems().set(1,friendLayout);
         FriendsTableController friendsTableController = fxmlLoader.getController();
-        friendsTableController.setFriendsController(cont,stage,user);
+        friendsTableController.setFriendsController(cont,stage,user,splitMain);
 
     }
     public void handleEvents(ActionEvent ev) throws IOException, InterruptedException {
@@ -103,8 +102,13 @@ public class MainWindowController {
         tableEvents.set(cont,user);
 
     }
-    public void handleStatistics(ActionEvent ev){
-        System.out.println("STATISTICS PROFILE");
+    public void handleStatistics(ActionEvent ev) throws IOException, InterruptedException {
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(new File(Algoritm.getFullPath("statistics-view.fxml")).toURI().toURL());
+        AnchorPane statLayout=fxmlLoader.load();
+        splitMain.getItems().set(1,statLayout);
+        StatisticsGUIController statCont=fxmlLoader.getController();
+        statCont.setStatisticsGUIController(cont,user);
     }
 
     public void handleLogout(ActionEvent ev) throws IOException, InterruptedException {

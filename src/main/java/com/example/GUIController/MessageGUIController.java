@@ -72,6 +72,7 @@ public class MessageGUIController implements Observer {
     }
 
     public void loadTheConversation(){
+        mainSceneTExt.getChildren().clear();
         if(otherPerson==null)return ;
         List<Message> conv=cont.loadConversation(user.getUsername(),otherPerson.getUsername());
         for (var mess:conv){

@@ -10,6 +10,7 @@ import com.example.Utils.Exceptions.Exception;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -34,9 +35,9 @@ public class RegisterController {
     @FXML
     private TextField textLastName;
     @FXML
-    private TextField textPassword;
+    private PasswordField textPassword;
     @FXML
-    private TextField textRetypePassword;
+    private PasswordField textRetypePassword;
     @FXML
     private AnchorPane anchorReg;
 
