@@ -1,9 +1,13 @@
 package com.example.Repository.Db;
 
 import com.example.Domain.Event;
+
+import com.example.Repository.PagingRepo.Page;
+
 import com.example.Domain.Relationship;
 import com.example.Repository.PagingRepo.Page;
 import com.example.Repository.PagingRepo.PageType;
+
 import com.example.Repository.PagingRepo.Pageble;
 import com.example.Repository.Repository;
 import com.example.Utils.Generator;
@@ -26,16 +30,21 @@ public class EventDbRepo extends DbRepoId<Long,Event> implements Repository<Long
         super(url, username, password);
     }
 
+    public EventDbRepo(String url, String username, String password,int size) {
+        super(url, username, password);
+        super.page=new Page(new Pageble(0,size), new ArrayList().stream());
+    }
+
     @Override
     public boolean save(Event entity) {
         if(entity.getId()==null) entity.setId(generateId());
-        super.sql= "insert into public.\"Events\" values (?, ?, ?,?)";
+        if(super.sql==null)super.sql= "insert into public.\"Events\" values (?, ?, ?,?)";
         return super.save(entity);
     }
 
     @Override
     public Event get(Long id) {
-        super.sql= "select * from public.\"Events\" where id="+id.toString();
+        if(super.sql==null)super.sql= "select * from public.\"Events\" where id="+id.toString();
         return super.get(id);
     }
 
@@ -43,7 +52,7 @@ public class EventDbRepo extends DbRepoId<Long,Event> implements Repository<Long
     public boolean update(Long id, Event entity) {
         // if(get(id)==null) throw new RelationshipRepoException("There is no event with that id");
 
-        super.sql= "update public.\"Events\" set id=?,name=?,the_date=?, description=? where id=?";
+        if(super.sql==null)super.sql= "update public.\"Events\" set id=?,name=?,the_date=?, description=? where id=?";
 
         return super.update(id, entity);
 
@@ -52,50 +61,74 @@ public class EventDbRepo extends DbRepoId<Long,Event> implements Repository<Long
     @Override
     public boolean delete(Long id) {
         //if(get(id)==null) throw new RelationshipRepoException("There is no event with that id");
-        super.sql="delete from public.\"Events\" where id=?";
+        if(super.sql==null)super.sql="delete from public.\"Events\" where id=?";
         return super.delete(id);
     }
 
     @Override
     protected void deleteAll() {
-        super.sql= "delete from public.\"Events\" where id != 0";
+        if(super.sql==null)super.sql= "delete from public.\"Events\" where id != 0";
         super.deleteAll();
     }
 
     @Override
     public int getSize() {
-        super.sql="select count(*) as \"size\" from public.\"Events\"";
+        if(super.sql==null)super.sql="select count(*) as \"size\" from public.\"Events\"";
         return super.getSize();
     }
 
     @Override
     public List<Event> getAll() {
-        super.sql="select * from public.\"Events\"";
+        if(super.sql==null)super.sql="select * from public.\"Events\"";
         return super.getAll();
     }
 
     @Override
     public Page<Event> getAll(Pageble pageble) {
-        super.sql="select * from ( select * ,ROW_NUMBER() over (order by id ASC) as rowss from public.\"Events\" E inner join public.\"UserEvents\" UE on U.id=UE.id_e)as Foo where rowss>=? and rowss<? ";
+       // super.sql="select * from ( select * ,ROW_NUMBER() over (order by id ASC) as rowss from public.\"Events\" E inner join public.\"UserEvents\" UE on U.id=UE.id_e)as Foo where rowss>=? and rowss<? ";
+        if(super.sql==null)sql="select * from ( select * ,ROW_NUMBER() over (order by id ASC) as rowss from public.\"Events\")as Foo where rowss>=? and rowss<? ";
         return super.getAll(pageble);
         //return super.getAll();
     }
 
+
     public Page<Event> getPageEvents(PageType type) {
-        super.sql="select * from ( select * ,ROW_NUMBER() over (order by id_rel ASC) as rowss from (select * from public.\"Events\"  as Foo where rowss>=? and rowss<? ";
+        if(super.sql==null)super.sql="select * from ( select * ,ROW_NUMBER() over (order by id ASC) as rowss from public.\"Events\") as Foo where rowss>=? and rowss<? ";
         switch(type){
             case CURRENT -> {return super.getCurrentPage();}
             case NEXT -> {return super.getNextPage();}
             case PREVIOUS -> {return super.getPreviousPage();}
         };
         return null;
-        //return super.getAll();
+    }
+
+
+    public Page<Event> getPageEventsSUBSCRIBE(PageType type,Long id_u) {
+        if(super.sql==null)sql="select * from ( select * ,ROW_NUMBER() over (order by id ASC) as rowss from (select * from public.\"Events\" E inner join public.\"UserEvents\" UE on E.id=UE.id_e where  UE.id_u=\'"+id_u.toString()+"\')as Foo1 )as Foo where rowss>=? and rowss<? ";
+        switch(type){
+            case CURRENT -> {return super.getCurrentPage();}
+            case NEXT -> {return super.getNextPage();}
+            case PREVIOUS -> {return super.getPreviousPage();}
+        };
+        return null;
+    }
+
+
+
+    public Page<Event> getFirstPageEvents(PageType type) {
+        super.page=super.page=new Page(new Pageble(0,super.page.getCurrentPage().getPageSize()), new ArrayList().stream());
+        return getPageEvents(type);
+    }
+
+    public Page<Event> getFirstPageEventsSUBSCRIBE(PageType type,Long id) {
+        super.page=super.page=new Page(new Pageble(0,super.page.getCurrentPage().getPageSize()), new ArrayList().stream());
+        return getPageEventsSUBSCRIBE(type,id);
     }
 
 
     @Override
     public List<Long> getAllIds() {
-        super.sql= "select id from public.\"Events\"";
+        if(super.sql==null)super.sql= "select id from public.\"Events\"";
         return super.getAllIds();
     }
 
@@ -112,7 +145,7 @@ public class EventDbRepo extends DbRepoId<Long,Event> implements Repository<Long
 
     public Event getByNameEvent(String name)
     {
-        super.sql= "select * from public.\"Events\" where name=?";
+        if(super.sql==null)super.sql= "select * from public.\"Events\" where name=?";
         Event ev=super.getByOther(name);
         return ev;//==null ? super.getByOther(name) : ev;
 

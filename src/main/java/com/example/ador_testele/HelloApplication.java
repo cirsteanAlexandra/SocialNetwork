@@ -2,14 +2,11 @@ package com.example.ador_testele;
 
 
 import com.example.Controller.NewController.*;
+import com.example.GUIController.LoginController;
 import com.example.Repository.Db.*;
 import com.example.Repository.RelationshipRepo;
 import com.example.Repository.UserRepo;
 import com.example.Utils.Algoritms.Algoritm;
-import com.example.GUIController.*;
-
-
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -29,7 +26,7 @@ public class HelloApplication extends Application {
         RelationshipRepo repoR= new RelationshipDbRepo(ConnectionsMain.URL,ConnectionsMain.Username,ConnectionsMain.Password,3);
         RequestsDbRepo repoRQ=new RequestsDbRepo(ConnectionsMain.URL,ConnectionsMain.Username,ConnectionsMain.Password,3);
         MessageDbRepo repoM=new MessageDbRepo(ConnectionsMain.URL,ConnectionsMain.Username,ConnectionsMain.Password);
-        EventDbRepo repoE=new EventDbRepo(ConnectionsMain.URL,ConnectionsMain.Username,ConnectionsMain.Password);
+        EventDbRepo repoE=new EventDbRepo(ConnectionsMain.URL,ConnectionsMain.Username,ConnectionsMain.Password,3);
         UserEventDbRepo repoUE=new UserEventDbRepo(ConnectionsMain.URL,ConnectionsMain.Username,ConnectionsMain.Password);
 
         UserController contU=new UserController(repoU);

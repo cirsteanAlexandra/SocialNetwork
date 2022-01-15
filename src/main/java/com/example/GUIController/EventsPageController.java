@@ -34,8 +34,10 @@ public class EventsPageController {
         NameEvent.setText(event.getName());
         Date_event.setText(String.valueOf(event.getDtf()));
         DecriptionEvent.setText(event.getDescription());
-       if(cont.FindIfUserParticipateToEvent(user.getId(), event.getId()))
-           Participate.setText("Participate");
-       else Participate.setText("Add event");
+
+      if(cont.FindIfUserParticipateToEvent(user.getId(), event.getId()))
+          Participate.setText("Participate");
+      else Participate.setText("Add event");
+
     }
 }

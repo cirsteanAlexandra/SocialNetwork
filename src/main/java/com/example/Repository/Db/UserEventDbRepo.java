@@ -37,27 +37,27 @@ public class UserEventDbRepo extends DbRepoId<Long, UserEvent> implements Reposi
 
     @Override
     public UserEvent get(Long aLong) {
-        super.sql= "select * from public.\"UserEvents\" where id="+aLong.toString();
+        super.sql= "select * from public.\"UserEvents\" where id_ue="+aLong.toString();
         return super.get(aLong);
     }
 
     @Override
     public boolean update(Long aLong, UserEvent entity) {
-        super.sql= "update public.\"UserEvents\" set id=?,id_u=?,id_e=?, where id=?";
+        super.sql= "update public.\"UserEvents\" set id_ue=?,id_u=?,id_e=?, where id_ue=?";
 
         return super.update(aLong, entity);
     }
 
     @Override
     public boolean delete(Long aLong) {
-        super.sql="delete from public.\"UserEvents\" where id=?";
+        super.sql="delete from public.\"UserEvents\" where id_ue=?";
 
         return super.delete(aLong);
     }
 
     @Override
     protected void deleteAll() {
-        super.sql= "delete from public.\"UserEvents\" where id != 0";
+        super.sql= "delete from public.\"UserEvents\" where id_ue != 0";
         super.deleteAll();
     }
 
@@ -75,7 +75,7 @@ public class UserEventDbRepo extends DbRepoId<Long, UserEvent> implements Reposi
 
     @Override
     public List<Long> getAllIds() {
-        super.sql= "select id from public.\"UserEvents\"";
+        super.sql= "select id_ue from public.\"UserEvents\"";
         return super.getAllIds();
     }
 
@@ -98,11 +98,11 @@ public class UserEventDbRepo extends DbRepoId<Long, UserEvent> implements Reposi
     protected UserEvent getGetStatement(ResultSet ps) throws SQLException {
         UserEvent Uevent=null;
         while (ps.next()) {
-            Long id = ps.getLong("id");
+            Long id = ps.getLong("id_ue");
             Long id_u= ps.getLong("id_u");
             Long id_e = ps.getLong("id_e");
 
-            Uevent =new UserEvent(id_u,id_e);
+            Uevent =new UserEvent(id,id_u,id_e);
 
         }
         return Uevent;
@@ -112,7 +112,7 @@ public class UserEventDbRepo extends DbRepoId<Long, UserEvent> implements Reposi
     protected List<Long> getAllIdStatement(ResultSet ps) throws SQLException {
         List<Long> listId=new ArrayList<>();
         while (ps.next()) {
-            Long id = ps.getLong("id");
+            Long id = ps.getLong("id_ue");
             listId.add(id);
         }
         return listId;
@@ -138,12 +138,12 @@ public class UserEventDbRepo extends DbRepoId<Long, UserEvent> implements Reposi
     protected List<UserEvent> getAllStatement(ResultSet ps) throws SQLException {
         List<UserEvent> Uevents=new ArrayList<>();
         while (ps.next()) {
-            Long id = ps.getLong("id");
+            Long id = ps.getLong("id_ue");
             Long id_u = ps.getLong("id_u");
             Long id_e = ps.getLong("id_e");
 
 
-            UserEvent Uevent =new UserEvent(id_u,id_e);
+            UserEvent Uevent =new UserEvent(id,id_u,id_e);
 
             Uevents.add(Uevent);
         }

@@ -3,10 +3,15 @@ package com.example.GUIController;
 import com.example.Controller.NewController.MainController;
 import com.example.Domain.User;
 import com.example.Utils.Algoritms.Algoritm;
+import com.example.Utils.Exceptions.Exception;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+
+import javafx.scene.Scene;
+
 import javafx.scene.control.Button;
+
 import javafx.scene.control.SplitPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -31,11 +36,9 @@ public class MainWindowController {
         this.loginLayout=loginLayout;
         SetButtonsImage(HomeButton,"C:\\Users\\Alexandra\\Desktop\\LastTry\\src\\main\\resources\\com\\example\\ador_testele\\Photos\\HomeIcon.png");
         SetButtonsImage(MessagesButton,"C:\\Users\\Alexandra\\Desktop\\LastTry\\src\\main\\resources\\com\\example\\ador_testele\\Photos\\MessagesIcon2.png");
-        SetButtonsImage(PeopleButton,"C:\\Users\\Alexandra\\Desktop\\LastTry\\src\\main\\resources\\com\\example\\ador_testele\\Photos\\People2.png");
-        SetButtonsImage(EventsButton,"C:\\Users\\Alexandra\\Desktop\\LastTry\\src\\main\\resources\\com\\example\\ador_testele\\Photos\\EventIcon.png");
+        SetButtonsImage(PeopleButton,"C:\\Users\\Alexandra\\Desktop\\LastTry\\src\\main\\resources\\com\\example\\ador_testele\\Photos\\People2.png");//        SetButtonsImage(EventsButton,"C:\\Users\\Alexandra\\Desktop\\LastTry\\src\\main\\resources\\com\\example\\ador_testele\\Photos\\EventIcon.png");
         SetButtonsImage(StatisticsButton,"C:\\Users\\Alexandra\\Desktop\\LastTry\\src\\main\\resources\\com\\example\\ador_testele\\Photos\\StatisticsIcon.png");
-        SetButtonsImage(ExitButton,"C:\\Users\\Alexandra\\Desktop\\LastTry\\src\\main\\resources\\com\\example\\ador_testele\\Photos\\ExitIcon.png");
-
+       SetButtonsImage(ExitButton,"C:\\Users\\Alexandra\\Desktop\\LastTry\\src\\main\\resources\\com\\example\\ador_testele\\Photos\\ExitIcon.png");
     }
     private void SetButtonsImage(Button NameButton,String url){
         Image img = new Image(url);
@@ -66,12 +69,17 @@ public class MainWindowController {
     }
 
     public void handleMessage(ActionEvent ev) throws IOException, InterruptedException {
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(new File(Algoritm.getFullPath("message_view.fxml")).toURI().toURL());
-        AnchorPane messLayout = fxmlLoader.load();
-        splitMain.getItems().set(1,messLayout);
-        MessageGUIController messageController = fxmlLoader.getController();
-        messageController.setMessageGUIController(cont,stage,user);
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(new File(Algoritm.getFullPath("message_view.fxml")).toURI().toURL());
+            AnchorPane messLayout = fxmlLoader.load();
+            splitMain.getItems().set(1, messLayout);
+            MessageGUIController messageController = fxmlLoader.getController();
+            messageController.setMessageGUIController(cont, stage, user);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     public void handleFriends(ActionEvent ev) throws IOException, InterruptedException {
@@ -80,9 +88,8 @@ public class MainWindowController {
         AnchorPane friendLayout = fxmlLoader.load();
 
         splitMain.getItems().set(1,friendLayout);
-        FriendsTableController requestController = fxmlLoader.getController();
-        System.out.println(cont.toString());
-        requestController.setFriendsController(cont,stage,user);
+        FriendsTableController friendsTableController = fxmlLoader.getController();
+        friendsTableController.setFriendsController(cont,stage,user);
 
     }
     public void handleEvents(ActionEvent ev) throws IOException, InterruptedException {
@@ -98,7 +105,18 @@ public class MainWindowController {
         System.out.println("STATISTICS PROFILE");
     }
 
-    public void handleLogout(ActionEvent ev){
-        System.out.println("LOGOUT PROFILE");
+    public void handleLogout(ActionEvent ev) throws IOException, InterruptedException {
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(new File(Algoritm.getFullPath("login_view.fxml")).toURI().toURL());
+        AnchorPane loginLayout=fxmlLoader.load();
+        LoginController loginController= fxmlLoader.getController();
+
+        Stage loginStage=new Stage();
+        Scene scene = new Scene(loginLayout);
+        loginController.setLoginController(cont,loginStage,loginLayout);
+        loginStage.setTitle("Login");
+        loginStage.setScene(scene);
+        loginStage.show();
+        stage.close();
     }
 }

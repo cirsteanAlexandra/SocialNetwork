@@ -3,23 +3,27 @@ package com.example.GUIController;
 import com.example.Controller.NewController.MainController;
 import com.example.Domain.Message;
 import com.example.Domain.User;
+import com.example.Utils.Algoritms.Algoritm;
+import com.example.Utils.Exceptions.Exception;
 import com.example.Utils.Observer.Observer;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -39,9 +43,10 @@ public class MessageGUIController implements Observer {
         this.stage=stage;
         this.user=user;
         initModel();
-        //initConversation();
         cont.addObserver(this);
     }
+
+    private Message reply;
 
     @FXML
     private TextArea textMess;
@@ -51,6 +56,9 @@ public class MessageGUIController implements Observer {
 
     @FXML
     private TextField textFilterUser;
+
+    @FXML
+    private Label labelReply;
 
     @FXML
     private TableView<String> tableUsername;
@@ -64,50 +72,40 @@ public class MessageGUIController implements Observer {
     }
 
     public void loadTheConversation(){
+        if(otherPerson==null)return ;
         List<Message> conv=cont.loadConversation(user.getUsername(),otherPerson.getUsername());
-        //mainSceneTExt.getChildren().clear();
-        //mainSceneTExt.
-        //mainSceneTExt.getChildren().clear();
         for (var mess:conv){
-            HBox convo_mess=new HBox();
-            //TextArea convo_mess=new TextArea();
-            //Text Username1= new Text(mess.getFrom().getUsername()+": ");
-            TextArea Username1= new TextArea(mess.getFrom().getUsername());
-            Username1.setPadding(Insets.EMPTY);
-            //Username1.setStyle("-fx-padding: 0,0,0,0");
-            Username1.setEditable(false);
-            //Text Username1=new Text(mess.getFrom().getUsername()+":");
+            TextArea convo_mess=new TextArea();
+            String date=mess.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm")).toString()+": ";
+            String Username1=mess.getFrom().getUsername();
+            Message messReply=null;
+            if(mess.getReply()!=null)
+                messReply= cont.getMessageById(mess.getReply().getId());
+            if(messReply!=null)
+            {
+                String rep="reply to: "+messReply.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm")).toString()+": "+messReply.getFrom().getUsername()+": "+messReply.getMessage();
+                if(rep.length()>=50){
+                    rep=rep.substring(0,50);
+                    rep+="...";
+                }
+                convo_mess.setText(rep+"\n"+date+Username1+": "+mess.getMessage());
+            }
+            else convo_mess.setText(date+Username1+": "+mess.getMessage());
             if (mess.getFrom().getUsername().equals(user.getUsername()))
-                //Username1.setFill(Color.RED);
-                Username1.setStyle("-fx-background-color:transparent; -fx-font-family: Consolas; -fx-highlight-fill: #00ff00; -fx-highlight-text-fill: #000000; -fx-text-fill: red; ");
+                convo_mess.setStyle("-fx-background-color: red;-fx-text-fill: red");
             else if(mess.getFrom().getUsername().equals(otherPerson.getUsername()))
-                //Username1.setFill(Color.GREEN);
-                Username1.setStyle("-fx-background-color:rgba(0,0,0,0); -fx-font-family: Consolas; -fx-highlight-fill: #00ff00; -fx-highlight-text-fill: #000000; -fx-text-fill: green; ");
-           // Username1.setEditable(false);
-            //Text textMess=new Text(mess.getMessage());
-            TextArea Mess=new TextArea(mess.getMessage());
-            Mess.setPadding(Insets.EMPTY);
-            //Mess.setStyle("-fx-padding: 0,0,0,0");
-            Mess.setEditable(false);
-            Mess.setWrapText(true);
-           // Mess.setBackground(Background.EMPTY);
-            //Text Mess= new Text(mess.getMessage());
-//            Text Date=new Text(mess.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm")).toString()+":");
-            TextArea Date=new TextArea( mess.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm")).toString()+":");
-            Date.setEditable(false);
-            Date.setWrapText(true);
-            Date.setPadding(Insets.EMPTY);
-            Date.setBorder(Border.EMPTY);
-            //Date.setStyle("-fx-padding: 0,0,0,0");
-           // Date.setPrefSize(Date.getPrefWidth()/2,3*Date.getPrefHeight()/4);
-           // mainSceneTExt.getChildren().addAll(Date,Username1,Mess);
-           // mainSceneTExt.getChildren().add(new Text(System.lineSeparator()));
-            convo_mess.getChildren().add(Date);
-            convo_mess.getChildren().add(Username1);
-            convo_mess.getChildren().add(Mess);
-            convo_mess.setPadding(Insets.EMPTY);
-            //convo_mess.setPrefSize(Mess.getWidth(),Mess.getHeight());
-
+                convo_mess.setStyle("-fx-background-color: green;-fx-border-colorder-color: green;-text-area-backorund: green; -fx-text-fill: green");
+            convo_mess.setWrapText(true);
+            convo_mess.setEditable(false);
+            convo_mess.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    if(event.getButton().equals(MouseButton.SECONDARY)){
+                        labelReply.setVisible(true);
+                        reply=mess;
+                    }
+                }
+            });
             mainSceneTExt.getChildren().add(convo_mess);
         }
     }
@@ -119,6 +117,7 @@ public class MessageGUIController implements Observer {
 
         textFilterUser.textProperty().addListener(o->handleFilterAction());
     }
+
 
     public void handleFilterAction(){
         Predicate<String> pred= u-> u.startsWith(textFilterUser.getText());
@@ -135,8 +134,15 @@ public class MessageGUIController implements Observer {
         else if (message.equals("") || message==null || message.isBlank())
             MessageAlert.showErrorMessage(null,"The text field is null");
         else{
-            Message mess= new Message(user,message, Arrays.asList(otherPerson), LocalDateTime.now());
+            Message mess;
+            if(labelReply.isVisible()){
+                Message messReply=cont.getMessageById(reply.getId());
+                mess= new Message(user,message, Arrays.asList(otherPerson), LocalDateTime.now(),messReply);
+            }
+            else mess= new Message(user,message, Arrays.asList(otherPerson), LocalDateTime.now());
             cont.sendMessage(mess);
+            reply=null;
+            labelReply.setVisible(false);
             textMess.clear();
             loadTheConversation();
         }
@@ -150,6 +156,31 @@ public class MessageGUIController implements Observer {
         {
             otherPerson=cont.getUserByUsername(Usern);
             loadTheConversation();
+        }
+    }
+
+    private boolean sendAll=false;
+    public void handleSendAll(ActionEvent ev){
+        try {
+            if(!sendAll) {
+                sendAll=true;
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(new File(Algoritm.getFullPath("send-all-view.fxml")).toURI().toURL());
+                AnchorPane loginLayout = fxmlLoader.load();
+                Stage messStage = new Stage();
+                SendAllGUIController messageController = fxmlLoader.getController();
+                messageController.setSendAllGUIController(cont, messStage, user,sendAll);
+                Scene scene = new Scene(loginLayout);
+                messStage.initModality(Modality.WINDOW_MODAL);
+                messStage.setTitle("Send All");
+                messStage.setScene(scene);
+                messStage.show();
+
+            }
+        }catch(IOException | InterruptedException | Exception e){
+            sendAll=false;
+            //e.printStackTrace();
+            MessageAlert.showErrorMessage(null, e.getMessage()+"\n"+e.getCause());
         }
     }
 

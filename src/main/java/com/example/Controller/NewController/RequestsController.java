@@ -50,4 +50,7 @@ public class RequestsController  extends Controller<Long, Relationship>{
         return backupRepo.getPageRequest(username, type);
     }
 
+    public Page<Relationship> getFirstPageRequests(String username, PageType type){
+        return backupRepo.getFirstPageRequest(username, type);
+    }
 }
