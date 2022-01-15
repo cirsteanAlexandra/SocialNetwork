@@ -3,28 +3,36 @@ package com.example.GUIController;
 import com.example.Controller.NewController.MainController;
 import com.example.Domain.User;
 import com.example.Repository.PagingRepo.PageType;
+import com.example.Utils.Algoritms.Algoritm;
 import com.example.Utils.Exceptions.Exception;
 import com.example.Utils.Observer.Observer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.SplitPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 public class FriendsTableController implements Observer {
     User user;
     private MainController cont;
     Stage registerStage;
+    SplitPane split;
 
-    public void setFriendsController(MainController cont, Stage stage, User user) {
+    public void setFriendsController(MainController cont, Stage stage, User user,SplitPane split) {
         this.cont = cont;
         this.registerStage = stage;
         this.user = user;
+        this.split=split;
         cont.addObserver(this);
         updateListFriend(PageType.CURRENT,true);
         updateListRequest(PageType.CURRENT,true);
@@ -143,12 +151,25 @@ public class FriendsTableController implements Observer {
         remove(username);
     }
     public void handleRemoveFriend2(ActionEvent actionEvent) {
-        String username=uname3.getText();
+        String username=uname2.getText();
         remove(username);
     }
     public void handleRemoveFriend3(ActionEvent actionEvent) {
         String username=uname3.getText();
         remove(username);
+    }
+
+    public void handleSeeProfileFriend1(ActionEvent actionEvent) throws IOException, InterruptedException {
+        String username=uname1.getText();
+        seeProfile(username);
+    }
+    public void handleSeeProfileFriend2(ActionEvent actionEvent) throws IOException, InterruptedException {
+        String username=uname2.getText();
+        seeProfile(username);
+    }
+    public void handleSeeProfileFriend3(ActionEvent actionEvent) throws IOException, InterruptedException {
+        String username=uname3.getText();
+        seeProfile(username);
     }
 
     public void handleAcceptFriend1(ActionEvent actionEvent) {
@@ -205,25 +226,28 @@ public class FriendsTableController implements Observer {
         }
     }
 
+    public void seeProfile(String username) throws IOException, InterruptedException {
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(new File(Algoritm.getFullPath("profile_other.fxml")).toURI().toURL());
+        AnchorPane profLayout = fxmlLoader.load();
+        split.getItems().set(1, profLayout);
+        ProfileController profileController = fxmlLoader.getController();
+        profileController.setProfileController(cont,user,cont.getUserByUsername(username));
+    }
+
     public void handleFriendNextPage(ActionEvent ev){
         if(listU.size()==3){
-
             updateListFriend(PageType.NEXT,false);
-
         }
     }
 
     public void handleFriendPreviousPage(ActionEvent ev){
-
             updateListFriend(PageType.PREVIOUS,false);
-
     }
 
     public void handleRequestNextPage(ActionEvent ev){
         if(listR.size()==3){
-
             updateListRequest(PageType.NEXT,false);
-
         }
     }
 
@@ -264,83 +288,5 @@ public class FriendsTableController implements Observer {
 
     }
 
-    /*
-    @FXML
-    private TableView<PrintedPersones> tableView;
-    @FXML
-    private TableColumn<PrintedPersones, String> tableColumnName;
-    @FXML
-    private TableColumn<PrintedPersones, String> tableColumnLastName;
-    @FXML
-    private TextField username;
 
-
-
-    @FXML
-    private TextField SearchFriend;
-
-    @FXML
-    private Button deleteButton;
-
-    @FXML
-    public void initialize() {
-        tableColumnName.setCellValueFactory(new PropertyValueFactory<PrintedPersones, String>("First_Name"));
-        tableColumnLastName.setCellValueFactory(new PropertyValueFactory<PrintedPersones, String>("Last_Name"));
-        tableView.setItems(model);
-
-    }
-
-    public void initModel() {
-
-        Set<Persone> persones = cont.getFriendsByUsername(user.getUsername()).keySet();
-
-        model.setAll(persones.stream()
-                .map(x -> new PrintedPersones(x.getFirstName(), x.getLastName()))
-                .collect(Collectors.toList()));
-
-    }
-
-    public void handleDeleteFriend(ActionEvent ev) {
-        String LastName=tableView.getSelectionModel().getSelectedItem().getLast_Name();
-        String userName= user.getUsername();
-        String userName2= cont.getUsernameByFirstName(LastName);
-
-        if(cont.GetTheSender(userName)) {
-            cont.removeRelationshipByUsernames(userName, userName2);
-            cont.removeRequestBySenderAndReceiver(userName, userName2);
-            //notify();
-        }
-        else
-        {
-            cont.removeRelationshipByUsernames(userName2, userName);
-            cont.removeRequestBySenderAndReceiver(userName2, userName);
-           // notify();
-        }
-
-    }
-
-
-    public void handleSearch(ActionEvent actionEvent) {
-
-
-        String searchFriendUser= SearchFriend.getText();
-        List<Persone> list=new ArrayList<>();
-        for(Persone p: cont.getFriendsByUsername(user.getUsername()).keySet())
-            if(p.getFirstName().equals(searchFriendUser)
-            || p.getLastName().equals(searchFriendUser))
-                list.add(p);
-
-        model.removeAll();
-        model.setAll(list.stream()
-                .map(x -> new PrintedPersones(x.getFirstName(), x.getLastName()))
-                .collect(Collectors.toList()));
-        initModel();
-
-    }
-
-    @Override
-    public void update() {
-        initModel();
-    }
-    */
 }

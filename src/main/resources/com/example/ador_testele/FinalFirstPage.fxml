@@ -69,7 +69,9 @@
                   </graphic>
                </Button>
 
-               <Button fx:id="StatisticsButton" layoutX="503.0" layoutY="24.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="41.0" style="-fx-background-color: #8080ff;">
+
+               <Button fx:id="StatisticsButton" layoutX="503.0" layoutY="24.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="41.0" style="-fx-background-color: #8080ff;" onAction="#handleStatistics">
+
 
                   <graphic>
                      <ImageView fitHeight="33.0" fitWidth="25.0" layoutX="27.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
@@ -90,7 +92,6 @@
                      </ImageView>
                   </graphic>
                </Button>
-
             </children></AnchorPane>
          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
       </items>

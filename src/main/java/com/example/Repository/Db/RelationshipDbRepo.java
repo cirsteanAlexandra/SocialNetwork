@@ -178,7 +178,7 @@ public class RelationshipDbRepo<Messages> extends DbRepoId<Long, Relationship> i
      */
     @Override
     public List<Long> getAllIds() {
-        super.sql= "select id_rel from public.\"Relationship\"";
+        if(super.sql==null)super.sql= "select id_rel from public.\"Relationship\"";
         return super.getAllIds();
     }
 

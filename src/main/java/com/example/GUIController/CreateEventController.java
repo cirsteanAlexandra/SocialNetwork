@@ -31,7 +31,8 @@ public class CreateEventController {
         dtf= LocalDate.parse(Date.getText());
         description=Description.getText();
         Event ev;
-        ev=new Event(11L,name,description,dtf);
+        Long id=Long.valueOf(cont.getSize());
+        ev=new Event(id+1,name,description,dtf);
         cont.addEvent(ev);
     }
 }

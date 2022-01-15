@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.GUIController.FriendsTableController" stylesheets="@../ador_testele/css/friends_requests.css">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="600.0" stylesheets="@../ador_testele/css/friends_requests.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.GUIController.FriendsTableController">
    <children>
       <SplitPane dividerPositions="0.4999999999999999" layoutX="200.0" layoutY="96.0" prefHeight="356.0" prefWidth="600.0" stylesheets="@../ador_testele/css/friends_requests.css" AnchorPane.bottomAnchor="-36.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -22,7 +22,7 @@
                      <children>
                         <HBox fx:id="hboxf1" prefHeight="73.0" prefWidth="230.0">
                            <children>
-                              <AnchorPane prefHeight="83.0" prefWidth="252.0" style="-fx-background-color: #ccccff;" stylesheets="@../ador_testele/css/friends_requests.css">
+                              <AnchorPane prefHeight="83.0" prefWidth="252.0" style="-fx-background-color: #ccccff;">
                                  <children>
                                     <ImageView fitHeight="53.0" fitWidth="57.0" layoutX="7.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -74,8 +74,8 @@
                         <HBox fx:id="hboxf4" prefHeight="0.0" prefWidth="252.0" />
                      </children>
                   </VBox>
-                  <Button layoutX="14.0" layoutY="284.0" mnemonicParsing="false" onAction="#handleFriendPreviousPage" prefHeight="26.0" prefWidth="41.0" style="-fx-background-color: #00ffaa;" stylesheets="@css/friends_requests.css" text="&lt;&lt;&lt;" textAlignment="CENTER" wrapText="true" />
-                  <Button layoutX="227.0" layoutY="282.0" mnemonicParsing="false" onAction="#handleFriendNextPage" prefHeight="26.0" prefWidth="41.0" style="-fx-background-color: #00ffaa;" text="&gt;&gt;&gt;" textAlignment="CENTER" wrapText="true" />
+                  <Button layoutX="14.0" layoutY="284.0" mnemonicParsing="false" onAction="#handleFriendPreviousPage" prefHeight="26.0" prefWidth="41.0" style="-fx-background-color: #00e673;" stylesheets="@css/friends_requests.css" text="&lt;&lt;&lt;" textAlignment="CENTER" wrapText="true" />
+                  <Button layoutX="227.0" layoutY="282.0" mnemonicParsing="false" onAction="#handleFriendNextPage" prefHeight="26.0" prefWidth="41.0" style="-fx-background-color: #00e673;" text="&gt;&gt;&gt;" textAlignment="CENTER" wrapText="true" />
                   <Text layoutX="85.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Friends" textAlignment="CENTER" wrappingWidth="111.99998982747388">
                      <font>
                         <Font size="19.0" />
@@ -138,8 +138,8 @@
                         <HBox fx:id="hboxr4" prefHeight="1.0" prefWidth="267.0" />
                      </children>
                   </VBox>
-                  <Button layoutX="13.0" layoutY="284.0" mnemonicParsing="false" onAction="#handleRequestPreviousPage" prefHeight="26.0" prefWidth="41.0" style="-fx-background-color: #00ffaa;" stylesheets="@css/friends_requests.css" text="&lt;&lt;&lt;" textAlignment="CENTER" wrapText="true" />
-                  <Button layoutX="212.0" layoutY="283.0" mnemonicParsing="false" onAction="#handleRequestNextPage" prefHeight="26.0" prefWidth="41.0" style="-fx-background-color: #00ffaa;" text="&gt;&gt;&gt;" textAlignment="CENTER" wrapText="true" />
+                  <Button layoutX="13.0" layoutY="284.0" mnemonicParsing="false" onAction="#handleRequestPreviousPage" prefHeight="26.0" prefWidth="41.0" style="-fx-background-color: #00e673;" stylesheets="@css/friends_requests.css" text="&lt;&lt;&lt;" textAlignment="CENTER" wrapText="true" />
+                  <Button layoutX="212.0" layoutY="283.0" mnemonicParsing="false" onAction="#handleRequestNextPage" prefHeight="26.0" prefWidth="41.0" style="-fx-background-color: #00e673;" text="&gt;&gt;&gt;" textAlignment="CENTER" wrapText="true" />
                   <Text layoutX="92.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Requests" textAlignment="CENTER" wrappingWidth="87.99995930989576">
                      <font>
                         <Font size="19.0" />

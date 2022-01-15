@@ -53,4 +53,8 @@ public class RequestsController  extends Controller<Long, Relationship>{
     public Page<Relationship> getFirstPageRequests(String username, PageType type){
         return backupRepo.getFirstPageRequest(username, type);
     }
+
+    public List<Relationship> getAllPending(){
+        return backupRepo.getAllPending();
+    }
 }

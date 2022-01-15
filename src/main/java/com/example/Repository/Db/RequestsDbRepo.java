@@ -42,7 +42,7 @@ public class RequestsDbRepo extends DbRepoId<Long, Relationship> implements Repo
             entity.setId(generateId());
 
          Relationship rel;
-         super.sql= "insert into public.\"Requests\" values (?, ?, ?,?,?)";
+        if(super.sql==null)super.sql= "insert into public.\"Requests\" values (?, ?, ?,?,?)";
          return super.save(entity);
 
     }
@@ -50,7 +50,7 @@ public class RequestsDbRepo extends DbRepoId<Long, Relationship> implements Repo
     @Override
     public boolean update(Long id, Relationship entity) {
         if(get(id)==null) throw new RelationshipRepoException("There is no relationship with that id");
-        super.sql= "update public.\"Requests\" set id_r=?,first_username=?,second_username=?, the_date=? , status=? where id_r=?";
+        if(super.sql==null)super.sql= "update public.\"Requests\" set id_r=?,first_username=?,second_username=?, the_date=? , status=? where id_r=?";
         return super.update(id, entity);
     }
 
@@ -61,7 +61,7 @@ public class RequestsDbRepo extends DbRepoId<Long, Relationship> implements Repo
      */
     @Override
     protected void deleteAll() {
-        super.sql= "delete from public.\"Requests\"";
+        if(super.sql==null)super.sql= "delete from public.\"Requests\"";
         super.deleteAll();
     }
 
@@ -74,14 +74,14 @@ public class RequestsDbRepo extends DbRepoId<Long, Relationship> implements Repo
      */
     @Override
     public Relationship get(Long id) {
-        super.sql= "select * from public.\"Requests\" where id_r="+id.toString();
+        if(super.sql==null)super.sql= "select * from public.\"Requests\" where id_r="+id.toString();
         return super.get(id);
     }
 
     @Override
     public boolean delete(Long id) {
         if (get(id) == null) throw new RelationshipRepoException("There is no relationship with that id");
-        super.sql = "delete from public.\"Requests\" where id_r=?";
+        if(super.sql==null)super.sql = "delete from public.\"Requests\" where id_r=?";
         return super.delete(id);
     }
 
@@ -89,6 +89,11 @@ public class RequestsDbRepo extends DbRepoId<Long, Relationship> implements Repo
     public List<Relationship> getAll() {
 
         if(super.sql==null)sql="select * from public.\"Requests\"";
+        return super.getAll();
+    }
+
+    public List<Relationship> getAllPending() {
+        if(super.sql==null)sql="select * from public.\"Requests\" where status=\'pending\'";
         return super.getAll();
     }
 
@@ -100,14 +105,16 @@ public class RequestsDbRepo extends DbRepoId<Long, Relationship> implements Repo
 
     @Override
     public Page<Relationship> getAll(Pageble pageble) {
-        super.sql="select * from ( select * ,ROW_NUMBER() over (order by id_r ASC) as rowss from public.\"Requests\")as Foo where rowss>=? and rowss<? ";
+        if(super.sql==null)super.sql="select * from ( select * ,ROW_NUMBER() over (order by id_r ASC) as rowss from public.\"Requests\")as Foo where rowss>=? and rowss<? ";
         return super.getAll(pageble);
         //return super.getAll();
     }
 
+
+
     public Page<Relationship> getPageRequest(String username, PageType type) {
 
-        sql="select * from ( select * ,ROW_NUMBER() over (order by id_r ASC) as rowss from (select * from public.\"Requests\" where (status='pending' and second_username=\'"+username+"\')) as Foo ) as Foo1 where rowss>=? and rowss<?;";
+        if(super.sql==null)sql="select * from ( select * ,ROW_NUMBER() over (order by id_r ASC) as rowss from (select * from public.\"Requests\" where (status='pending' and second_username=\'"+username+"\')) as Foo ) as Foo1 where rowss>=? and rowss<?;";
         switch(type){
             case CURRENT -> {return super.getCurrentPage();}
             case NEXT -> {return super.getNextPage();}
@@ -123,7 +130,7 @@ public class RequestsDbRepo extends DbRepoId<Long, Relationship> implements Repo
 
     @Override
     public List<Long> getAllIds() {
-        super.sql= "select id_r from public.\"Requests\"";
+        if(super.sql==null)super.sql= "select id_r from public.\"Requests\"";
         return super.getAllIds();
     }
 

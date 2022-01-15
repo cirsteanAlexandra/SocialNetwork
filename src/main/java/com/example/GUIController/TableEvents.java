@@ -33,6 +33,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+
+
 public class TableEvents  implements Observer {
 
     public VBox vertical_box;
@@ -72,86 +74,11 @@ public class TableEvents  implements Observer {
 
         cont.addObserver(this);
         updateListEvents2(PageType.CURRENT,true);
-
-
         SetEventsTable1(events1);
 
 
     }
     ObservableList<PrintedPersones> model = FXCollections.observableArrayList();
-
-
-    //ObservableList<PrintedPersones> model = FXCollections.observableArrayList();
-   /* private void SetEventsTable() {
-
-<<<<<<< HEAD
-            if(!events.isEmpty())
-                for(int i=1;i<=3;i++)
-=======
-    private List<Event> events;
-
-
-    private void SetEventsTable() {
-
-        //probabil ceva for, nu s prea sigura cum vine cu paginarea
-        //Lista de event
-
-        List<Event> events=cont.getAllEvents();
-
-
-       // =cont.getAllEvents();
-            if(!events.isEmpty())
-
-           for(int i=1;i<=3;i++)
->>>>>>> e6a9d669f55624838f16a5cb8c108d6ad9975315
-           {
-               if(i==1 && i<=events.size())
-               {
-                   Event ev=events.get(i-1);
-                   NameEvent1.setText(ev.getName());
-                   Date_event1.setText(ev.getDtf().toString());
-                   DecriptionEvent1.setText(ev.getDescription());
-
-
-                   Participate1.setText("Cancel");
-
-                   Notify1.setText("Notify me!");
-
-               }
-               if(i==2 && i<=events.size())
-               {
-                   Event ev=events.get(i-1);
-                   NameEvent2.setText(ev.getName());
-                   Date_event2.setText(ev.getDtf().toString());
-                   DecriptionEvent2.setText(ev.getDescription());
-
-                   Participate2.setText("Cancel");
-
-                   Notify2.setText("Notify me!");
-
-               }
-               if(i==3 && i<=events.size())
-               {
-                   Event ev=events.get(i-1);
-                   NameEvent3.setText(ev.getName());
-                   Date_event3.setText(ev.getDtf().toString());
-                   DecriptionEvent3.setText(ev.getDescription());
-
-                   Participate3.setText("Cancel");
-
-                   Notify3.setText("Notify me!");
-
-               }
-
-               }
-        for(int i=events.size()+1;i<=3;i++){
-
-            if(i==1)hboxf1.setVisible(false);
-            if(i==2)hboxf2.setVisible(false);
-            if(i==3)hboxf3.setVisible(false);
-        }
-    }*/
-
 
     public void handleEventPreviousPage(ActionEvent ev){
         if(FirstButton==true)
@@ -169,15 +96,8 @@ public class TableEvents  implements Observer {
             if (events.size() == 3) {
                 updateListEvents2(PageType.NEXT, false);
             }
-
-
-           }
-
+        }
     }
-
-
-
-
 
     public void updateListEvents( PageType type,boolean f){
         events1=cont.getPageEventS(type,f,user);
@@ -189,43 +109,40 @@ public class TableEvents  implements Observer {
 
     private void SetEventsTable1(List<Event> events) {
         Long id_ev;
-        if(!events.isEmpty())
-            for(int i=1;i<=3;i++)
-            {
-                if(i==1 && i<=events.size())
-                {
-                    Event ev=events.get(i-1);
+
+        if(events!=null && !events.isEmpty()) {
+            for (int i = 1; i <= 3; i++) {
+                if (i == 1 && i <= events.size()) {
+                    Event ev = events.get(i - 1);
                     NameEvent1.setText(ev.getName());
                     Date_event1.setText(ev.getDtf().toString());
                     DecriptionEvent1.setText(ev.getDescription());
-                    id_ev=cont.getEventByName(NameEvent1.getText()).getId();
-                    if(cont.FindIfUserParticipateToEvent(user.getId(), id_ev))
+                    id_ev = cont.getEventByName(NameEvent1.getText()).getId();
+                    if (cont.FindIfUserParticipateToEvent(user.getId(), id_ev))
                         Participate1.setText("Cancel");
                     else Participate1.setText("Add event");
                     Notify1.setText("Notify me!");
 
                 }
-                if(i==2 && i<=events.size())
-                {
-                    Event ev=events.get(i-1);
+                if (i == 2 && i <= events.size()) {
+                    Event ev = events.get(i - 1);
                     NameEvent2.setText(ev.getName());
                     Date_event2.setText(ev.getDtf().toString());
                     DecriptionEvent2.setText(ev.getDescription());
-                    id_ev=cont.getEventByName(NameEvent2.getText()).getId();
-                    if(cont.FindIfUserParticipateToEvent(user.getId(), id_ev))
+                    id_ev = cont.getEventByName(NameEvent2.getText()).getId();
+                    if (cont.FindIfUserParticipateToEvent(user.getId(), id_ev))
                         Participate2.setText("Cancel");
                     else Participate2.setText("Add event");
                     Notify2.setText("Notify me!");
 
                 }
-                if(i==3 && i<=events.size())
-                {
-                    Event ev=events.get(i-1);
+                if (i == 3 && i <= events.size()) {
+                    Event ev = events.get(i - 1);
                     NameEvent3.setText(ev.getName());
                     Date_event3.setText(ev.getDtf().toString());
                     DecriptionEvent3.setText(ev.getDescription());
-                    id_ev=cont.getEventByName(NameEvent3.getText()).getId();
-                    if(cont.FindIfUserParticipateToEvent(user.getId(), id_ev))
+                    id_ev = cont.getEventByName(NameEvent3.getText()).getId();
+                    if (cont.FindIfUserParticipateToEvent(user.getId(), id_ev))
                         Participate3.setText("Cancel");
                     else Participate3.setText("Add event");
                     Notify3.setText("Notify me!");
@@ -233,11 +150,12 @@ public class TableEvents  implements Observer {
                 }
 
             }
-        for(int i=events.size()+1;i<=3;i++){
+            for (int i = events.size() + 1; i <= 3; i++) {
 
-            if(i==1)hboxf1.setVisible(false);
-            if(i==2)hboxf2.setVisible(false);
-            if(i==3)hboxf3.setVisible(false);
+                if (i == 1) hboxf1.setVisible(false);
+                if (i == 2) hboxf2.setVisible(false);
+                if (i == 3) hboxf3.setVisible(false);
+            }
         }
     }
 
@@ -263,10 +181,7 @@ public class TableEvents  implements Observer {
 
     public void handleAllEvents(ActionEvent actionEvent) {
 
-
         updateListEvents2(PageType.CURRENT,false);
-
-
     }
 
     public void handleEventsParticipation(ActionEvent actionEvent) {
@@ -319,8 +234,13 @@ public class TableEvents  implements Observer {
             cont.removeUserEventIdUser(id_ue);
         else
         {
-            UserEvent ue=new UserEvent(14L,user.getId(),id_ev);
+            Long id=Long.valueOf(generateId());
+            UserEvent ue=new UserEvent(id,user.getId(),id_ev);
             cont.addUE(ue);
         }
+    }
+
+    private int generateId() {
+        return cont.getSize()+1;
     }
 }

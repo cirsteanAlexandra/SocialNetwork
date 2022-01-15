@@ -1,13 +1,8 @@
 package com.example.Repository.Db;
 
 import com.example.Domain.Event;
-
-import com.example.Repository.PagingRepo.Page;
-
-import com.example.Domain.Relationship;
 import com.example.Repository.PagingRepo.Page;
 import com.example.Repository.PagingRepo.PageType;
-
 import com.example.Repository.PagingRepo.Pageble;
 import com.example.Repository.Repository;
 import com.example.Utils.Generator;
@@ -50,7 +45,7 @@ public class EventDbRepo extends DbRepoId<Long,Event> implements Repository<Long
 
     @Override
     public boolean update(Long id, Event entity) {
-        // if(get(id)==null) throw new RelationshipRepoException("There is no event with that id");
+        //if(get(id)==null) throw new RelationshipRepoException("There is no event with that id");
 
         if(super.sql==null)super.sql= "update public.\"Events\" set id=?,name=?,the_date=?, description=? where id=?";
 
@@ -85,15 +80,17 @@ public class EventDbRepo extends DbRepoId<Long,Event> implements Repository<Long
 
     @Override
     public Page<Event> getAll(Pageble pageble) {
-       // super.sql="select * from ( select * ,ROW_NUMBER() over (order by id ASC) as rowss from public.\"Events\" E inner join public.\"UserEvents\" UE on U.id=UE.id_e)as Foo where rowss>=? and rowss<? ";
-        if(super.sql==null)sql="select * from ( select * ,ROW_NUMBER() over (order by id ASC) as rowss from public.\"Events\")as Foo where rowss>=? and rowss<? ";
-        return super.getAll(pageble);
+
+        if(super.sql==null)super.sql="select * from ( select * ,ROW_NUMBER() over (order by id_ue ASC) as rowss from public.\"Events\" E inner join public.\"UserEvents\" UE on E.id=UE.id_e)as Foo where rowss>=? and rowss<? ";
+       return super.getAll(pageble);
         //return super.getAll();
     }
 
 
     public Page<Event> getPageEvents(PageType type) {
-        if(super.sql==null)super.sql="select * from ( select * ,ROW_NUMBER() over (order by id ASC) as rowss from public.\"Events\") as Foo where rowss>=? and rowss<? ";
+
+        if(super.sql==null)super.sql="select * from ( select * ,ROW_NUMBER() over (order by id ASC) as rowss from public.\"Events\" ) as Foo where rowss>=? and rowss<? ";
+
         switch(type){
             case CURRENT -> {return super.getCurrentPage();}
             case NEXT -> {return super.getNextPage();}
@@ -123,6 +120,11 @@ public class EventDbRepo extends DbRepoId<Long,Event> implements Repository<Long
     public Page<Event> getFirstPageEventsSUBSCRIBE(PageType type,Long id) {
         super.page=super.page=new Page(new Pageble(0,super.page.getCurrentPage().getPageSize()), new ArrayList().stream());
         return getPageEventsSUBSCRIBE(type,id);
+    }
+
+    public List<Event> getUserEvents(Long id){
+        if(super.sql==null)super.sql="select * from public.\"Events\" E inner join public.\"UserEvents\" UE on E.id=UE.id_e where UE.id_u="+id.toString();
+        return super.getAll();
     }
 
 

@@ -1,15 +1,12 @@
 package com.example.Repository.Db;
 
-import com.example.Domain.Event;
 import com.example.Domain.UserEvent;
-import com.example.Repository.PagingRepo.Page;
-import com.example.Repository.PagingRepo.Pageble;
 import com.example.Repository.Repository;
 import com.example.Utils.Generator;
-import org.postgresql.util.PSQLException;
 
-import java.sql.*;
-import java.time.LocalDate;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
