@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 
 import javafx.scene.control.SplitPane;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -54,6 +55,8 @@ public class MainWindowController {
     private AnchorPane currentLayout;
     @FXML
     private SplitPane splitMain;
+    @FXML
+    private TextField textSearch;
 
     public void handleHome(ActionEvent ev) throws IOException, InterruptedException {
         //System.out.println("HOME PROFILE");
@@ -67,7 +70,16 @@ public class MainWindowController {
         String Username=user.getUsername();
 
         mainWindowController.setMainWindowController(cont,registerStage,loginLayout,cont.getUserByUsername(Username));
+    }
 
+    public void handleSearch(ActionEvent ev) throws IOException, InterruptedException {
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(new File(Algoritm.getFullPath("search-view.fxml")).toURI().toURL());
+        AnchorPane seaLayout = fxmlLoader.load();
+        splitMain.getItems().set(1, seaLayout);
+        SearchGUIController seaController = fxmlLoader.getController();
+        System.out.println(textSearch.getText());
+        seaController.setSearchGUIController(cont,user,splitMain,textSearch);
     }
 
     public void handleMessage(ActionEvent ev) throws IOException, InterruptedException {
